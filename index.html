@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ESTÜ GPA</title>
-
     <meta name="google-site-verification" content="eqw_TdbsmcxzwDvIDL1pQ-z7KWtn9_m173YTxxZiQZA" />
+    <link rel="canonical" href="https://furkanisik33.github.io/estu-gpa/" />
+    <meta property="og:title" content="ESTÜ GPA | GANO Hesaplama Aracı" />
+    <meta property="og:description" content="Eskişehir Teknik Üniversitesi EEE öğrencileri için not ortalaması hesaplama ve senaryo aracı." />
+    <meta property="og:url" content="https://furkanisik33.github.io/estu-gpa/" />
+    <meta property="og:image" content="https://furkanisik33.github.io/estu-gpa/icon.png" />
     <meta name="description" content="ESTÜ (Eskişehir Teknik Üniversitesi) öğrencileri için en güncel GPA ve GANO hesaplama aracı. Derslerini seç, ortalamanı öğren.">
     <meta name="keywords" content="ESTÜ GPA, ESTÜ GANO Hesaplama, Eskişehir Teknik Üniversitesi, Elektrik Elektronik Mühendisliği, Ortalama Hesaplama, ESTÜ EEE">
     <meta name="author" content="Furkan Işık">
@@ -627,11 +631,25 @@
         div.style.padding = "15px";
         div.style.borderLeft = "4px solid var(--warning)";
         let opts = Object.keys(gradeScale).map(g => `<option value="${gradeScale[g]}">${g}</option>`).join('');
+
+        // --- DÜZENLEME: MANUEL İSE INPUT, DEĞİLSE TEXT ---
+        let ectsDisplay;
+        if (isManual) {
+            // Manuel ise kullanıcı değiştirebilsin
+            ectsDisplay = `<input type="number" class="s-ects" value="${ects}" 
+                            style="width:60px; padding:6px; border-radius:8px; border:1px solid var(--border); 
+                            background:var(--bg-body); color:var(--text-main); font-weight:700; text-align:center;">`;
+        } else {
+            // Listeden seçildiyse sabit kalsın
+            ectsDisplay = `<span style="background:var(--bg-body); padding:2px 8px; border-radius:6px; font-size:0.8rem;">${ects} AKTS</span>
+                           <input type="hidden" class="s-ects" value="${ects}">`;
+        }
+        // --------------------------------------------------
+
         div.innerHTML = `
             <div style="display:flex; justify-content:space-between; margin-bottom:10px; align-items:center;">
                 <span style="font-weight:700;">${isManual ? 'Manuel' : code} <small style="font-weight:400; color:var(--text-sub)">${name}</small></span>
-                <span style="background:var(--bg-body); padding:2px 8px; border-radius:6px; font-size:0.8rem;">${ects} AKTS</span>
-                <input type="hidden" class="s-ects" value="${ects}">
+                ${ectsDisplay}
             </div>
             <div style="display:grid; grid-template-columns: 1fr auto 1fr; gap:10px; align-items:center;">
                 <div><select class="s-old"><option value="">NA</option>${opts}</select></div>
@@ -691,5 +709,4 @@
     window.onload = init;
 </script>
 </body>
-
 </html>
