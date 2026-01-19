@@ -20,7 +20,7 @@
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <script src="js/data.js?v=20260120-2"></script>
+    <script src="js/data.js?v=final_v1"></script>
 
     <style>
         :root {
@@ -74,11 +74,11 @@
         .btn { width: 100%; padding: 18px; border: none; border-radius: var(--radius-md); font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-family: inherit; }
         .btn-primary { background: var(--primary-grad); color: white; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2); }
         .btn-add { background: var(--accent); color: white; height: 100%; border-radius: 12px; }
+        .btn-outline { background: transparent; border: 2px dashed var(--text-sub); color: var(--text-sub); margin-top: 10px; opacity: 0.7; }
         
         #result-area { display: none; text-align: center; margin-top: 30px; }
         .gano-display { font-size: 5rem; font-weight: 800; line-height: 1; letter-spacing: -3px; margin: 20px 0; color: var(--text-main); }
         
-        .controls-grid { display: grid; grid-template-columns: 1fr 1.5fr auto; gap: 10px; }
         .input-row { display: flex; gap: 15px; } .input-group { flex: 1; }
         label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-sub); text-transform: uppercase; margin-bottom: 10px; }
         
@@ -91,6 +91,24 @@
         #loading-box { text-align: center; padding: 50px; color: var(--text-sub); font-size: 1.2rem; font-weight: 500; }
         
         .info-box { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--success); color: #065f46; text-align: center; font-weight: 600; }
+
+        /* ARAMA MOTORU STİLİ */
+        .search-container-local { position: relative; margin-bottom: 15px; }
+        .search-container-local input { width: 100%; padding: 15px; padding-left: 40px; border-radius: 12px; border: 2px solid var(--border); transition: 0.3s; }
+        .search-container-local input:focus { border-color: var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .search-icon-local { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); opacity: 0.5; }
+        
+        .search-results-list { 
+            display: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--bg-card); 
+            border: 1px solid var(--border); border-radius: 12px; max-height: 250px; overflow-y: auto; 
+            z-index: 50; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-top: 5px;
+        }
+        .search-result-item { padding: 12px 15px; border-bottom: 1px solid var(--border); cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .search-result-item:hover { background: var(--bg-body); }
+        .search-result-item:last-child { border-bottom: none; }
+        .res-code { font-weight: 800; font-size: 0.9rem; color: var(--primary); }
+        .res-name { font-size: 0.85rem; color: var(--text-main); margin-left: 10px; }
+        .res-ects { font-size: 0.75rem; background: var(--bg-body); padding: 2px 6px; border-radius: 4px; }
 
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .modal-content { background: var(--bg-card); padding: 30px; border-radius: 24px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.2); position: relative; }
@@ -111,12 +129,10 @@
         <span class="modal-close" onclick="closeModal(event)">×</span>
         <h2 style="margin-top:0; color:var(--primary);">Hata Bildir / İletişim</h2>
         <p style="font-size:0.9rem; color:var(--text-sub);">Bir hata fark ettiyseniz veya öneriniz varsa bize ulaşın:</p>
-        
         <div class="contact-item">
             <span class="contact-label">Geliştirici</span>
             <a href="mailto:furkan.isik@ogr.eskisehir.edu.tr" class="contact-link">furkan.isik@ogr.eskisehir.edu.tr</a>
         </div>
-        
         <div class="contact-item">
             <span class="contact-label">Geliştirici</span>
             <a href="mailto:ahmetelindag@ogr.eskisehir.edu.tr" class="contact-link">ahmetelindag@ogr.eskisehir.edu.tr</a>
@@ -162,15 +178,16 @@
         <div id="curriculum-container"></div>
 
         <div class="card" style="border-left: 5px solid var(--success);">
-            <label style="color:var(--success)" data-lang="add_course_label">+ UZMANLAŞMA / EK DERS</label>
-            <div class="controls-grid">
-                <select id="specFilter" onchange="filterSpecs()">
-                    <option value="all">Tümü (Listele)</option>
-                </select>
-                <select id="specSelect"><option value="">Ders Seç...</option></select>
-                <button class="btn btn-add" onclick="addSpecCourse()">EKLE</button>
+            <label style="color:var(--success)" data-lang="add_course_label">+ SEÇMELİ DERS / UZMANLIK EKLE</label>
+            
+            <div class="search-container-local">
+                <span class="search-icon-local">🔍</span>
+                <input type="text" id="courseSearchBox" placeholder="Ders adı veya kodu yaz... (Örn: Yapay Zeka)" onkeyup="searchCourse()" autocomplete="off">
+                <div id="searchResults" class="search-results-list"></div>
             </div>
-            </div>
+
+            <button class="btn btn-outline" onclick="addManualCourse()" data-lang="btn_manual">+ Listede Olmayan Ders Ekle (Manuel)</button>
+        </div>
 
         <button class="btn btn-primary" onclick="calculateGANO()" data-lang="btn_calc"><span>HESAPLA</span></button>
         
@@ -283,8 +300,58 @@
         if(localStorage.getItem('lang') === 'en') { currentLang = 'en'; toggleLang(false); } 
         updateSemesterOptions();
         renderCurriculum(); 
-        filterSpecs(); 
         populateScenList();
+        
+        // Arama kutusuna tıklayınca başka yerdeki tıklamaları dinle (kapatmak için)
+        document.addEventListener('click', function(e) {
+            const searchContainer = document.querySelector('.search-container-local');
+            if (!searchContainer.contains(e.target)) {
+                document.getElementById('searchResults').style.display = 'none';
+            }
+        });
+    }
+
+    // ARAMA MOTORU FONKSİYONU 🔍
+    function searchCourse() {
+        const input = document.getElementById('courseSearchBox');
+        const filter = input.value.toLowerCase();
+        const resultsDiv = document.getElementById('searchResults');
+        
+        if (!filter) {
+            resultsDiv.style.display = 'none';
+            return;
+        }
+
+        if(!window.specs) return;
+
+        const matches = window.specs.filter(course => 
+            course.n.toLowerCase().includes(filter) || 
+            course.c.toLowerCase().includes(filter)
+        );
+
+        resultsDiv.innerHTML = "";
+        if(matches.length > 0) {
+            resultsDiv.style.display = 'block';
+            matches.forEach(course => {
+                const div = document.createElement('div');
+                div.className = "search-result-item";
+                div.innerHTML = `
+                    <div style="display:flex; align-items:center;">
+                        <span class="res-code">${course.c}</span>
+                        <span class="res-name">${course.n}</span>
+                    </div>
+                    <span class="res-ects">${course.e}</span>
+                `;
+                div.onclick = function() {
+                    addCustomRow(course.c, course.n, course.e);
+                    input.value = "";
+                    resultsDiv.style.display = 'none';
+                };
+                resultsDiv.appendChild(div);
+            });
+        } else {
+            resultsDiv.style.display = 'none';
+        }
     }
 
     function updateSemesterOptions() {
@@ -295,8 +362,12 @@
         
         labels.forEach((label, index) => {
             const val = index.toString();
+            // Görüntüde düzeltme yapıyoruz (Manuel kelimesini gizlemek için)
+            let displayText = label;
+            if(index === 6) displayText = "4. Sınıf / Mezuniyet"; // Ekranda böyle görünsün
+            
             const option = document.createElement('option');
-            option.value = val; option.text = label; select.appendChild(option);
+            option.value = val; option.text = displayText; select.appendChild(option);
         });
         
         if(currentValue) select.value = currentValue;
@@ -313,7 +384,6 @@
 
         const max = parseInt(val);
         const labels = SYSTEM_CONFIG.semesterLabels[currentLang];
-
         const loopMax = (max === 6) ? 5 : max; 
 
         for(let i=0; i<=loopMax; i++) {
@@ -365,16 +435,6 @@
         const data = JSON.parse(localStorage.getItem('grades_' + window.deptId));
         if(data) { Object.keys(data).forEach(id => { const el = document.getElementById(id); if(el) el.value = data[id]; }); }
     }
-    function filterSpecs() {
-        const type = document.getElementById('specFilter').value;
-        const sel = document.getElementById('specSelect');
-        sel.innerHTML = '<option value="">...</option>';
-        if(!window.specs) return;
-        let list = type === 'all' ? window.specs : window.specs.filter(s => s.t && s.t.includes(type));
-        list.sort((a,b) => a.c.localeCompare(b.c));
-        list.forEach(s => { let opt = document.createElement('option'); opt.value = JSON.stringify(s); opt.text = `${s.c} - ${s.n}`; sel.appendChild(opt); });
-    }
-    function addSpecCourse() { const val = document.getElementById('specSelect').value; if(!val) return; const c = JSON.parse(val); addCustomRow(c.c, c.n, c.e); }
     function addCustomRow(code, name, ects, isManual=false) {
         let container = document.getElementById('curriculum-container');
         let extraCard = document.getElementById('extra-courses-card');
@@ -385,7 +445,7 @@
         div.innerHTML = `<div class="c-info"><div class="c-code">${codeDisplay} ${!isManual ? ectsDisplay : ''}</div>${isManual ? ectsDisplay : ''}<span class="c-name">${name}</span></div><div style="display:flex; flex-direction:column; align-items:end; gap:5px;"><select class="grade-select ${isManual?'manual-grade':'spec-grade'}" ${!isManual ? `data-ects="${ects}"` : ''} onchange="saveGANOState()"><option value="">-</option>${Object.keys(gradeScale).map(g => `<option value="${gradeScale[g]}">${g}</option>`).join('')}</select><button onclick="this.closest('.course-item').remove(); saveGANOState();" style="border:none; background:none; color:var(--danger); font-size:0.8rem; cursor:pointer;">Sil</button></div>`;
         list.appendChild(div);
     }
-    function addScenManual() { addScenRow("", "Manuel Ders", 5, true); }
+    function addManualCourse() { addCustomRow("MANUEL", "Özel Ders", 5, true); }
     function calculateGANO() {
         let totalP = 0, totalE = 0;
         document.querySelectorAll('#curriculum-container .card').forEach((card) => {
@@ -420,6 +480,7 @@
         all.forEach(c => { let opt = document.createElement('option'); opt.value = JSON.stringify(c); opt.text = `${c.c} - ${c.n}`; sel.appendChild(opt); });
     }
     function addScenFromList() { const val = document.getElementById('scen-list-select').value; if(!val) return; const c = JSON.parse(val); addScenRow(c.c, c.n, c.e, false); }
+    function addScenManual() { addScenRow("", "Manuel Ders", 5, true); }
     function addScenRow(code, name, ects, isManual) {
         const div = document.createElement('div'); div.className = "card"; div.style.padding = "15px"; div.style.borderLeft = "4px solid var(--warning)";
         let opts = Object.keys(gradeScale).map(g => `<option value="${gradeScale[g]}">${g}</option>`).join('');
