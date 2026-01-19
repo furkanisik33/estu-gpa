@@ -14,8 +14,17 @@
     <title>ESTÜ GPA Hesapla</title>
     
     <meta name="google-site-verification" content="geFAFpHDdJmimSnFMtUR9NZI0Lvaevapm_uEPHqJ7uc" />
-    <meta name="description" content="ESTÜ Not Ortalaması Hesaplama Aracı.">
+    <meta name="description" content="ESTÜ Not Ortalaması Hesaplama Aracı. Müfredat, senaryo ve GANO hesaplama.">
+    
+    <meta property="og:title" content="ESTÜ GPA | GANO Hesapla" />
+    <meta property="og:description" content="Tüm mühendislik bölümleri için en güncel GANO hesaplama ve senaryo oluşturma aracı." />
+    <meta property="og:image" content="https://furkanisik33.github.io/estu-gpa/icon.png" />
+    <meta property="og:url" content="https://furkanisik33.github.io/estu-gpa/" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image">
+
     <link rel="icon" href="icon.png" type="image/png">
+    <link rel="manifest" href="manifest.json">
     
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -92,7 +101,6 @@
         
         .info-box { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--success); color: #065f46; text-align: center; font-weight: 600; }
 
-        /* ARAMA MOTORU STİLİ */
         .search-container-local { position: relative; margin-bottom: 15px; }
         .search-container-local input { width: 100%; padding: 15px; padding-left: 40px; border-radius: 12px; border: 2px solid var(--border); transition: 0.3s; }
         .search-container-local input:focus { border-color: var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
@@ -302,16 +310,14 @@
         renderCurriculum(); 
         populateScenList();
         
-        // Arama kutusuna tıklayınca başka yerdeki tıklamaları dinle (kapatmak için)
         document.addEventListener('click', function(e) {
             const searchContainer = document.querySelector('.search-container-local');
-            if (!searchContainer.contains(e.target)) {
+            if (searchContainer && !searchContainer.contains(e.target)) {
                 document.getElementById('searchResults').style.display = 'none';
             }
         });
     }
 
-    // ARAMA MOTORU FONKSİYONU 🔍
     function searchCourse() {
         const input = document.getElementById('courseSearchBox');
         const filter = input.value.toLowerCase();
@@ -362,9 +368,8 @@
         
         labels.forEach((label, index) => {
             const val = index.toString();
-            // Görüntüde düzeltme yapıyoruz (Manuel kelimesini gizlemek için)
             let displayText = label;
-            if(index === 6) displayText = "4. Sınıf / Mezuniyet"; // Ekranda böyle görünsün
+            if(index === 6) displayText = "4. Sınıf / Mezuniyet";
             
             const option = document.createElement('option');
             option.value = val; option.text = displayText; select.appendChild(option);
