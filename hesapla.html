@@ -17,7 +17,7 @@
     <meta name="description" content="ESTÜ Not Ortalaması Hesaplama Aracı. Müfredat, senaryo ve GANO hesaplama.">
     
     <meta property="og:title" content="ESTÜ GPA | GANO Hesapla" />
-    <meta property="og:description" content="Tüm mühendislik bölümleri için en güncel GANO hesaplama ve senaryo oluşturma aracı." />
+    <meta property="og:description" content="Tüm mühendislik bölümleri için en güncel GANO hesaplama aracı." />
     <meta property="og:image" content="https://furkanisik33.github.io/estu-gpa/icon.png" />
     <meta property="og:url" content="https://furkanisik33.github.io/estu-gpa/" />
     <meta property="og:type" content="website" />
@@ -29,7 +29,7 @@
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <script src="js/data.js?v=final_v1"></script>
+    <script src="js/data.js?v=final_v2"></script>
 
     <style>
         :root {
@@ -70,15 +70,40 @@
         [data-theme="dark"] .tab-btn.active { background: var(--primary); color: white; }
         
         .card { background: var(--bg-card); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 24px; box-shadow: var(--shadow-card); border: 1px solid var(--border); }
+        
+        /* --- ESTETİK DÜZELTME: Select ve Input --- */
         select, input { width: 100%; padding: 14px 16px; border-radius: 14px; border: 2px solid var(--border); background: var(--bg-body); color: var(--text-main); outline: none; font-family: inherit; font-weight: 500; }
-        select:focus, input:focus { border-color: var(--primary); background: var(--bg-card); }
+        
+        /* Not Seçim Kutusu Özelleştirmesi */
+        select.grade-select {
+            width: 90px !important; /* Sabit küçük genişlik */
+            min-width: 90px;
+            padding: 10px 5px !important;
+            text-align: center;
+            text-align-last: center; /* Mobilde ortalama */
+            font-weight: 800;
+            height: 45px;
+            cursor: pointer;
+            background-color: var(--bg-body);
+        }
         
         .semester-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; border-bottom: 2px solid var(--border); margin-bottom: 15px; }
         .sem-title { font-weight: 800; color: var(--primary); font-size: 1.1rem; }
-        .course-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border); }
+        
+        /* --- ESTETİK DÜZELTME: Liste Elemanları --- */
+        .course-item { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 12px 0; 
+            border-bottom: 1px solid var(--border); 
+            gap: 15px; /* Yazı ve kutu arası boşluk */
+        }
+        .c-info { flex: 1; /* Yazı alanı genişlesin */ }
+        
         .c-code { font-weight: 800; } 
         .c-ects { background: rgba(0,0,0,0.05); color: var(--primary); font-size: 0.7rem; padding: 3px 8px; border-radius: 6px; font-weight: 700; margin-left: 5px;}
-        .c-name { display: block; font-size: 0.85rem; color: var(--text-sub); margin-top: 4px; }
+        .c-name { display: block; font-size: 0.85rem; color: var(--text-sub); margin-top: 4px; line-height: 1.3; }
         
         .btn { width: 100%; padding: 18px; border: none; border-radius: var(--radius-md); font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-family: inherit; }
         .btn-primary { background: var(--primary-grad); color: white; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2); }
@@ -106,14 +131,9 @@
         .search-container-local input:focus { border-color: var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
         .search-icon-local { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); opacity: 0.5; }
         
-        .search-results-list { 
-            display: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--bg-card); 
-            border: 1px solid var(--border); border-radius: 12px; max-height: 250px; overflow-y: auto; 
-            z-index: 50; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-top: 5px;
-        }
+        .search-results-list { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; max-height: 250px; overflow-y: auto; z-index: 50; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-top: 5px; }
         .search-result-item { padding: 12px 15px; border-bottom: 1px solid var(--border); cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
         .search-result-item:hover { background: var(--bg-body); }
-        .search-result-item:last-child { border-bottom: none; }
         .res-code { font-weight: 800; font-size: 0.9rem; color: var(--primary); }
         .res-name { font-size: 0.85rem; color: var(--text-main); margin-left: 10px; }
         .res-ects { font-size: 0.75rem; background: var(--bg-body); padding: 2px 6px; border-radius: 4px; }
@@ -187,13 +207,11 @@
 
         <div class="card" style="border-left: 5px solid var(--success);">
             <label style="color:var(--success)" data-lang="add_course_label">+ SEÇMELİ DERS / UZMANLIK EKLE</label>
-            
             <div class="search-container-local">
                 <span class="search-icon-local">🔍</span>
                 <input type="text" id="courseSearchBox" placeholder="Ders adı veya kodu yaz... (Örn: Yapay Zeka)" onkeyup="searchCourse()" autocomplete="off">
                 <div id="searchResults" class="search-results-list"></div>
             </div>
-
             <button class="btn btn-outline" onclick="addManualCourse()" data-lang="btn_manual">+ Listede Olmayan Ders Ekle (Manuel)</button>
         </div>
 
@@ -323,11 +341,7 @@
         const filter = input.value.toLowerCase();
         const resultsDiv = document.getElementById('searchResults');
         
-        if (!filter) {
-            resultsDiv.style.display = 'none';
-            return;
-        }
-
+        if (!filter) { resultsDiv.style.display = 'none'; return; }
         if(!window.specs) return;
 
         const matches = window.specs.filter(course => 
@@ -341,23 +355,11 @@
             matches.forEach(course => {
                 const div = document.createElement('div');
                 div.className = "search-result-item";
-                div.innerHTML = `
-                    <div style="display:flex; align-items:center;">
-                        <span class="res-code">${course.c}</span>
-                        <span class="res-name">${course.n}</span>
-                    </div>
-                    <span class="res-ects">${course.e}</span>
-                `;
-                div.onclick = function() {
-                    addCustomRow(course.c, course.n, course.e);
-                    input.value = "";
-                    resultsDiv.style.display = 'none';
-                };
+                div.innerHTML = `<div style="display:flex; align-items:center;"><span class="res-code">${course.c}</span><span class="res-name">${course.n}</span></div><span class="res-ects">${course.e}</span>`;
+                div.onclick = function() { addCustomRow(course.c, course.n, course.e); input.value = ""; resultsDiv.style.display = 'none'; };
                 resultsDiv.appendChild(div);
             });
-        } else {
-            resultsDiv.style.display = 'none';
-        }
+        } else { resultsDiv.style.display = 'none'; }
     }
 
     function updateSemesterOptions() {
@@ -365,16 +367,13 @@
         const currentValue = select.value;
         select.innerHTML = "";
         let labels = (typeof SYSTEM_CONFIG !== 'undefined') ? SYSTEM_CONFIG.semesterLabels[currentLang] : [];
-        
         labels.forEach((label, index) => {
             const val = index.toString();
             let displayText = label;
             if(index === 6) displayText = "4. Sınıf / Mezuniyet";
-            
             const option = document.createElement('option');
             option.value = val; option.text = displayText; select.appendChild(option);
         });
-        
         if(currentValue) select.value = currentValue;
         if(!select.value && labels.length > 0) { select.selectedIndex = 0; setTimeout(renderCurriculum, 50); }
     }
@@ -383,7 +382,6 @@
         const val = document.getElementById('semesterSelect').value;
         const container = document.getElementById('curriculum-container');
         container.innerHTML = "";
-        
         if(!window.core || window.core.length === 0) return;
         if(val === "" || val === null) return;
 
@@ -395,7 +393,6 @@
             if(!window.core[i]) continue;
             const semDiv = document.createElement('div'); semDiv.className = "card";
             const semName = labels[i] ? labels[i].split(' (')[0] : "Dönem " + (i+1);
-            
             let html = `<div class="semester-header"><span class="sem-title">${semName}</span><span class="ano-badge" id="ano-${i}">ANO: --</span></div>`;
             window.core[i].forEach(c => {
                 html += `<div class="course-item"><div class="c-info"><div class="c-code">${c.c} <span class="c-ects">${c.e}</span></div><span class="c-name">${c.n}</span></div><select class="grade-select core-grade" data-ects="${c.e}" id="grade-${c.c}" onchange="saveGANOState()"><option value="">-</option>${Object.keys(gradeScale).map(g => `<option value="${gradeScale[g]}">${g}</option>`).join('')}</select></div>`;
@@ -409,7 +406,6 @@
             infoDiv.innerHTML = "🎓 4. Sınıf / Mezuniyet <br><span style='font-weight:400; font-size:0.9rem;'>Lütfen aşağıdan <b>Uzmanlık Alanı</b> veya <b>Seçmeli Derslerinizi</b> ekleyiniz.</span>";
             container.appendChild(infoDiv);
         }
-
         loadSavedGrades();
     }
 
