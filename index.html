@@ -14,16 +14,15 @@
     <title>ESTÜ GPA | Mühendislik Not Merkezi</title>
     
     <meta name="google-site-verification" content="geFAFpHDdJmimSnFMtUR9NZI0Lvaevapm_uEPHqJ7uc" />
-
     <meta name="description" content="Eskişehir Teknik Üniversitesi (ESTÜ) tüm mühendislik bölümleri için gelişmiş GPA ve GANO hesaplama platformu. Bölümünü seç, hesapla.">
     <link rel="icon" href="icon.png" type="image/png">
     
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     
-    <script src="js/data.js"></script>
+    <script src="js/data.js?v=20260120"></script>
 
     <style>
-        :root { --primary: #c62828; --bg: #f8fafc; --text: #0f172a; }
+        :root { --primary: #c62828; --bg: #f8fafc; --text: #0f172a; --card-bg: #ffffff; }
         body { margin: 0; font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
         
         .logo-area img { width: 120px; border-radius: 25px; box-shadow: 0 10px 40px rgba(198, 40, 40, 0.2); margin-bottom: 25px; transition: transform 0.3s; }
@@ -45,17 +44,42 @@
         .dept-icon { font-size: 3rem; }
         .dept-name { font-weight: 700; font-size: 0.95rem; line-height: 1.3; }
         
-        /* PRESTİJ KARTI (EEE İÇİN) */
         .dept-card.prestigious { grid-column: span 2; background: linear-gradient(135deg, #c62828 0%, #b91c1c 100%); color: white; border: none; }
         .dept-card.prestigious:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 20px 40px rgba(198, 40, 40, 0.4); }
         
-        /* FOOTER */
+        /* FOOTER & BUTTON */
         .footer { margin-top: 60px; font-size: 0.9rem; color: #94a3b8; }
-        .contact-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 15px; padding: 8px 16px; background: #fff; border: 1px solid #e2e8f0; border-radius: 50px; text-decoration: none; color: #475569; font-weight: 600; font-size: 0.85rem; transition: 0.2s; }
+        .contact-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 15px; padding: 10px 20px; background: #fff; border: 1px solid #e2e8f0; border-radius: 50px; text-decoration: none; color: #475569; font-weight: 600; font-size: 0.85rem; transition: 0.2s; cursor: pointer; }
         .contact-btn:hover { background: #f1f5f9; color: var(--primary); border-color: var(--primary); }
+
+        /* MODAL STİLLERİ (HESAPLA.HTML İLE AYNI) */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        .modal-content { background: #fff; padding: 30px; border-radius: 24px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.2); position: relative; }
+        .modal-close { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: #64748b; }
+        .contact-item { background: #f1f5f9; padding: 15px; border-radius: 12px; margin: 10px 0; font-size: 0.9rem; word-break: break-all; display: flex; flex-direction: column; gap: 5px; }
+        .contact-label { font-size: 0.75rem; font-weight: 800; color: var(--primary); text-transform: uppercase; }
+        .contact-link { color: #0f172a; text-decoration: none; font-weight: 600; }
     </style>
 </head>
 <body>
+
+    <div id="contactModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal(event)">×</span>
+            <h2 style="margin-top:0; color:#c62828;">Hata Bildir / İletişim</h2>
+            <p style="font-size:0.9rem; color:#64748b;">Bir hata fark ettiyseniz veya öneriniz varsa bize ulaşın:</p>
+            
+            <div class="contact-item">
+                <span class="contact-label">Geliştirici</span>
+                <a href="mailto:furkan.isik@ogr.eskisehir.edu.tr" class="contact-link">furkan.isik@ogr.eskisehir.edu.tr</a>
+            </div>
+            
+            <div class="contact-item">
+                <span class="contact-label">Geliştirici</span>
+                <a href="mailto:ahmetelindag@ogr.eskisehir.edu.tr" class="contact-link">ahmetelindag@ogr.eskisehir.edu.tr</a>
+            </div>
+        </div>
+    </div>
 
     <div class="logo-area">
         <img src="icon.png" alt="ESTÜ Logo">
@@ -73,26 +97,34 @@
 
     <div class="footer">
         <div>Designed by <strong>Furkan Işık</strong></div>
-        <a href="mailto:furkanisik@ogu.edu.tr" class="contact-btn"> 📩 Hata Bildir / İletişim
-        </a>
+        <button onclick="openModal()" class="contact-btn">
+            📩 Hata Bildir / İletişim
+        </button>
     </div>
 
     <script>
         const container = document.getElementById('dept-list');
         
+        // MODAL FONKSİYONLARI
+        function openModal() { document.getElementById('contactModal').style.display = 'flex'; }
+        function closeModal(e) { 
+            if(e.target.id === 'contactModal' || e.target.classList.contains('modal-close')) 
+                document.getElementById('contactModal').style.display = 'none'; 
+        }
+
         function renderDepts(filterText = "") {
             container.innerHTML = "";
             
-            // Object'i diziye çevirip döngüye alıyoruz
+            if (typeof DEPARTMENTS === 'undefined') {
+                container.innerHTML = "<p>Veritabanı yükleniyor...</p>";
+                return;
+            }
+
             Object.keys(DEPARTMENTS).forEach(key => {
                 const dept = DEPARTMENTS[key];
                 
-                // Arama Filtresi
                 if(dept.title.toLowerCase().includes(filterText.toLowerCase())) {
-                    
-                    // EEE için özel prestijli tasarım
                     const isEEE = key === 'eee';
-                    
                     const html = `
                     <a href="hesapla.html?bolum=${key}" class="dept-card ${isEEE ? 'prestigious' : ''}">
                         <div class="dept-icon">${dept.icon}</div>
@@ -110,8 +142,15 @@
             renderDepts(val);
         }
 
-        // Başlangıçta hepsini göster
-        renderDepts();
+        // Veritabanının yüklenmesini bekle
+        window.addEventListener('load', function() {
+            // data.js gecikirse diye kontrol
+            if (typeof DEPARTMENTS === 'undefined') {
+                setTimeout(function() { renderDepts(); }, 500);
+            } else {
+                renderDepts();
+            }
+        });
     </script>
 </body>
 </html>
