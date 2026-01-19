@@ -20,7 +20,7 @@
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <script src="js/data.js"></script>
+    <script src="js/data.js?v=99"></script>
 
     <style>
         :root {
@@ -86,14 +86,9 @@
         /* Back Button */
         .back-link { color: white; text-decoration: none; font-size: 1.2rem; margin-right: 15px; opacity: 0.8; }
 
-        /* Footer Düzenlemesi */
         .dev-footer {
-            margin-top: 50px;
-            padding-bottom: 20px;
-            text-align: center;
-            font-size: 0.9rem;
-            color: var(--text-sub);
-            opacity: 0.8;
+            margin-top: 50px; padding-bottom: 20px; text-align: center;
+            font-size: 0.9rem; color: var(--text-sub); opacity: 0.8;
         }
 
         #error-box { display: none; background: #fee2e2; color: #991b1b; padding: 20px; border-radius: 15px; text-align: center; font-weight: bold; margin: 20px; border: 2px solid #ef4444; }
@@ -206,10 +201,17 @@
 </div>
 
 <script>
-    // --- AKILLI MOTOR V3 (Düzeltilmiş) ---
+    // --- YEDEK DÖNEM LİSTESİ (Kurtarıcı Kod) ---
+    // data.js bozuk olsa bile burası çalışacak
+    const DEFAULT_LABELS = {
+        tr: [ "1. Dönem (Güz)", "2. Dönem Sonu (1. Sınıf)", "3. Dönem Sonu", "4. Dönem Sonu (2. Sınıf)", "5. Dönem Sonu", "6. Dönem Sonu (3. Sınıf)", "Manuel / 4. Sınıf" ],
+        en: [ "1st Semester (Fall)", "End of 2nd Sem. (Freshman)", "End of 3rd Semester", "End of 4th Sem. (Sophomore)", "End of 5th Semester", "End of 6th Sem. (Junior)", "Manual / Senior" ]
+    };
+
+    // --- AKILLI MOTOR V4 (Fix) ---
 
     // 1. Veritabanı Kontrolü
-    if (typeof DEPARTMENTS === 'undefined' || typeof SYSTEM_CONFIG === 'undefined') {
+    if (typeof DEPARTMENTS === 'undefined') {
         document.getElementById('error-box').style.display = 'block';
         document.getElementById('dept-badge').innerText = "HATA";
     } else {
@@ -218,7 +220,6 @@
     }
 
     function startEngine() {
-        // URL'den Bölümü Oku
         const urlParams = new URLSearchParams(window.location.search);
         const deptId = urlParams.get('bolum') || 'eee';
 
@@ -229,35 +230,91 @@
             return;
         }
 
-        // Verileri Global Yap
         window.core = currentDept.core; 
         window.specs = currentDept.specs;
         window.deptId = deptId;
 
-        // Renkler
         document.documentElement.style.setProperty('--primary', currentDept.color);
         document.documentElement.style.setProperty('--primary-dark', currentDept.color);
         document.getElementById('dept-badge').innerText = currentDept.title;
         document.getElementById('story-icon').innerText = currentDept.icon;
         document.getElementById('story-dept').innerText = currentDept.title.toUpperCase();
 
-        // MOTORU BAŞLAT
         init();
     }
 
     let currentLang = 'tr';
-    // Hata buradaydı: Veriyi direkt SYSTEM_CONFIG'den okuyoruz
-    const gradeScale = (typeof SYSTEM_CONFIG !== 'undefined') ? SYSTEM_CONFIG.gradeScale : {"AA":4.0, "FF":0};
+    const gradeScale = (typeof SYSTEM_CONFIG !== 'undefined') ? SYSTEM_CONFIG.gradeScale : {"AA":4.0, "AB":3.7, "BA":3.3, "BB":3.0, "BC":2.7, "CB":2.3, "CC":2.0, "CD":1.7, "DC":1.3, "DD":1.0, "FF":0.0};
 
     function init() {
         if(localStorage.getItem('theme') === 'dark') toggleTheme();
         if(localStorage.getItem('lang') === 'en') { currentLang = 'en'; toggleLang(false); } 
         
-        // Önemli düzeltme: Önce dönemleri yükle, sonra müfredatı çiz
-        updateSemesterOptions();
+        updateSemesterOptions(); // Önce menüyü doldur
         renderCurriculum(); 
         filterSpecs(); 
         populateScenList();
+    }
+
+    function updateSemesterOptions() {
+        const select = document.getElementById('semesterSelect');
+        const currentValue = select.value;
+        select.innerHTML = "";
+        
+        // --- DÜZELTME BURADA ---
+        // data.js'den gelmezse bile DEFAULT_LABELS kullan
+        let labels = [];
+        if (typeof SYSTEM_CONFIG !== 'undefined' && SYSTEM_CONFIG.semesterLabels) {
+            labels = SYSTEM_CONFIG.semesterLabels[currentLang];
+        } else {
+            labels = DEFAULT_LABELS[currentLang];
+        }
+        
+        labels.forEach((label, index) => {
+            const val = index === labels.length - 1 ? "custom" : index.toString();
+            const option = document.createElement('option');
+            option.value = val; option.text = label; select.appendChild(option);
+        });
+        
+        if(currentValue) select.value = currentValue;
+        // Eğer boşsa ilkini seçtir ki dersler görünsün
+        if(!select.value && labels.length > 0) {
+            select.selectedIndex = 0;
+            // İlk açılışta dersleri de tetikle
+            setTimeout(renderCurriculum, 50);
+        }
+    }
+
+    // Diğer fonksiyonlar aynı...
+    function renderCurriculum() {
+        const val = document.getElementById('semesterSelect').value;
+        const container = document.getElementById('curriculum-container');
+        container.innerHTML = "";
+        
+        if(!window.core || window.core.length === 0) {
+            container.innerHTML = "<div class='card' style='text-align:center; color:var(--text-sub); padding:20px;'>Bu bölümün dersleri henüz eklenmemiş.<br>Manuel ekleme yapabilirsin.</div>";
+            return;
+        }
+        
+        if(val === "custom") { loadSavedGrades(); return; }
+        if(val === "" || val === null) return;
+
+        const max = parseInt(val);
+        // Etiketleri yine güvenli alıyoruz
+        let labels = (typeof SYSTEM_CONFIG !== 'undefined') ? SYSTEM_CONFIG.semesterLabels[currentLang] : DEFAULT_LABELS[currentLang];
+
+        for(let i=0; i<=max; i++) {
+            if(!window.core[i]) continue;
+            const semDiv = document.createElement('div'); semDiv.className = "card";
+            const semName = labels[i] ? labels[i].split(' (')[0] : "Dönem " + (i+1);
+            
+            let html = `<div class="semester-header"><span class="sem-title">${semName}</span><span class="ano-badge" id="ano-${i}">ANO: --</span></div>`;
+            window.core[i].forEach(c => {
+                html += `<div class="course-item"><div class="c-info"><div class="c-code">${c.c} <span class="c-ects">${c.e}</span></div><span class="c-name">${c.n}</span></div><select class="grade-select core-grade" data-ects="${c.e}" id="grade-${c.c}" onchange="saveGANOState()"><option value="">-</option>${Object.keys(gradeScale).map(g => `<option value="${gradeScale[g]}">${g}</option>`).join('')}</select></div>`;
+            });
+            semDiv.innerHTML = html; container.appendChild(semDiv);
+        }
+        loadSavedGrades();
     }
 
     function toggleTheme() {
@@ -278,7 +335,6 @@
         if(switchLang) currentLang = currentLang === 'tr' ? 'en' : 'tr';
         document.getElementById('langBtn').innerText = currentLang.toUpperCase();
         
-        // Basit çeviriler
         const trans = {
             tr: { tab_calc: "📊 GPA Hesapla", tab_scen: "🚀 Senaryo", period_label: "HESAPLAMA DÖNEMİ", add_course_label: "+ UZMANLAŞMA / EK DERS", btn_manual: "+ Listede Olmayan Ders (Manuel)", btn_calc: "HESAPLA", result_title: "GENEL NOT ORTALAMASI (GPA)", btn_share: "Sonucu Story At", scen_desc: "Mevcut GPA'nı gir, tekrar alacağın veya yeni alacağın dersleri ekle.", lbl_cur_gpa: "MEVCUT GPA", lbl_total_ects: "TOPLAM AKTS", add_scen_course: "DERS EKLE", btn_manual_scen: "+ Manuel Ekle", btn_calc_scen: "HESAPLA", result_scen: "TAHMİNİ YENİ ORTALAMA" },
             en: { tab_calc: "📊 Calculate GPA", tab_scen: "🚀 What-If", period_label: "SEMESTER", add_course_label: "+ ELECTIVES / SPECIALIZATION", btn_manual: "+ Manual Course", btn_calc: "CALCULATE", result_title: "CUMULATIVE GPA", btn_share: "Share to Story", scen_desc: "Enter current GPA, add courses to retake or new ones.", lbl_cur_gpa: "CURRENT GPA", lbl_total_ects: "TOTAL ECTS", add_scen_course: "ADD WHAT-IF COURSE", btn_manual_scen: "+ Manual Add", btn_calc_scen: "CALCULATE WHAT-IF", result_scen: "ESTIMATED NEW GPA" }
@@ -289,64 +345,10 @@
             if(trans[currentLang][key]) el.innerText = trans[currentLang][key];
         });
         
-        // Dönemleri güncelle
         updateSemesterOptions();
         localStorage.setItem('lang', currentLang);
     }
 
-    function updateSemesterOptions() {
-        const select = document.getElementById('semesterSelect');
-        const currentValue = select.value;
-        select.innerHTML = "";
-        
-        // Veriyi doğrudan SYSTEM_CONFIG'den alıyoruz
-        const labels = SYSTEM_CONFIG.semesterLabels[currentLang] || [];
-        
-        labels.forEach((label, index) => {
-            const val = index === labels.length - 1 ? "custom" : index.toString();
-            const option = document.createElement('option');
-            option.value = val; option.text = label; select.appendChild(option);
-        });
-        
-        if(currentValue) select.value = currentValue;
-        // Eğer boşsa veya değer yoksa varsayılanı seçtirt
-        if(!select.value && labels.length > 0) select.selectedIndex = 0;
-    }
-
-    function renderCurriculum() {
-        const val = document.getElementById('semesterSelect').value;
-        const container = document.getElementById('curriculum-container');
-        container.innerHTML = "";
-        
-        if(!window.core || window.core.length === 0) {
-            container.innerHTML = "<div class='card' style='text-align:center; color:var(--text-sub); padding:20px;'>Bu bölümün dersleri henüz eklenmemiş.<br>Manuel ekleme yapabilirsin.</div>";
-            return;
-        }
-        
-        if(val === "custom") { loadSavedGrades(); return; }
-        // Eğer value boşsa (ilk açılışta) çalışmasın
-        if(val === "" || val === null) return;
-
-        const max = parseInt(val);
-        const labels = SYSTEM_CONFIG.semesterLabels[currentLang]; // Dil ayarına göre başlık
-
-        for(let i=0; i<=max; i++) {
-            if(!window.core[i]) continue;
-            const semDiv = document.createElement('div'); semDiv.className = "card";
-            
-            // Dönem adını al
-            const semName = labels[i] ? labels[i].split(' (')[0] : "Dönem " + (i+1);
-            
-            let html = `<div class="semester-header"><span class="sem-title">${semName}</span><span class="ano-badge" id="ano-${i}">ANO: --</span></div>`;
-            window.core[i].forEach(c => {
-                html += `<div class="course-item"><div class="c-info"><div class="c-code">${c.c} <span class="c-ects">${c.e}</span></div><span class="c-name">${c.n}</span></div><select class="grade-select core-grade" data-ects="${c.e}" id="grade-${c.c}" onchange="saveGANOState()"><option value="">-</option>${Object.keys(gradeScale).map(g => `<option value="${gradeScale[g]}">${g}</option>`).join('')}</select></div>`;
-            });
-            semDiv.innerHTML = html; container.appendChild(semDiv);
-        }
-        loadSavedGrades();
-    }
-
-    // Diğer fonksiyonlar aynı
     function switchTab(tab) {
         document.querySelectorAll('.tab-content').forEach(d => d.style.display = 'none');
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -363,14 +365,6 @@
     }
 
     function loadSavedGrades() {
-        // Kayıtlı dönemi geri yükle (Opsiyonel, kullanıcıyı şaşırtmamak için kapalı tutabiliriz)
-        /*
-        const savedSem = localStorage.getItem('sem_' + window.deptId);
-        if(savedSem && document.getElementById('semesterSelect').value !== savedSem) {
-            document.getElementById('semesterSelect').value = savedSem; 
-            renderCurriculum(); return;
-        }
-        */
         const data = JSON.parse(localStorage.getItem('grades_' + window.deptId));
         if(data) { Object.keys(data).forEach(id => { const el = document.getElementById(id); if(el) el.value = data[id]; }); }
     }
