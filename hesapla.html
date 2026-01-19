@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K3F43XM20K"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-K3F43XM20K');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ESTÜ GPA Hesapla</title>
+    
+    <meta name="google-site-verification" content="geFAFpHDdJmimSnFMtUR9NZI0Lvaevapm_uEPHqJ7uc" />
+    
+    <meta name="description" content="ESTÜ (Eskişehir Teknik Üniversitesi) Not Ortalaması Hesaplama Aracı. Bölümüne özel müfredat ile GANO'nu hesapla.">
+    <link rel="icon" href="icon.png" type="image/png">
+    
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="js/data.js"></script>
+
+    <style>
+        :root {
+            /* Varsayılan Renk (EEE Kırmızısı) - JS ile değişecek */
+            --primary: #c62828; 
+            --primary-dark: #8e0000;
+            --primary-grad: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            --accent: #1e293b; 
+            --bg-body: #f1f5f9;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-sub: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --shadow-card: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+            --font-family: 'Outfit', sans-serif;
+        }
+        [data-theme="dark"] {
+            --bg-body: #0f172a; --bg-card: #1e293b; --text-main: #f8fafc; --text-sub: #94a3b8; --border: #334155; --accent: #3b82f6; 
+        }
+        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        body { font-family: var(--font-family); background-color: var(--bg-body); color: var(--text-main); margin: 0; padding-bottom: 80px; transition: 0.3s; }
+        
+        header { background: var(--primary-grad); padding: 1.2rem 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.3); color: white; }
+        .header-content { max-width: 700px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+        .brand-group h1 { margin: 0; font-size: 1.5rem; font-weight: 800; line-height: 1; }
+        .brand-group .badge { display: inline-block; background: rgba(255,255,255,0.2); backdrop-filter: blur(5px); font-size: 0.75rem; padding: 4px 10px; border-radius: 20px; margin-top: 5px; font-weight: 500; }
+        .header-tools { display: flex; gap: 10px; }
+        .tool-btn { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); color: white; width: 40px; height: 40px; border-radius: 12px; cursor: pointer; font-size: 0.9rem; font-weight: 700; display: flex; align-items: center; justify-content: center; font-family: var(--font-family); }
+        
+        .container { max-width: 700px; margin: 0 auto; padding: 25px 20px; }
+        .tabs { background: rgba(255,255,255,0.5); backdrop-filter: blur(10px); padding: 6px; border-radius: 20px; display: flex; margin-bottom: 30px; border: 1px solid var(--border); }
+        .tab-btn { flex: 1; border: none; background: transparent; padding: 12px; border-radius: 16px; color: var(--text-sub); font-weight: 600; cursor: pointer; transition: 0.3s; font-family: inherit; }
+        .tab-btn.active { background: white; color: var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        [data-theme="dark"] .tab-btn.active { background: var(--primary); color: white; }
+        
+        .card { background: var(--bg-card); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 24px; box-shadow: var(--shadow-card); border: 1px solid var(--border); }
+        select, input { width: 100%; padding: 14px 16px; border-radius: 14px; border: 2px solid var(--border); background: var(--bg-body); color: var(--text-main); outline: none; font-family: inherit; font-weight: 500; }
+        select:focus, input:focus { border-color: var(--primary); background: var(--bg-card); }
+        
+        .semester-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; border-bottom: 2px solid var(--border); margin-bottom: 15px; }
+        .sem-title { font-weight: 800; color: var(--primary); font-size: 1.1rem; }
+        .course-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border); }
+        .c-code { font-weight: 800; } 
+        .c-ects { background: rgba(0,0,0,0.05); color: var(--primary); font-size: 0.7rem; padding: 3px 8px; border-radius: 6px; font-weight: 700; margin-left: 5px;}
+        .c-name { display: block; font-size: 0.85rem; color: var(--text-sub); margin-top: 4px; }
+        
+        .btn { width: 100%; padding: 18px; border: none; border-radius: var(--radius-md); font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-family: inherit; }
+        .btn-primary { background: var(--primary-grad); color: white; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2); }
+        .btn-add { background: var(--accent); color: white; height: 100%; border-radius: 12px; }
+        .btn-outline { background: transparent; border: 2px dashed var(--text-sub); color: var(--text-sub); margin-top: 10px; opacity: 0.7; }
+        
+        #result-area { display: none; text-align: center; margin-top: 30px; }
+        .gano-display { font-size: 5rem; font-weight: 800; line-height: 1; letter-spacing: -3px; margin: 20px 0; color: var(--text-main); }
+        
+        /* Grid ve Yardımcılar */
+        .controls-grid { display: grid; grid-template-columns: 1fr 1.5fr auto; gap: 10px; }
+        .input-row { display: flex; gap: 15px; } .input-group { flex: 1; }
+        label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-sub); text-transform: uppercase; margin-bottom: 10px; }
+        
+        /* Story ve Back Button */
+        .back-link { color: white; text-decoration: none; font-size: 1.2rem; margin-right: 15px; opacity: 0.8; }
+        #share-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -999; opacity: 0; pointer-events: none; background: #fff; display: flex; justify-content: center; align-items: center; }
+        .story-card { width: 1080px; height: 1920px; background: #f8fafc; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; position: relative; padding: 100px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-content">
+        <div style="display:flex; align-items:center;">
+            <a href="index.html" class="back-link">←</a>
+            <div class="brand-group">
+                <h1>ESTÜ GPA</h1>
+                <span class="badge" id="dept-badge">Loading...</span>
+            </div>
+        </div>
+        <div class="header-tools">
+            <button onclick="toggleLang()" class="tool-btn" id="langBtn">TR</button>
+            <button onclick="toggleTheme()" class="tool-btn" id="themeBtn">🌙</button>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('calc')" data-lang="tab_calc">📊 GPA Hesapla</button>
+        <button class="tab-btn" onclick="switchTab('scenario')" data-lang="tab_scen">🚀 Senaryo</button>
+    </div>
+
+    <div id="tab-calc" class="tab-content active">
+        <div class="card">
+            <label data-lang="period_label">HESAPLAMA DÖNEMİ</label>
+            <select id="semesterSelect" onchange="renderCurriculum()"></select>
+        </div>
+
+        <div id="curriculum-container"></div>
+
+        <div class="card" style="border-left: 5px solid var(--success);">
+            <label style="color:var(--success)" data-lang="add_course_label">+ UZMANLAŞMA / EK DERS</label>
+            <div class="controls-grid">
+                <select id="specFilter" onchange="filterSpecs()">
+                    <option value="all">Tüm Alanlar</option>
+                    </select>
+                <select id="specSelect"><option value="">Ders Seç...</option></select>
+                <button class="btn btn-add" onclick="addSpecCourse()">EKLE</button>
+            </div>
+            <button class="btn btn-outline" onclick="addManualCourse()" data-lang="btn_manual">+ Listede Olmayan Ders (Manuel)</button>
+        </div>
+
+        <button class="btn btn-primary" onclick="calculateGANO()" data-lang="btn_calc"><span>HESAPLA</span></button>
+        
+        <div id="result-area" class="card">
+            <span style="font-size:0.9rem; font-weight:700; color:var(--text-sub);" data-lang="result_title">GENEL NOT ORTALAMASI (GPA)</span>
+            <div class="gano-display" id="gano-val">0.00</div>
+            <button class="btn" style="background:#10b981; color:white; width:auto; margin:0 auto; border-radius:50px; padding:12px 30px;" onclick="downloadShare()">📸 <span data-lang="btn_share">Sonucu Story At</span></button>
+        </div>
+    </div>
+
+    <div id="tab-scenario" class="tab-content" style="display:none;">
+        <div class="card">
+            <p style="color:var(--text-sub); font-size:0.9rem;" data-lang="scen_desc">Mevcut GPA'nı gir, senaryo oluştur.</p>
+            <div class="input-row">
+                <div class="input-group"><label data-lang="lbl_cur_gpa">MEVCUT GPA</label><input type="number" id="scen-gano" step="0.01"></div>
+                <div class="input-group"><label data-lang="lbl_total_ects">TOPLAM AKTS</label><input type="number" id="scen-ects" step="0.5"></div>
+            </div>
+        </div>
+        <div id="scenario-list"></div>
+        <div class="card">
+             <label data-lang="add_scen_course">DERS EKLE</label>
+             <div class="controls-grid" style="grid-template-columns: 3fr 1fr;">
+                <select id="scen-list-select"></select>
+                <button class="btn btn-add" onclick="addScenFromList()">EKLE</button>
+             </div>
+             <button class="btn btn-outline" onclick="addScenManual()" data-lang="btn_manual_scen">+ Manuel Ekle</button>
+        </div>
+        <button class="btn btn-primary" onclick="calcScenario()" data-lang="btn_calc_scen">HESAPLA</button>
+        <div id="scen-result" class="card" style="display:none; text-align:center; margin-top:30px;">
+             <div class="gano-display" id="scen-new-gano" style="color:var(--success)">0.00</div>
+             <div id="scen-diff" style="font-weight:700;"></div>
+        </div>
+    </div>
+
+    <div class="dev-footer">Designed by <span class="designer-name">Furkan Işık</span></div>
+</div>
+
+<div id="share-container">
+    <div class="story-card" id="share-card-el">
+        <div style="display:flex; align-items:center; gap:30px; margin-bottom:60px;">
+            <div style="width:100px; height:100px; background:var(--primary); border-radius:20px; display:flex; align-items:center; justify-content:center; color:white; font-size:60px; font-weight:800;" id="story-icon">E</div>
+            <div>
+                <h1 style="color:var(--primary); font-size:4rem; margin:0; line-height:1;">ESTÜ GPA</h1>
+                <span id="story-dept" style="font-size:1.5rem; color:#64748b; letter-spacing:2px; font-weight:600;">ENGINEERING</span>
+            </div>
+        </div>
+        <div class="story-circle">
+            <span style="font-size:2rem; color:#64748b; letter-spacing:4px; font-weight:600;">GPA SCORE</span>
+            <strong id="share-gano-val" style="font-size:14rem; color:var(--primary); line-height:1; margin-top:20px; font-weight:800;">0.00</strong>
+        </div>
+        <div style="position:absolute; bottom:80px; font-size:1.2rem; color:#cbd5e1;">Designed by Furkan Işık</div>
+    </div>
+</div>
+
+<script>
+    // --- AKILLI MOTOR BAŞLANGICI ---
+    
+    // 1. URL'den Bölümü Oku (Örn: hesapla.html?bolum=pc)
+    const urlParams = new URLSearchParams(window.location.search);
+    const deptId = urlParams.get('bolum') || 'eee'; // Varsayılan EEE
+    
+    // 2. Data.js'den Veriyi Çek (Hata varsa ana sayfaya at)
+    const currentDept = DEPARTMENTS[deptId];
+    if(!currentDept) {
+        alert("Bölüm bulunamadı, ana sayfaya yönlendiriliyorsunuz.");
+        window.location.href = "index.html";
+    }
+
+    // 3. Verileri Değişkenlere Ata
+    const core = currentDept.core;
+    const specs = currentDept.specs;
+    
+    // 4. Tasarımı Bölüme Göre Boya
+    document.documentElement.style.setProperty('--primary', currentDept.color);
+    document.documentElement.style.setProperty('--primary-dark', currentDept.color); // Basitlik için aynısı veya koyusu
+    document.getElementById('dept-badge').innerText = currentDept.title;
+    document.getElementById('story-icon').innerText = currentDept.icon;
+    document.getElementById('story-dept').innerText = currentDept.title.toUpperCase();
+
+    // --- ESKİ JS MANTIĞI AYNEN DEVAM ---
+    const translations = SYSTEM_CONFIG.semesterLabels; // Data.js'den gelen ayarlar
+    let currentLang = 'tr';
+    const gradeScale = SYSTEM_CONFIG.gradeScale;
+
+    function init() {
+        if(localStorage.getItem('theme') === 'dark') toggleTheme();
+        if(localStorage.getItem('lang') === 'en') { currentLang = 'en'; toggleLang(false); } else { updateSemesterOptions(); }
+        renderCurriculum(); 
+        filterSpecs(); populateScenList();
+    }
+
+    // ... (Buradan sonraki toggleTheme, renderCurriculum vb. fonksiyonlar senin eski kodunla birebir aynıdır, sadece 'core' değişkeni artık dinamiktir) ...
+    
+    // Kısa kesmemek için kritik fonksiyonları tekrar yazıyorum:
+    function renderCurriculum() {
+        const val = document.getElementById('semesterSelect').value;
+        const container = document.getElementById('curriculum-container');
+        container.innerHTML = "";
+        if(!val) return;
+        
+        // --- DİKKAT: Veri yoksa hata vermesin ---
+        if(core.length === 0) {
+            container.innerHTML = "<div class='card' style='text-align:center; color:var(--danger);'>Bu bölümün müfredatı henüz eklenmedi. <br>Manuel ekleme yapabilirsin.</div>";
+            return;
+        }
+
+        const max = parseInt(val);
+        for(let i=0; i<=max; i++) {
+            if(!core[i]) continue; // Dönem verisi yoksa atla
+            const semDiv = document.createElement('div'); semDiv.className = "card";
+            const semName = translations.tr[i].split(' (')[0]; // Basitlik için TR aldım
+            
+            let html = `<div class="semester-header"><span class="sem-title">${semName}</span><span class="ano-badge" id="ano-${i}">ANO: --</span></div>`;
+            core[i].forEach(c => {
+                html += `<div class="course-item"><div class="c-info"><div class="c-code">${c.c} <span class="c-ects">${c.e}</span></div><span class="c-name">${c.n}</span></div><select class="grade-select core-grade" data-ects="${c.e}" id="grade-${c.c}" onchange="saveGANOState()"><option value="">-</option>${Object.keys(gradeScale).map(g => `<option value="${gradeScale[g]}">${g}</option>`).join('')}</select></div>`;
+            });
+            semDiv.innerHTML = html; container.appendChild(semDiv);
+        }
+        // Notları geri yükleme fonksiyonunu çağır (localStorage anahtarı bölüme özel olmalı!)
+        loadSavedGrades();
+    }
+
+    // LocalStorage'ı bölüme özel yapıyoruz ki EEE notları PC notlarıyla karışmasın
+    function saveGANOState() {
+        const selects = document.querySelectorAll('select.grade-select');
+        const data = {};
+        selects.forEach(s => { if(s.value !== "") { if(!s.id) s.id = "s-"+Math.random().toString(36).substr(2,9); data[s.id] = s.value; } });
+        localStorage.setItem('grades_' + deptId, JSON.stringify(data));
+    }
+    function loadSavedGrades() {
+        const data = JSON.parse(localStorage.getItem('grades_' + deptId));
+        if(data) { Object.keys(data).forEach(id => { const el = document.getElementById(id); if(el) el.value = data[id]; }); }
+    }
+
+    // Diğer yardımcı fonksiyonlar (switchTab, toggleTheme vs.) senin eski kodundaki gibi çalışacak.
+    // ...
+
+    // Başlat
+    window.onload = init;
+    
+    // Geri kalan fonksiyonların (toggleLang, calculateGANO, downloadShare vb.) senin eski kodunla AYNIDIR. 
+    // Kopyala-Yapıştır yaparken <script> içindeki tüm fonksiyonları aldığından emin ol.
+    // Sadece 'saveGrades' yerine yukarıdaki 'saveGANOState' mantığını kullan.
+</script>
+</body>
+</html>
