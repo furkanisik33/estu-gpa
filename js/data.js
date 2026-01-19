@@ -23,15 +23,58 @@ const DEPARTMENTS = {
             [ {c:"EEM308",n:"Comm. I",e:7},{c:"EEM336",n:"Microproc. I",e:7},{c:"EEM342",n:"Controls",e:7},{c:"ISG402",n:"İş Sağlığı ve Güvenliği II",e:2},{c:"TAR166",n:"Atatürk İlk. ve İnk. II",e:2} ]
         ],
         specs: [
-            {c:"EEM322",n:"Electronics II",e:5,t:"elektronik"},{c:"EEM403",n:"Optoelectronics",e:5,t:"elektronik"},{c:"EEM449",n:"Embedded Sys.",e:5,t:"elektronik sayisal"},
-            {c:"EEM470",n:"Microwaves",e:5,t:"elektronik haberlesme"},{c:"EEM417",n:"Eng. Comp.",e:5,t:"elektronik guc haberlesme kontrol sayisal sinyal"},
-            {c:"EEM471",n:"Elec. Machinery",e:5,t:"guc"},{c:"EEM473",n:"Power Sys. I",e:5,t:"guc"},{c:"EEM475",n:"Power Elec. I",e:5,t:"guc kontrol"},
-            {c:"EEM409",n:"Random Signals",e:5,t:"haberlesme sinyal"},{c:"EEM467",n:"Digital Comm.",e:5,t:"haberlesme sinyal"},{c:"EEM477",n:"DSP",e:5,t:"haberlesme kontrol sayisal sinyal"},
-            {c:"EEM491",n:"Linear Controls",e:5,t:"kontrol sinyal"},{c:"EEM451",n:"Ind. Control",e:5,t:"kontrol"},{c:"EEM334",n:"Digital Sys. II",e:5,t:"sayisal"},
-            {c:"EEM480",n:"Algorithms",e:5,t:"sayisal"},{c:"EEM489",n:"Microproc. II",e:5,t:"sayisal"}
+            // Kontrol ve Sistem
+            {c:"EEM451",n:"Industrial Control Systems",e:5,t:"kontrol"},
+            {c:"EEM453",n:"Research in Control I",e:5,t:"kontrol"},
+            {c:"EEM454",n:"Research in Control II",e:5,t:"kontrol"},
+            {c:"EEM491",n:"Linear Control Systems",e:5,t:"kontrol"},
+            {c:"EEM494",n:"Control Systems Lab",e:5,t:"kontrol"},
+            {c:"EEM450",n:"Intro to System ID",e:5,t:"kontrol"},
+            {c:"EEM452",n:"Intro to Robotics",e:5,t:"kontrol"},
+
+            // Elektronik
+            {c:"EEM4501",n:"Analog Electronics",e:5,t:"elektronik"},
+            {c:"EEM459",n:"Research in Electronics I",e:5,t:"elektronik"},
+            {c:"EEM460",n:"Research in Electronics II",e:5,t:"elektronik"},
+            {c:"EEM464",n:"System-on-Chip Design",e:5,t:"elektronik"},
+            {c:"EEM403",n:"Optoelectronics & Nanophotonics",e:5,t:"elektronik"},
+
+            // Haberleşme (Telekom)
+            {c:"EEM465",n:"Fund. of Data Comm.",e:5,t:"haberlesme"},
+            {c:"EEM467",n:"Digital Communications",e:5,t:"haberlesme"},
+            {c:"EEM469",n:"Communication Electronics",e:5,t:"haberlesme"},
+            {c:"EEM461",n:"Research in Telecom I",e:5,t:"haberlesme"},
+            {c:"EEM462",n:"Research in Telecom II",e:5,t:"haberlesme"},
+            {c:"EEM470",n:"Microwaves and Antennas",e:5,t:"haberlesme"},
+            {c:"EEM496",n:"Communication Sys. Lab",e:5,t:"haberlesme"},
+            {c:"EEM482",n:"Fund. of Data Networks",e:5,t:"haberlesme"},
+
+            // Güç Sistemleri
+            {c:"EEM471",n:"Electrical Machinery I",e:5,t:"guc"},
+            {c:"EEM473",n:"Power Systems Analysis I",e:5,t:"guc"},
+            {c:"EEM475",n:"Power Electronics I",e:5,t:"guc"},
+            {c:"EEM479",n:"Electrical Install. Sys.",e:5,t:"guc"},
+            {c:"EEM483",n:"Power Systems Analysis II",e:5,t:"guc"},
+            {c:"EEM456",n:"Research in Power Sys II",e:5,t:"guc"},
+            {c:"EEM466",n:"High Voltage Techniques",e:5,t:"guc"},
+            {c:"EEM476",n:"Power Electronics II",e:5,t:"guc"},
+
+            // Sinyal İşleme
+            {c:"EEM409",n:"Random Signals",e:5,t:"sinyal"},
+            {c:"EEM457",n:"Research in Signal Proc. I",e:5,t:"sinyal"},
+            {c:"EEM458",n:"Research in Signal Proc. II",e:5,t:"sinyal"},
+            {c:"EEM463",n:"Intro to Image Processing",e:5,t:"sinyal"},
+            {c:"EEM477",n:"Digital Signal Processing",e:5,t:"sinyal"},
+
+            // Sayısal Sistemler ve Bilgisayar
+            {c:"EEM417",n:"Engineering Computations",e:5,t:"bilgisayar"},
+            {c:"EEM449",n:"Embedded System Design",e:5,t:"sayisal"},
+            {c:"EEM4503",n:"Digital Sys. Des. (FPGA)",e:5,t:"sayisal"},
+            {c:"EEM448",n:"Research in Digital Sys II",e:5,t:"sayisal"},
+            {c:"EEM480",n:"Algorithms and Complexity",e:5,t:"bilgisayar"},
+            {c:"EEM486",n:"Computer Architecture",e:5,t:"bilgisayar"}
         ]
     },
-
     // 2. BİLGİSAYAR MÜHENDİSLİĞİ
     "bilgisayar": {
         title: "Bilgisayar Mühendisliği",
