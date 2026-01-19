@@ -14,8 +14,7 @@
     <title>ESTÜ GPA Hesapla</title>
     
     <meta name="google-site-verification" content="geFAFpHDdJmimSnFMtUR9NZI0Lvaevapm_uEPHqJ7uc" />
-    
-    <meta name="description" content="ESTÜ (Eskişehir Teknik Üniversitesi) Not Ortalaması Hesaplama Aracı. Bölümüne özel müfredat ile GANO'nu hesapla.">
+    <meta name="description" content="ESTÜ Not Ortalaması Hesaplama Aracı.">
     <link rel="icon" href="icon.png" type="image/png">
     
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
@@ -25,7 +24,6 @@
 
     <style>
         :root {
-            /* Varsayılan Renk (EEE Kırmızısı) - JS ile değişecek */
             --primary: #c62828; 
             --primary-dark: #8e0000;
             --primary-grad: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
@@ -81,18 +79,36 @@
         #result-area { display: none; text-align: center; margin-top: 30px; }
         .gano-display { font-size: 5rem; font-weight: 800; line-height: 1; letter-spacing: -3px; margin: 20px 0; color: var(--text-main); }
         
-        /* Grid ve Yardımcılar */
         .controls-grid { display: grid; grid-template-columns: 1fr 1.5fr auto; gap: 10px; }
         .input-row { display: flex; gap: 15px; } .input-group { flex: 1; }
         label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-sub); text-transform: uppercase; margin-bottom: 10px; }
         
-        /* Story ve Back Button */
+        /* Back Button */
         .back-link { color: white; text-decoration: none; font-size: 1.2rem; margin-right: 15px; opacity: 0.8; }
+
+        /* Footer Düzenlemesi */
+        .dev-footer {
+            margin-top: 50px;
+            padding-bottom: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-sub);
+            opacity: 0.8;
+        }
+
+        #error-box { display: none; background: #fee2e2; color: #991b1b; padding: 20px; border-radius: 15px; text-align: center; font-weight: bold; margin: 20px; border: 2px solid #ef4444; }
+        
         #share-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -999; opacity: 0; pointer-events: none; background: #fff; display: flex; justify-content: center; align-items: center; }
         .story-card { width: 1080px; height: 1920px; background: #f8fafc; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; position: relative; padding: 100px; }
+        .story-circle { width: 650px; height: 650px; border-radius: 50%; background: white; box-shadow: 0 50px 120px rgba(0,0,0,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; border: 10px solid var(--primary); margin: 80px 0; }
     </style>
 </head>
 <body>
+
+<div id="error-box">
+    ⚠️ Veritabanı dosyası (js/data.js) yüklenemedi!<br>
+    Lütfen dosya yolunu kontrol et.
+</div>
 
 <header>
     <div class="header-content">
@@ -110,7 +126,7 @@
     </div>
 </header>
 
-<div class="container">
+<div class="container" id="main-container" style="display:none;">
     <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('calc')" data-lang="tab_calc">📊 GPA Hesapla</button>
         <button class="tab-btn" onclick="switchTab('scenario')" data-lang="tab_scen">🚀 Senaryo</button>
@@ -129,7 +145,7 @@
             <div class="controls-grid">
                 <select id="specFilter" onchange="filterSpecs()">
                     <option value="all">Tüm Alanlar</option>
-                    </select>
+                </select>
                 <select id="specSelect"><option value="">Ders Seç...</option></select>
                 <button class="btn btn-add" onclick="addSpecCourse()">EKLE</button>
             </div>
@@ -190,94 +206,256 @@
 </div>
 
 <script>
-    // --- AKILLI MOTOR BAŞLANGICI ---
-    
-    // 1. URL'den Bölümü Oku (Örn: hesapla.html?bolum=pc)
-    const urlParams = new URLSearchParams(window.location.search);
-    const deptId = urlParams.get('bolum') || 'eee'; // Varsayılan EEE
-    
-    // 2. Data.js'den Veriyi Çek (Hata varsa ana sayfaya at)
-    const currentDept = DEPARTMENTS[deptId];
-    if(!currentDept) {
-        alert("Bölüm bulunamadı, ana sayfaya yönlendiriliyorsunuz.");
-        window.location.href = "index.html";
+    // --- AKILLI MOTOR V3 (Düzeltilmiş) ---
+
+    // 1. Veritabanı Kontrolü
+    if (typeof DEPARTMENTS === 'undefined' || typeof SYSTEM_CONFIG === 'undefined') {
+        document.getElementById('error-box').style.display = 'block';
+        document.getElementById('dept-badge').innerText = "HATA";
+    } else {
+        document.getElementById('main-container').style.display = 'block';
+        startEngine();
     }
 
-    // 3. Verileri Değişkenlere Ata
-    const core = currentDept.core;
-    const specs = currentDept.specs;
-    
-    // 4. Tasarımı Bölüme Göre Boya
-    document.documentElement.style.setProperty('--primary', currentDept.color);
-    document.documentElement.style.setProperty('--primary-dark', currentDept.color); // Basitlik için aynısı veya koyusu
-    document.getElementById('dept-badge').innerText = currentDept.title;
-    document.getElementById('story-icon').innerText = currentDept.icon;
-    document.getElementById('story-dept').innerText = currentDept.title.toUpperCase();
+    function startEngine() {
+        // URL'den Bölümü Oku
+        const urlParams = new URLSearchParams(window.location.search);
+        const deptId = urlParams.get('bolum') || 'eee';
 
-    // --- ESKİ JS MANTIĞI AYNEN DEVAM ---
-    const translations = SYSTEM_CONFIG.semesterLabels; // Data.js'den gelen ayarlar
+        const currentDept = DEPARTMENTS[deptId];
+        if(!currentDept) {
+            alert("Bölüm bulunamadı, ana sayfaya yönlendiriliyorsunuz.");
+            window.location.href = "index.html";
+            return;
+        }
+
+        // Verileri Global Yap
+        window.core = currentDept.core; 
+        window.specs = currentDept.specs;
+        window.deptId = deptId;
+
+        // Renkler
+        document.documentElement.style.setProperty('--primary', currentDept.color);
+        document.documentElement.style.setProperty('--primary-dark', currentDept.color);
+        document.getElementById('dept-badge').innerText = currentDept.title;
+        document.getElementById('story-icon').innerText = currentDept.icon;
+        document.getElementById('story-dept').innerText = currentDept.title.toUpperCase();
+
+        // MOTORU BAŞLAT
+        init();
+    }
+
     let currentLang = 'tr';
-    const gradeScale = SYSTEM_CONFIG.gradeScale;
+    // Hata buradaydı: Veriyi direkt SYSTEM_CONFIG'den okuyoruz
+    const gradeScale = (typeof SYSTEM_CONFIG !== 'undefined') ? SYSTEM_CONFIG.gradeScale : {"AA":4.0, "FF":0};
 
     function init() {
         if(localStorage.getItem('theme') === 'dark') toggleTheme();
-        if(localStorage.getItem('lang') === 'en') { currentLang = 'en'; toggleLang(false); } else { updateSemesterOptions(); }
+        if(localStorage.getItem('lang') === 'en') { currentLang = 'en'; toggleLang(false); } 
+        
+        // Önemli düzeltme: Önce dönemleri yükle, sonra müfredatı çiz
+        updateSemesterOptions();
         renderCurriculum(); 
-        filterSpecs(); populateScenList();
+        filterSpecs(); 
+        populateScenList();
     }
 
-    // ... (Buradan sonraki toggleTheme, renderCurriculum vb. fonksiyonlar senin eski kodunla birebir aynıdır, sadece 'core' değişkeni artık dinamiktir) ...
-    
-    // Kısa kesmemek için kritik fonksiyonları tekrar yazıyorum:
+    function toggleTheme() {
+        const body = document.body;
+        const btn = document.getElementById('themeBtn');
+        if(body.getAttribute('data-theme') === 'dark') {
+            body.removeAttribute('data-theme');
+            btn.innerHTML = '🌙';
+            localStorage.setItem('theme', 'light');
+        } else {
+            body.setAttribute('data-theme', 'dark');
+            btn.innerHTML = '☀️';
+            localStorage.setItem('theme', 'dark');
+        }
+    }
+
+    function toggleLang(switchLang = true) {
+        if(switchLang) currentLang = currentLang === 'tr' ? 'en' : 'tr';
+        document.getElementById('langBtn').innerText = currentLang.toUpperCase();
+        
+        // Basit çeviriler
+        const trans = {
+            tr: { tab_calc: "📊 GPA Hesapla", tab_scen: "🚀 Senaryo", period_label: "HESAPLAMA DÖNEMİ", add_course_label: "+ UZMANLAŞMA / EK DERS", btn_manual: "+ Listede Olmayan Ders (Manuel)", btn_calc: "HESAPLA", result_title: "GENEL NOT ORTALAMASI (GPA)", btn_share: "Sonucu Story At", scen_desc: "Mevcut GPA'nı gir, tekrar alacağın veya yeni alacağın dersleri ekle.", lbl_cur_gpa: "MEVCUT GPA", lbl_total_ects: "TOPLAM AKTS", add_scen_course: "DERS EKLE", btn_manual_scen: "+ Manuel Ekle", btn_calc_scen: "HESAPLA", result_scen: "TAHMİNİ YENİ ORTALAMA" },
+            en: { tab_calc: "📊 Calculate GPA", tab_scen: "🚀 What-If", period_label: "SEMESTER", add_course_label: "+ ELECTIVES / SPECIALIZATION", btn_manual: "+ Manual Course", btn_calc: "CALCULATE", result_title: "CUMULATIVE GPA", btn_share: "Share to Story", scen_desc: "Enter current GPA, add courses to retake or new ones.", lbl_cur_gpa: "CURRENT GPA", lbl_total_ects: "TOTAL ECTS", add_scen_course: "ADD WHAT-IF COURSE", btn_manual_scen: "+ Manual Add", btn_calc_scen: "CALCULATE WHAT-IF", result_scen: "ESTIMATED NEW GPA" }
+        };
+
+        document.querySelectorAll('[data-lang]').forEach(el => {
+            const key = el.getAttribute('data-lang');
+            if(trans[currentLang][key]) el.innerText = trans[currentLang][key];
+        });
+        
+        // Dönemleri güncelle
+        updateSemesterOptions();
+        localStorage.setItem('lang', currentLang);
+    }
+
+    function updateSemesterOptions() {
+        const select = document.getElementById('semesterSelect');
+        const currentValue = select.value;
+        select.innerHTML = "";
+        
+        // Veriyi doğrudan SYSTEM_CONFIG'den alıyoruz
+        const labels = SYSTEM_CONFIG.semesterLabels[currentLang] || [];
+        
+        labels.forEach((label, index) => {
+            const val = index === labels.length - 1 ? "custom" : index.toString();
+            const option = document.createElement('option');
+            option.value = val; option.text = label; select.appendChild(option);
+        });
+        
+        if(currentValue) select.value = currentValue;
+        // Eğer boşsa veya değer yoksa varsayılanı seçtirt
+        if(!select.value && labels.length > 0) select.selectedIndex = 0;
+    }
+
     function renderCurriculum() {
         const val = document.getElementById('semesterSelect').value;
         const container = document.getElementById('curriculum-container');
         container.innerHTML = "";
-        if(!val) return;
         
-        // --- DİKKAT: Veri yoksa hata vermesin ---
-        if(core.length === 0) {
-            container.innerHTML = "<div class='card' style='text-align:center; color:var(--danger);'>Bu bölümün müfredatı henüz eklenmedi. <br>Manuel ekleme yapabilirsin.</div>";
+        if(!window.core || window.core.length === 0) {
+            container.innerHTML = "<div class='card' style='text-align:center; color:var(--text-sub); padding:20px;'>Bu bölümün dersleri henüz eklenmemiş.<br>Manuel ekleme yapabilirsin.</div>";
             return;
         }
+        
+        if(val === "custom") { loadSavedGrades(); return; }
+        // Eğer value boşsa (ilk açılışta) çalışmasın
+        if(val === "" || val === null) return;
 
         const max = parseInt(val);
+        const labels = SYSTEM_CONFIG.semesterLabels[currentLang]; // Dil ayarına göre başlık
+
         for(let i=0; i<=max; i++) {
-            if(!core[i]) continue; // Dönem verisi yoksa atla
+            if(!window.core[i]) continue;
             const semDiv = document.createElement('div'); semDiv.className = "card";
-            const semName = translations.tr[i].split(' (')[0]; // Basitlik için TR aldım
+            
+            // Dönem adını al
+            const semName = labels[i] ? labels[i].split(' (')[0] : "Dönem " + (i+1);
             
             let html = `<div class="semester-header"><span class="sem-title">${semName}</span><span class="ano-badge" id="ano-${i}">ANO: --</span></div>`;
-            core[i].forEach(c => {
+            window.core[i].forEach(c => {
                 html += `<div class="course-item"><div class="c-info"><div class="c-code">${c.c} <span class="c-ects">${c.e}</span></div><span class="c-name">${c.n}</span></div><select class="grade-select core-grade" data-ects="${c.e}" id="grade-${c.c}" onchange="saveGANOState()"><option value="">-</option>${Object.keys(gradeScale).map(g => `<option value="${gradeScale[g]}">${g}</option>`).join('')}</select></div>`;
             });
             semDiv.innerHTML = html; container.appendChild(semDiv);
         }
-        // Notları geri yükleme fonksiyonunu çağır (localStorage anahtarı bölüme özel olmalı!)
         loadSavedGrades();
     }
 
-    // LocalStorage'ı bölüme özel yapıyoruz ki EEE notları PC notlarıyla karışmasın
+    // Diğer fonksiyonlar aynı
+    function switchTab(tab) {
+        document.querySelectorAll('.tab-content').forEach(d => d.style.display = 'none');
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('tab-'+tab).style.display = 'block';
+        document.querySelector(`.tab-btn[onclick="switchTab('${tab}')"]`).classList.add('active');
+    }
+
     function saveGANOState() {
         const selects = document.querySelectorAll('select.grade-select');
         const data = {};
         selects.forEach(s => { if(s.value !== "") { if(!s.id) s.id = "s-"+Math.random().toString(36).substr(2,9); data[s.id] = s.value; } });
-        localStorage.setItem('grades_' + deptId, JSON.stringify(data));
+        localStorage.setItem('grades_' + window.deptId, JSON.stringify(data));
+        localStorage.setItem('sem_' + window.deptId, document.getElementById('semesterSelect').value);
     }
+
     function loadSavedGrades() {
-        const data = JSON.parse(localStorage.getItem('grades_' + deptId));
+        // Kayıtlı dönemi geri yükle (Opsiyonel, kullanıcıyı şaşırtmamak için kapalı tutabiliriz)
+        /*
+        const savedSem = localStorage.getItem('sem_' + window.deptId);
+        if(savedSem && document.getElementById('semesterSelect').value !== savedSem) {
+            document.getElementById('semesterSelect').value = savedSem; 
+            renderCurriculum(); return;
+        }
+        */
+        const data = JSON.parse(localStorage.getItem('grades_' + window.deptId));
         if(data) { Object.keys(data).forEach(id => { const el = document.getElementById(id); if(el) el.value = data[id]; }); }
     }
 
-    // Diğer yardımcı fonksiyonlar (switchTab, toggleTheme vs.) senin eski kodundaki gibi çalışacak.
-    // ...
+    function filterSpecs() {
+        const type = document.getElementById('specFilter').value;
+        const sel = document.getElementById('specSelect');
+        sel.innerHTML = '<option value="">...</option>';
+        if(!window.specs) return;
+        let list = type === 'all' ? window.specs : window.specs.filter(s => s.t && s.t.includes(type));
+        list.sort((a,b) => a.c.localeCompare(b.c));
+        list.forEach(s => { let opt = document.createElement('option'); opt.value = JSON.stringify(s); opt.text = `${s.c} - ${s.n}`; sel.appendChild(opt); });
+    }
 
-    // Başlat
-    window.onload = init;
-    
-    // Geri kalan fonksiyonların (toggleLang, calculateGANO, downloadShare vb.) senin eski kodunla AYNIDIR. 
-    // Kopyala-Yapıştır yaparken <script> içindeki tüm fonksiyonları aldığından emin ol.
-    // Sadece 'saveGrades' yerine yukarıdaki 'saveGANOState' mantığını kullan.
+    function addSpecCourse() { const val = document.getElementById('specSelect').value; if(!val) return; const c = JSON.parse(val); addCustomRow(c.c, c.n, c.e); }
+    function addManualCourse() { addCustomRow("MANUEL", "Özel Ders", 5, true); }
+
+    function addCustomRow(code, name, ects, isManual=false) {
+        let container = document.getElementById('curriculum-container');
+        let extraCard = document.getElementById('extra-courses-card');
+        if(!extraCard) { extraCard = document.createElement('div'); extraCard.id = 'extra-courses-card'; extraCard.className = 'card'; extraCard.innerHTML = `<div class="semester-header"><span class="sem-title" style="color:var(--success)">EK DERSLER</span></div><div id="extra-list"></div>`; container.appendChild(extraCard); }
+        const list = extraCard.querySelector('#extra-list'); const div = document.createElement('div'); div.className = "course-item";
+        const ectsDisplay = isManual ? `<input type="number" class="manual-ects" value="5" style="width:50px; padding:5px; border-radius:8px;">` : `<span class="c-ects">${ects}</span>`;
+        const codeDisplay = isManual ? `<input type="text" placeholder="Kod" style="width:80px; padding:5px; border-radius:8px;">` : code;
+        div.innerHTML = `<div class="c-info"><div class="c-code">${codeDisplay} ${!isManual ? ectsDisplay : ''}</div>${isManual ? ectsDisplay : ''}<span class="c-name">${name}</span></div><div style="display:flex; flex-direction:column; align-items:end; gap:5px;"><select class="grade-select ${isManual?'manual-grade':'spec-grade'}" ${!isManual ? `data-ects="${ects}"` : ''} onchange="saveGANOState()"><option value="">-</option>${Object.keys(gradeScale).map(g => `<option value="${gradeScale[g]}">${g}</option>`).join('')}</select><button onclick="this.closest('.course-item').remove(); saveGANOState();" style="border:none; background:none; color:var(--danger); font-size:0.8rem; cursor:pointer;">Sil</button></div>`;
+        list.appendChild(div);
+    }
+
+    function calculateGANO() {
+        let totalP = 0, totalE = 0;
+        document.querySelectorAll('#curriculum-container .card').forEach((card) => {
+            let semP = 0, semE = 0;
+            card.querySelectorAll('select.grade-select').forEach(sel => {
+                if(sel.value === "") return;
+                let ects = sel.classList.contains('manual-grade') ? (parseFloat(sel.closest('.course-item').querySelector('.manual-ects').value)||0) : parseFloat(sel.getAttribute('data-ects'));
+                if(ects > 0) { semP += parseFloat(sel.value) * ects; semE += ects; }
+            });
+            const anoBadge = card.querySelector('.ano-badge');
+            if(anoBadge && semE > 0) { const ano = semP/semE; anoBadge.innerText = `ANO: ${ano.toFixed(2)}`; anoBadge.style.color = ano>=3?"var(--success)":(ano>=2?"var(--warning)":"var(--danger)"); }
+            totalP += semP; totalE += semE;
+        });
+        const resArea = document.getElementById('result-area'); const ganoDisplay = document.getElementById('gano-val');
+        if(totalE === 0) { alert("Lütfen not giriniz."); return; }
+        const gano = totalP / totalE; ganoDisplay.innerText = gano.toFixed(2); ganoDisplay.style.color = gano>=3?"var(--success)":(gano>=2?"var(--warning)":"var(--danger)");
+        resArea.style.display = 'block'; saveGANOState(); resArea.scrollIntoView({behavior:'smooth'});
+    }
+
+    function downloadShare() {
+        const gano = document.getElementById('gano-val').innerText; document.getElementById('share-gano-val').innerText = gano;
+        const container = document.getElementById('share-container'); container.style.opacity = "1"; const cardEl = document.getElementById('share-card-el');
+        html2canvas(cardEl, { scale: 1, backgroundColor: "#f8fafc" }).then(canvas => {
+            container.style.opacity = "0"; const link = document.createElement('a'); link.download = `ESTU_GPA_${gano}.png`; link.href = canvas.toDataURL("image/png"); link.click();
+        }).catch(err => { container.style.opacity = "0"; });
+    }
+
+    function populateScenList() {
+        const sel = document.getElementById('scen-list-select');
+        let all = [];
+        if(window.core) window.core.forEach(sem => sem.forEach(c => all.push(c)));
+        if(window.specs) window.specs.forEach(s => all.push(s));
+        all.sort((a,b) => a.c.localeCompare(b.c));
+        all.forEach(c => { let opt = document.createElement('option'); opt.value = JSON.stringify(c); opt.text = `${c.c} - ${c.n}`; sel.appendChild(opt); });
+    }
+    function addScenFromList() { const val = document.getElementById('scen-list-select').value; if(!val) return; const c = JSON.parse(val); addScenRow(c.c, c.n, c.e, false); }
+    function addScenManual() { addScenRow("", "Manuel Ders", 5, true); }
+    function addScenRow(code, name, ects, isManual) {
+        const div = document.createElement('div'); div.className = "card"; div.style.padding = "15px"; div.style.borderLeft = "4px solid var(--warning)";
+        let opts = Object.keys(gradeScale).map(g => `<option value="${gradeScale[g]}">${g}</option>`).join('');
+        let ectsDisplay = isManual ? `<input type="number" class="s-ects" value="${ects}" style="width:60px; padding:6px; border-radius:8px; border:1px solid var(--border); background:var(--bg-body); font-weight:700; text-align:center;">` : `<span style="background:var(--bg-body); padding:2px 8px; border-radius:6px; font-size:0.8rem;">${ects} AKTS</span><input type="hidden" class="s-ects" value="${ects}">`;
+        div.innerHTML = `<div style="display:flex; justify-content:space-between; margin-bottom:10px; align-items:center;"><span style="font-weight:700;">${isManual ? 'Manuel' : code} <small style="font-weight:400; color:var(--text-sub)">${name}</small></span>${ectsDisplay}</div><div style="display:grid; grid-template-columns: 1fr auto 1fr; gap:10px; align-items:center;"><div><select class="s-old"><option value="">NA</option>${opts}</select></div><div style="color:var(--text-sub);">➔</div><div><select class="s-new"><option value="">?</option>${opts}</select></div></div><button onclick="this.closest('.card').remove()" style="width:100%; margin-top:10px; background:none; border:1px dashed var(--danger); color:var(--danger); padding:8px; border-radius:8px; cursor:pointer;">Kaldır</button>`;
+        document.getElementById('scenario-list').appendChild(div);
+    }
+    function calcScenario() {
+        const curGano = parseFloat(document.getElementById('scen-gano').value); const curEcts = parseFloat(document.getElementById('scen-ects').value);
+        if(!curGano || !curEcts) { alert("Mevcut verileri giriniz."); return; }
+        let points = curGano * curEcts; let totalEcts = curEcts;
+        document.querySelectorAll('#scenario-list .card').forEach(row => {
+            const ects = parseFloat(row.querySelector('.s-ects').value); const oldG = row.querySelector('.s-old').value; const newG = row.querySelector('.s-new').value;
+            if(newG === "") return;
+            if(oldG === "") { points += (parseFloat(newG) * ects); totalEcts += ects; } else { points = points - (parseFloat(oldG)*ects) + (parseFloat(newG)*ects); }
+        });
+        const newGano = points / totalEcts; document.getElementById('scen-result').style.display = 'block'; document.getElementById('scen-new-gano').innerText = newGano.toFixed(2);
+        const diff = newGano - curGano; document.getElementById('scen-diff').innerHTML = `<span style="color:${diff>0?'var(--success)':'var(--danger)'}">${diff>0?'+':''}${diff.toFixed(2)}</span> Değişim`;
+        document.getElementById('scen-result').scrollIntoView({behavior:'smooth'});
+    }
 </script>
 </body>
 </html>
