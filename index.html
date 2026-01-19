@@ -14,12 +14,22 @@
     <title>ESTÜ GPA | Mühendislik Not Merkezi</title>
     
     <meta name="google-site-verification" content="geFAFpHDdJmimSnFMtUR9NZI0Lvaevapm_uEPHqJ7uc" />
+    
     <meta name="description" content="Eskişehir Teknik Üniversitesi (ESTÜ) tüm mühendislik bölümleri için gelişmiş GPA ve GANO hesaplama platformu. Bölümünü seç, hesapla.">
+    
+    <meta property="og:title" content="ESTÜ GPA | Mühendislik Not Merkezi" />
+    <meta property="og:description" content="Tüm bölümler için en güncel GANO hesaplama ve senaryo aracı. Hemen hesapla!" />
+    <meta property="og:image" content="https://furkanisik33.github.io/estu-gpa/icon.png" />
+    <meta property="og:url" content="https://furkanisik33.github.io/estu-gpa/" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image">
+
     <link rel="icon" href="icon.png" type="image/png">
+    <link rel="manifest" href="manifest.json">
     
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     
-    <script src="js/data.js?v=20260120"></script>
+    <script src="js/data.js?v=final_v1"></script>
 
     <style>
         :root { --primary: #c62828; --bg: #f8fafc; --text: #0f172a; --card-bg: #ffffff; }
@@ -52,7 +62,7 @@
         .contact-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 15px; padding: 10px 20px; background: #fff; border: 1px solid #e2e8f0; border-radius: 50px; text-decoration: none; color: #475569; font-weight: 600; font-size: 0.85rem; transition: 0.2s; cursor: pointer; }
         .contact-btn:hover { background: #f1f5f9; color: var(--primary); border-color: var(--primary); }
 
-        /* MODAL STİLLERİ (HESAPLA.HTML İLE AYNI) */
+        /* MODAL STİLLERİ */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .modal-content { background: #fff; padding: 30px; border-radius: 24px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.2); position: relative; }
         .modal-close { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: #64748b; }
@@ -105,7 +115,6 @@
     <script>
         const container = document.getElementById('dept-list');
         
-        // MODAL FONKSİYONLARI
         function openModal() { document.getElementById('contactModal').style.display = 'flex'; }
         function closeModal(e) { 
             if(e.target.id === 'contactModal' || e.target.classList.contains('modal-close')) 
@@ -142,9 +151,7 @@
             renderDepts(val);
         }
 
-        // Veritabanının yüklenmesini bekle
         window.addEventListener('load', function() {
-            // data.js gecikirse diye kontrol
             if (typeof DEPARTMENTS === 'undefined') {
                 setTimeout(function() { renderDepts(); }, 500);
             } else {
