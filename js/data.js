@@ -42,17 +42,100 @@ const DEPARTMENTS = {
         ]
     },
 
-    // 2. BİLGİSAYAR MÜHENDİSLİĞİ
+  // 2. BİLGİSAYAR MÜHENDİSLİĞİ
     "bilgisayar": {
         title: "Bilgisayar Mühendisliği",
         icon: "💻",
-        color: "#1e293b",
+        color: "#1e293b", // Koyu lacivert/gri tonu
         core: [
-            // Burayı dolduracağız...
+            // 1. YARIYIL
+            [ 
+                {c:"BİM103",n:"Computer Programming I",e:5.0},
+                {c:"BİM105",n:"Intro to Computer Eng.",e:2.0},
+                {c:"FIZ105",n:"Physics I",e:6.0},
+                {c:"FIZ107",n:"Physics Lab I",e:1.5},
+                {c:"KIM1005",n:"General Chemistry",e:6.0},
+                {c:"MAT1011",n:"Calculus I",e:7.5},
+                {c:"TUR125",n:"Türk Dili I",e:2.0}
+            ],
+            // 2. YARIYIL
+            [ 
+                {c:"BİM108",n:"Computer Programming II",e:6.0},
+                {c:"BİM122",n:"Discrete Comp. Struct.",e:5.0},
+                {c:"FIZ106",n:"Physics II",e:6.0},
+                {c:"FIZ108",n:"Physics Lab II",e:1.5},
+                {c:"MAT1012",n:"Calculus II",e:7.5},
+                {c:"TUR126",n:"Türk Dili II",e:2.0}
+            ],
+            // 3. YARIYIL
+            [ 
+                {c:"BİM2005",n:"Computer Programming III",e:6.0},
+                {c:"BİM203",n:"Logic Design",e:6.0},
+                {c:"BİM209",n:"Software Design & Dev.",e:6.0},
+                {c:"BİM213",n:"Data Structures & Algo.",e:5.5},
+                {c:"MAT2021",n:"Linear Algebra",e:4.5},
+                {c:"TAR165",n:"Atatürk İlk. ve İnk. I",e:2.0}
+            ],
+            // 4. YARIYIL
+            [ 
+                {c:"BİM2006",n:"Computer Programming IV",e:5.5},
+                {c:"BİM2008",n:"Formal Lang. & Automata",e:4.5},
+                {c:"BİM216",n:"Database Mgmt. Sys.",e:5.0},
+                {c:"BİM222",n:"Internet Programming",e:4.5},
+                {c:"IST252",n:"Probability & Statistics",e:4.0},
+                {c:"MAT2004",n:"Diff. Eq. & Num. Meth.",e:4.5},
+                {c:"TAR166",n:"Atatürk İlk. ve İnk. II",e:2.0}
+            ],
+            // 5. YARIYIL
+            [ 
+                {c:"BİM3005",n:"Fund. of Software Eng.",e:4.5},
+                {c:"BİM3007",n:"Math Tools for Comp. Eng.",e:6.0},
+                {c:"BİM303",n:"Microcomputers",e:7.0},
+                {c:"BİM305",n:"Computer Organization",e:5.0}
+            ],
+            // 6. YARIYIL
+            [ 
+                {c:"BİM218",n:"Operating Systems",e:4.5},
+                {c:"BİM304",n:"Comp. Algorithm Design",e:6.0},
+                {c:"BİM308",n:"Web Server Programming",e:4.5},
+                {c:"BİM324",n:"Computer Networks",e:4.5},
+                {c:"BIMSJ302",n:"Internship I",e:2.5}
+            ],
+            // 7. YARIYIL
+            [ 
+                {c:"BİM437",n:"Comp. Eng. Design",e:4.0},
+                {c:"BIMSJ401",n:"Internship II",e:2.5},
+                {c:"ISG401",n:"İş Sağlığı ve Güvenliği I",e:2.0}
+            ],
+            // 8. YARIYIL
+            [ 
+                {c:"BİM444",n:"Comp. Eng. Applications",e:7.0},
+                {c:"ISG402",n:"İş Sağlığı ve Güvenliği II",e:2.0}
+            ]
         ],
-        specs: []
+        specs: [
+            // MESLEKİ SEÇMELİ DERSLER
+            {c:"BİM309",n:"Artificial Intelligence",e:4.5,t:"yapay_zeka"},
+            {c:"BİM453",n:"Intro to Machine Learning",e:4.5,t:"yapay_zeka"},
+            {c:"BİM454",n:"Prog. Language Concepts",e:4.5,t:"yazilim"},
+            {c:"BİM459",n:"AI in Healthcare",e:4.5,t:"yapay_zeka"},
+            {c:"BİM461",n:"Intro to Cloud Computing",e:4.5,t:"sistem"},
+            {c:"BİM463",n:"Intro to NLP",e:4.5,t:"yapay_zeka"},
+            {c:"BİM472",n:"Image Processing",e:4.5,t:"goruntu"},
+            {c:"BİM485",n:"Research in CS I",e:4.5,t:"arastirma"},
+            {c:"BİM493",n:"Mobile Programming I",e:4.5,t:"yazilim"},
+            {c:"BİM447",n:"Intro to Deep Learning",e:4.5,t:"yapay_zeka"},
+            {c:"BİM449",n:"Intro to Game Prog.",e:4.5,t:"oyun"},
+            {c:"BİM466",n:"Fuzzy Logic",e:4.5,t:"yapay_zeka"},
+            {c:"BİM474",n:"Intro to Cryptography",e:4.5,t:"guvenlik"},
+            {c:"BİM476",n:"Data Acq. and Processing",e:4.5,t:"veri"},
+            {c:"BİM486",n:"Research in CS II",e:4.5,t:"arastirma"},
+            {c:"BİM490",n:"Intro to Info. Retrieval",e:4.5,t:"veri"},
+            {c:"BİM492",n:"Design Patterns",e:4.5,t:"yazilim"},
+            {c:"BİM496",n:"Computer Vision",e:4.5,t:"goruntu"}
+        ]
     },
-
+   
     // 3. ENDÜSTRİ MÜHENDİSLİĞİ
     "endustri": {
         title: "Endüstri Mühendisliği",
