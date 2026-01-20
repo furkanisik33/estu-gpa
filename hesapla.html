@@ -70,37 +70,16 @@
         [data-theme="dark"] .tab-btn.active { background: var(--primary); color: white; }
         
         .card { background: var(--bg-card); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 24px; box-shadow: var(--shadow-card); border: 1px solid var(--border); }
-        
-        /* --- ESTETİK DÜZELTME: Select ve Input --- */
         select, input { width: 100%; padding: 14px 16px; border-radius: 14px; border: 2px solid var(--border); background: var(--bg-body); color: var(--text-main); outline: none; font-family: inherit; font-weight: 500; }
         
-        /* Not Seçim Kutusu Özelleştirmesi */
-        select.grade-select {
-            width: 90px !important; /* Sabit küçük genişlik */
-            min-width: 90px;
-            padding: 10px 5px !important;
-            text-align: center;
-            text-align-last: center; /* Mobilde ortalama */
-            font-weight: 800;
-            height: 45px;
-            cursor: pointer;
-            background-color: var(--bg-body);
-        }
+        /* Not Kutusu */
+        select.grade-select { width: 90px !important; min-width: 90px; padding: 10px 5px !important; text-align: center; text-align-last: center; font-weight: 800; height: 45px; cursor: pointer; background-color: var(--bg-body); }
         
         .semester-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; border-bottom: 2px solid var(--border); margin-bottom: 15px; }
         .sem-title { font-weight: 800; color: var(--primary); font-size: 1.1rem; }
         
-        /* --- ESTETİK DÜZELTME: Liste Elemanları --- */
-        .course-item { 
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; 
-            padding: 12px 0; 
-            border-bottom: 1px solid var(--border); 
-            gap: 15px; /* Yazı ve kutu arası boşluk */
-        }
-        .c-info { flex: 1; /* Yazı alanı genişlesin */ }
-        
+        .course-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border); gap: 15px; }
+        .c-info { flex: 1; }
         .c-code { font-weight: 800; } 
         .c-ects { background: rgba(0,0,0,0.05); color: var(--primary); font-size: 0.7rem; padding: 3px 8px; border-radius: 6px; font-weight: 700; margin-left: 5px;}
         .c-name { display: block; font-size: 0.85rem; color: var(--text-sub); margin-top: 4px; line-height: 1.3; }
@@ -117,7 +96,6 @@
         label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-sub); text-transform: uppercase; margin-bottom: 10px; }
         
         .back-link { color: white; text-decoration: none; font-size: 1.2rem; margin-right: 15px; opacity: 0.8; }
-
         .dev-footer { margin-top: 50px; padding-bottom: 20px; text-align: center; font-size: 0.9rem; color: var(--text-sub); opacity: 0.8; }
         .dev-footer strong { color: var(--primary); cursor: pointer; }
 
@@ -126,11 +104,11 @@
         
         .info-box { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--success); color: #065f46; text-align: center; font-weight: 600; }
 
+        /* Arama Motoru */
         .search-container-local { position: relative; margin-bottom: 15px; }
         .search-container-local input { width: 100%; padding: 15px; padding-left: 40px; border-radius: 12px; border: 2px solid var(--border); transition: 0.3s; }
         .search-container-local input:focus { border-color: var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
         .search-icon-local { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); opacity: 0.5; }
-        
         .search-results-list { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; max-height: 250px; overflow-y: auto; z-index: 50; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-top: 5px; }
         .search-result-item { padding: 12px 15px; border-bottom: 1px solid var(--border); cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
         .search-result-item:hover { background: var(--bg-body); }
@@ -138,14 +116,21 @@
         .res-name { font-size: 0.85rem; color: var(--text-main); margin-left: 10px; }
         .res-ects { font-size: 0.75rem; background: var(--bg-body); padding: 2px 6px; border-radius: 4px; }
 
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
-        .modal-content { background: var(--bg-card); padding: 30px; border-radius: 24px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.2); position: relative; }
-        .modal-close { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: var(--text-sub); }
-        .contact-item { background: var(--bg-body); padding: 15px; border-radius: 12px; margin: 10px 0; font-size: 0.9rem; word-break: break-all; display: flex; flex-direction: column; gap: 5px; }
+        /* MODAL (İletişim & Story İçin) */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
+        .modal-content { background: var(--bg-card); padding: 30px; border-radius: 24px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3); position: relative; animation: slideUp 0.3s ease; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal-close { position: absolute; top: 15px; right: 20px; font-size: 1.8rem; cursor: pointer; color: var(--text-sub); }
+        
+        .contact-item { background: var(--bg-body); padding: 15px; border-radius: 12px; margin: 10px 0; font-size: 0.9rem; display: flex; flex-direction: column; gap: 5px; }
         .contact-label { font-size: 0.75rem; font-weight: 800; color: var(--primary); text-transform: uppercase; }
         .contact-link { color: var(--text-main); text-decoration: none; font-weight: 600; }
 
-        #share-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -999; opacity: 0; pointer-events: none; background: #fff; display: flex; justify-content: center; align-items: center; }
+        /* Story Preview Resim Stili */
+        #story-preview-img { width: 100%; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); margin-bottom: 15px; }
+
+        /* GİZLİ STORY ELEMENTİ (Arka planda render alınacak) */
+        #share-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -999; opacity: 0; pointer-events: none; display: flex; justify-content: center; align-items: center; background: #fff; }
         .story-card { width: 1080px; height: 1920px; background: #f8fafc; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; position: relative; padding: 100px; }
         .story-circle { width: 650px; height: 650px; border-radius: 50%; background: white; box-shadow: 0 50px 120px rgba(0,0,0,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; border: 10px solid var(--primary); margin: 80px 0; }
     </style>
@@ -165,6 +150,18 @@
             <span class="contact-label">Geliştirici</span>
             <a href="mailto:ahmetelindag@ogr.eskisehir.edu.tr" class="contact-link">ahmetelindag@ogr.eskisehir.edu.tr</a>
         </div>
+    </div>
+</div>
+
+<div id="storyModal" class="modal-overlay" onclick="closeModal(event)">
+    <div class="modal-content" style="max-width: 350px;">
+        <span class="modal-close" onclick="closeModal(event)">×</span>
+        <h3 style="margin-top:0; color:var(--text-main);">Story Hazır! 🎉</h3>
+        <p style="font-size:0.85rem; color:var(--text-sub); margin-bottom:15px;">Aşağıdaki resme <b>basılı tutup</b> kaydedebilir veya paylaşabilirsin.</p>
+        
+        <img id="story-preview-img" src="" alt="GPA Story">
+        
+        <button onclick="closeModal(event)" class="btn btn-primary" style="padding: 12px; font-size:0.9rem;">Kapat</button>
     </div>
 </div>
 
@@ -278,9 +275,45 @@
     window.addEventListener('load', function() { checkDatabaseAndStart(); });
 
     function openModal() { document.getElementById('contactModal').style.display = 'flex'; }
+    
     function closeModal(e) { 
-        if(e.target.id === 'contactModal' || e.target.classList.contains('modal-close')) 
+        // Hem Contact modalı hem Story modalı için kapatma
+        if(e.target.id === 'contactModal' || e.target.id === 'storyModal' || e.target.classList.contains('modal-close') || e.target.tagName === 'BUTTON') {
             document.getElementById('contactModal').style.display = 'none'; 
+            document.getElementById('storyModal').style.display = 'none';
+        }
+    }
+
+    // STORY OLUŞTURMA FONKSİYONU (YENİ)
+    function downloadShare() {
+        const gano = document.getElementById('gano-val').innerText;
+        document.getElementById('share-gano-val').innerText = gano;
+        
+        const container = document.getElementById('share-container');
+        // Render almak için geçici olarak görünür yap
+        container.style.opacity = "1";
+        container.style.zIndex = "9999"; 
+
+        const cardEl = document.getElementById('share-card-el');
+        
+        html2canvas(cardEl, { scale: 2, backgroundColor: "#f8fafc" }).then(canvas => {
+            // Resmi oluştur
+            const imgData = canvas.toDataURL("image/png");
+            
+            // Modaldaki resim alanına koy
+            document.getElementById('story-preview-img').src = imgData;
+            
+            // Modalı aç
+            document.getElementById('storyModal').style.display = 'flex';
+
+            // Gizli alanı tekrar sakla
+            container.style.opacity = "0";
+            container.style.zIndex = "-999";
+        }).catch(err => { 
+            alert("Resim oluşturulurken hata oluştu.");
+            container.style.opacity = "0";
+            container.style.zIndex = "-999";
+        });
     }
 
     function checkDatabaseAndStart() {
@@ -464,13 +497,6 @@
         if(totalE === 0) { alert("Lütfen not giriniz."); return; }
         const gano = totalP / totalE; ganoDisplay.innerText = gano.toFixed(2); ganoDisplay.style.color = gano>=3?"var(--success)":(gano>=2?"var(--warning)":"var(--danger)");
         resArea.style.display = 'block'; saveGANOState(); resArea.scrollIntoView({behavior:'smooth'});
-    }
-    function downloadShare() {
-        const gano = document.getElementById('gano-val').innerText; document.getElementById('share-gano-val').innerText = gano;
-        const container = document.getElementById('share-container'); container.style.opacity = "1"; const cardEl = document.getElementById('share-card-el');
-        html2canvas(cardEl, { scale: 1, backgroundColor: "#f8fafc" }).then(canvas => {
-            container.style.opacity = "0"; const link = document.createElement('a'); link.download = `ESTU_GPA_${gano}.png`; link.href = canvas.toDataURL("image/png"); link.click();
-        }).catch(err => { container.style.opacity = "0"; });
     }
     function populateScenList() {
         const sel = document.getElementById('scen-list-select');
