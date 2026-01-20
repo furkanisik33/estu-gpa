@@ -14,10 +14,17 @@
     <title>ESTÜ GPA Hesapla</title>
     
     <meta name="google-site-verification" content="geFAFpHDdJmimSnFMtUR9NZI0Lvaevapm_uEPHqJ7uc" />
-    <meta name="description" content="ESTÜ Not Ortalaması Hesaplama Aracı. Müfredat, senaryo ve GANO hesaplama.">
+    <meta name="description" content="ESTÜ Not Ortalaması Hesaplama Aracı. Transkriptini veya ekran görüntüsünü yükle, GANO'nu otomatik hesapla.">
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
     <meta property="og:title" content="ESTÜ GPA | GANO Hesapla" />
-    <meta property="og:description" content="Tüm mühendislik bölümleri için en güncel GANO hesaplama aracı." />
+    <meta property="og:description" content="Transkriptini veya SS'ini yükle, saniyeler içinde ortalamanı hesapla." />
     <meta property="og:image" content="https://furkanisik33.github.io/estu-gpa/icon.png" />
     <meta property="og:url" content="https://furkanisik33.github.io/estu-gpa/" />
     <meta property="og:type" content="website" />
@@ -29,7 +36,7 @@
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <script src="js/data.js?v=final_v2"></script>
+    <script src="js/data.js?v=final_v6"></script>
 
     <style>
         :root {
@@ -73,7 +80,7 @@
         select, input { width: 100%; padding: 14px 16px; border-radius: 14px; border: 2px solid var(--border); background: var(--bg-body); color: var(--text-main); outline: none; font-family: inherit; font-weight: 500; }
         
         /* Not Kutusu */
-        select.grade-select { width: 90px !important; min-width: 90px; padding: 10px 5px !important; text-align: center; text-align-last: center; font-weight: 800; height: 45px; cursor: pointer; background-color: var(--bg-body); }
+        select.grade-select { width: 80px !important; min-width: 80px; padding: 8px 5px !important; text-align: center; text-align-last: center; font-weight: 700; height: 40px; cursor: pointer; background-color: var(--bg-body); border-radius: 10px; font-size: 0.95rem; }
         
         .semester-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; border-bottom: 2px solid var(--border); margin-bottom: 15px; }
         .sem-title { font-weight: 800; color: var(--primary); font-size: 1.1rem; }
@@ -89,6 +96,11 @@
         .btn-add { background: var(--accent); color: white; height: 100%; border-radius: 12px; }
         .btn-outline { background: transparent; border: 2px dashed var(--text-sub); color: var(--text-sub); margin-top: 10px; opacity: 0.7; }
         
+        /* TRANSKRIPT BUTONU */
+        .upload-btn-area { margin-bottom: 20px; }
+        .btn-upload { background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%); color: white; border: none; padding: 15px; border-radius: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; width: 100%; box-shadow: 0 10px 20px rgba(124, 58, 237, 0.2); transition: 0.3s; }
+        .btn-upload:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(124, 58, 237, 0.3); }
+
         #result-area { display: none; text-align: center; margin-top: 30px; }
         .gano-display { font-size: 5rem; font-weight: 800; line-height: 1; letter-spacing: -3px; margin: 20px 0; color: var(--text-main); }
         
@@ -104,7 +116,6 @@
         
         .info-box { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--success); color: #065f46; text-align: center; font-weight: 600; }
 
-        /* Arama Motoru */
         .search-container-local { position: relative; margin-bottom: 15px; }
         .search-container-local input { width: 100%; padding: 15px; padding-left: 40px; border-radius: 12px; border: 2px solid var(--border); transition: 0.3s; }
         .search-container-local input:focus { border-color: var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
@@ -116,20 +127,21 @@
         .res-name { font-size: 0.85rem; color: var(--text-main); margin-left: 10px; }
         .res-ects { font-size: 0.75rem; background: var(--bg-body); padding: 2px 6px; border-radius: 4px; }
 
-        /* MODAL (İletişim & Story İçin) */
+        /* MODAL STYLES */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
         .modal-content { background: var(--bg-card); padding: 30px; border-radius: 24px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3); position: relative; animation: slideUp 0.3s ease; }
         @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         .modal-close { position: absolute; top: 15px; right: 20px; font-size: 1.8rem; cursor: pointer; color: var(--text-sub); }
-        
         .contact-item { background: var(--bg-body); padding: 15px; border-radius: 12px; margin: 10px 0; font-size: 0.9rem; display: flex; flex-direction: column; gap: 5px; }
         .contact-label { font-size: 0.75rem; font-weight: 800; color: var(--primary); text-transform: uppercase; }
         .contact-link { color: var(--text-main); text-decoration: none; font-weight: 600; }
-
-        /* Story Preview Resim Stili */
         #story-preview-img { width: 100%; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); margin-bottom: 15px; }
 
-        /* GİZLİ STORY ELEMENTİ (Arka planda render alınacak) */
+        /* PROGRESS BAR FOR OCR */
+        #ocr-progress { width: 100%; background-color: #e2e8f0; border-radius: 10px; margin-top: 10px; height: 10px; display: none; overflow: hidden; }
+        #ocr-bar { height: 100%; background-color: var(--success); width: 0%; transition: width 0.3s; }
+
+        /* GİZLİ PAYLAŞIM ALANI */
         #share-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -999; opacity: 0; pointer-events: none; display: flex; justify-content: center; align-items: center; background: #fff; }
         .story-card { width: 1080px; height: 1920px; background: #f8fafc; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; position: relative; padding: 100px; }
         .story-circle { width: 650px; height: 650px; border-radius: 50%; background: white; box-shadow: 0 50px 120px rgba(0,0,0,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; border: 10px solid var(--primary); margin: 80px 0; }
@@ -158,10 +170,22 @@
         <span class="modal-close" onclick="closeModal(event)">×</span>
         <h3 style="margin-top:0; color:var(--text-main);">Story Hazır! 🎉</h3>
         <p style="font-size:0.85rem; color:var(--text-sub); margin-bottom:15px;">Aşağıdaki resme <b>basılı tutup</b> kaydedebilir veya paylaşabilirsin.</p>
-        
         <img id="story-preview-img" src="" alt="GPA Story">
-        
         <button onclick="closeModal(event)" class="btn btn-primary" style="padding: 12px; font-size:0.9rem;">Kapat</button>
+    </div>
+</div>
+
+<div id="uploadModal" class="modal-overlay" onclick="closeModal(event)">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal(event)">×</span>
+        <h3 style="margin-top:0; color:var(--accent);">Transkript Yükle</h3>
+        <p style="font-size:0.85rem; color:var(--text-sub); margin-bottom:20px;">OBS'den indirdiğin <b>PDF</b> dosyasını veya aldığın <b>Ekran Görüntüsünü (SS)</b> yükle.</p>
+        
+        <input type="file" id="fileInput" accept=".pdf, .png, .jpg, .jpeg" style="display:none;" onchange="handleFileUpload(this)">
+        <label for="fileInput" class="btn btn-primary" style="margin-bottom:15px; cursor:pointer;">📄 Dosya Seç (PDF veya Resim)</label>
+        
+        <div id="ocr-progress"><div id="ocr-bar"></div></div>
+        <div id="upload-status" style="font-size:0.8rem; color:var(--text-sub); margin-top:10px;"></div>
     </div>
 </div>
 
@@ -189,6 +213,13 @@
 <div id="loading-box">⏳ Müfredat Yükleniyor...</div>
 
 <div class="container" id="main-container" style="display:none;">
+    
+    <div class="upload-btn-area">
+        <button class="btn-upload" onclick="openUploadModal()">
+            <span>🚀 Transkript Yükle (PDF / SS)</span>
+        </button>
+    </div>
+
     <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('calc')" data-lang="tab_calc">📊 GPA Hesapla</button>
         <button class="tab-btn" onclick="switchTab('scenario')" data-lang="tab_scen">🚀 Senaryo</button>
@@ -275,44 +306,141 @@
     window.addEventListener('load', function() { checkDatabaseAndStart(); });
 
     function openModal() { document.getElementById('contactModal').style.display = 'flex'; }
+    function openUploadModal() { document.getElementById('uploadModal').style.display = 'flex'; }
     
     function closeModal(e) { 
-        // Hem Contact modalı hem Story modalı için kapatma
-        if(e.target.id === 'contactModal' || e.target.id === 'storyModal' || e.target.classList.contains('modal-close') || e.target.tagName === 'BUTTON') {
+        if(e.target.id === 'contactModal' || e.target.id === 'storyModal' || e.target.id === 'uploadModal' || e.target.classList.contains('modal-close') || e.target.tagName === 'BUTTON') {
             document.getElementById('contactModal').style.display = 'none'; 
             document.getElementById('storyModal').style.display = 'none';
+            document.getElementById('uploadModal').style.display = 'none';
         }
     }
 
-    // STORY OLUŞTURMA FONKSİYONU (YENİ)
+    // --- DOSYA İŞLEME MERKEZİ (PDF & RESİM) ---
+    async function handleFileUpload(input) {
+        const file = input.files[0];
+        if(!file) return;
+
+        const statusDiv = document.getElementById('upload-status');
+        const progressBar = document.getElementById('ocr-progress');
+        const bar = document.getElementById('ocr-bar');
+        
+        statusDiv.innerHTML = "⏳ Dosya işleniyor...";
+        statusDiv.style.color = "var(--text-sub)";
+        progressBar.style.display = 'none';
+
+        if (file.type === 'application/pdf') {
+            // PDF İŞLEME (Hızlı)
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
+                let fullText = "";
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const textContent = await page.getTextContent();
+                    fullText += textContent.items.map(item => item.str).join(" ") + " ";
+                }
+                parseAndFill(fullText);
+            } catch (error) {
+                console.error(error);
+                statusDiv.innerHTML = "❌ PDF okunamadı.";
+            }
+        } else if (file.type.startsWith('image/')) {
+            // RESİM İŞLEME (OCR - Tesseract)
+            progressBar.style.display = 'block';
+            statusDiv.innerHTML = "🧠 Resim okunuyor... (Bu işlem birkaç saniye sürebilir)";
+            
+            Tesseract.recognize(
+                file,
+                'eng', // İngilizce modeli kodlar ve notlar için daha başarılıdır
+                { logger: m => {
+                    if(m.status === 'recognizing text') {
+                        bar.style.width = (m.progress * 100) + '%';
+                    }
+                }}
+            ).then(({ data: { text } }) => {
+                console.log("OCR Sonucu:", text);
+                parseAndFill(text);
+            }).catch(err => {
+                console.error(err);
+                statusDiv.innerHTML = "❌ Resim okunamadı.";
+            });
+        }
+    }
+
+    function parseAndFill(text) {
+        // --- AKILLI OKUMA MOTORU v2.0 ---
+        // 1. Temizlik
+        let cleanText = text
+            .replace(/\s+/g, " ")       // Boşlukları sıkıştır
+            .replace(/\|/g, " ")        // Tablo çizgilerini (OCR hatası) sil
+            .replace(/FZ/g, "FIZ")
+            .replace(/B M/g, "BIM")
+            .replace(/EMAT/g, "MAT")
+            .replace(/ST20/g, "IST20")
+            .toUpperCase();
+
+        let filledCount = 0;
+        const grades = ["AA", "AB", "BA", "BB", "BC", "CB", "CC", "CD", "DC", "DD", "FF", "VF", "F"];
+
+        // 2. Arama
+        let allCourses = [];
+        if(window.core) window.core.forEach(sem => allCourses.push(...sem));
+        if(window.specs) allCourses.push(...window.specs);
+
+        allCourses.forEach(course => {
+            const code = course.c; 
+            const safeCode = code.replace(/[^A-Z0-9]/g, ""); 
+            
+            // Regex: Kodu bul, sağında 250 karakter içinde harf notu ara
+            // Parantez içi temizliği vs. için toleranslı regex
+            const regex = new RegExp(`${safeCode}.{0,250}?(${grades.join("|")})(?![A-Z])`, "i");
+            const match = cleanText.match(regex);
+            
+            if (match) {
+                let foundGrade = match[1];
+                if (foundGrade === "F") foundGrade = "FF";
+
+                const select = document.getElementById(`grade-${course.c}`);
+                if (select) {
+                    for (let i = 0; i < select.options.length; i++) {
+                        if (select.options[i].text === foundGrade) {
+                            if(select.selectedIndex !== i) {
+                                select.selectedIndex = i;
+                                filledCount++;
+                                select.dispatchEvent(new Event('change'));
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        });
+
+        const statusDiv = document.getElementById('upload-status');
+        if(filledCount > 0) {
+            statusDiv.innerHTML = `✅ <b>${filledCount}</b> ders başarıyla dolduruldu!`;
+            statusDiv.style.color = "var(--success)";
+            setTimeout(() => { document.getElementById('uploadModal').style.display = 'none'; calculateGANO(); }, 2000);
+        } else {
+            statusDiv.innerHTML = "⚠️ Ders bulunamadı. Görüntü kalitesi düşük olabilir.";
+            statusDiv.style.color = "var(--warning)";
+        }
+    }
+
     function downloadShare() {
         const gano = document.getElementById('gano-val').innerText;
         document.getElementById('share-gano-val').innerText = gano;
-        
         const container = document.getElementById('share-container');
-        // Render almak için geçici olarak görünür yap
-        container.style.opacity = "1";
-        container.style.zIndex = "9999"; 
-
+        container.style.opacity = "1"; container.style.zIndex = "9999"; 
         const cardEl = document.getElementById('share-card-el');
-        
         html2canvas(cardEl, { scale: 2, backgroundColor: "#f8fafc" }).then(canvas => {
-            // Resmi oluştur
             const imgData = canvas.toDataURL("image/png");
-            
-            // Modaldaki resim alanına koy
             document.getElementById('story-preview-img').src = imgData;
-            
-            // Modalı aç
             document.getElementById('storyModal').style.display = 'flex';
-
-            // Gizli alanı tekrar sakla
-            container.style.opacity = "0";
-            container.style.zIndex = "-999";
+            container.style.opacity = "0"; container.style.zIndex = "-999";
         }).catch(err => { 
-            alert("Resim oluşturulurken hata oluştu.");
-            container.style.opacity = "0";
-            container.style.zIndex = "-999";
+            alert("Hata oluştu."); container.style.opacity = "0"; container.style.zIndex = "-999";
         });
     }
 
@@ -343,6 +471,7 @@
 
         document.documentElement.style.setProperty('--primary', currentDept.color);
         document.documentElement.style.setProperty('--primary-dark', currentDept.color);
+        
         document.querySelector('.brand-group h1').innerText = currentDept.title;
         document.getElementById('dept-badge').innerText = currentDept.faculty || "Mühendislik Fakültesi";
         document.getElementById('story-icon').innerText = currentDept.icon;
@@ -361,7 +490,6 @@
         updateSemesterOptions();
         renderCurriculum(); 
         populateScenList();
-        
         document.addEventListener('click', function(e) {
             const searchContainer = document.querySelector('.search-container-local');
             if (searchContainer && !searchContainer.contains(e.target)) {
@@ -374,15 +502,9 @@
         const input = document.getElementById('courseSearchBox');
         const filter = input.value.toLowerCase();
         const resultsDiv = document.getElementById('searchResults');
-        
         if (!filter) { resultsDiv.style.display = 'none'; return; }
         if(!window.specs) return;
-
-        const matches = window.specs.filter(course => 
-            course.n.toLowerCase().includes(filter) || 
-            course.c.toLowerCase().includes(filter)
-        );
-
+        const matches = window.specs.filter(course => course.n.toLowerCase().includes(filter) || course.c.toLowerCase().includes(filter));
         resultsDiv.innerHTML = "";
         if(matches.length > 0) {
             resultsDiv.style.display = 'block';
