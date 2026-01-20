@@ -35,16 +35,17 @@
             --primary: #c62828; 
             --bg: #f8fafc; 
             --text: #0f172a; 
-            --hero-grad: linear-gradient(135deg, #0f172a 0%, #c62828 100%); 
+            /* YENİ DOĞAL GRADIENT (Radial) */
+            --hero-grad: radial-gradient(circle at center, #d32f2f 0%, #c62828 40%, #1e293b 100%);
         }
         body { margin: 0; font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding-bottom: 40px; }
         
-        /* 1. HERO ALANI (MODERN BAŞLIK) */
+        /* 1. HERO ALANI (GÜNCELLENMİŞ) */
         .hero-section {
             width: 100%;
             background: var(--hero-grad);
             color: white;
-            padding: 50px 20px 80px 20px; /* Alttan ekstra boşluk bıraktık (floating için) */
+            padding: 60px 20px 90px 20px; /* Biraz daha ferahlık için padding arttı */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -52,26 +53,26 @@
             text-align: center;
             border-bottom-left-radius: 40px;
             border-bottom-right-radius: 40px;
-            box-shadow: 0 10px 40px rgba(198, 40, 40, 0.3);
+            box-shadow: 0 15px 50px rgba(198, 40, 40, 0.4); /* Gölgeyi de yumuşattık */
             position: relative;
-            margin-bottom: 60px; /* Arama kutusu buraya gelecek */
+            margin-bottom: 60px;
         }
         .hero-logo img {
-            width: 90px;
-            border-radius: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            width: 130px; /* LOGO BÜYÜTÜLDÜ (Eski: 90px) */
+            border-radius: 24px; /* Köşeler de orantılı büyüdü */
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3); /* Gölge daha belirgin */
             background: white;
-            padding: 2px;
-            margin-bottom: 15px;
+            padding: 4px; /* Çerçeve kalınlığı arttı */
+            margin-bottom: 20px; /* Alt boşluk arttı */
         }
-        .hero-title { font-size: 2.2rem; font-weight: 800; margin: 0; letter-spacing: -1px; }
-        .hero-subtitle { font-size: 1rem; opacity: 0.85; margin-top: 5px; font-weight: 300; max-width: 400px; line-height: 1.4; }
+        .hero-title { font-size: 2.4rem; font-weight: 800; margin: 0; letter-spacing: -1px; }
+        .hero-subtitle { font-size: 1.05rem; opacity: 0.9; margin-top: 8px; font-weight: 300; max-width: 450px; line-height: 1.5; }
 
-        /* 2. FLOATING ARAMA VE FİLTRE (HAVADA DURAN KISIM) */
+        /* 2. FLOATING ARAMA VE FİLTRE (AYNI KALDI) */
         .controls-wrapper {
             width: 90%;
             max-width: 600px;
-            margin-top: -60px; /* Yukarı çekerek Hero'nun üzerine bindirdik */
+            margin-top: -60px;
             z-index: 10;
         }
 
@@ -96,17 +97,17 @@
         }
         .search-icon { position: absolute; left: 22px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; opacity: 0.4; color: var(--primary); }
 
-        /* AKILLI SEKMELER (CHIPS) */
+        /* AKILLI SEKMELER (CHIPS) (AYNI KALDI) */
         .filter-chips {
             display: flex;
             gap: 10px;
             overflow-x: auto;
-            padding: 5px 5px 15px 5px; /* Scroll bar için boşluk */
-            justify-content: center; /* Ortala */
+            padding: 5px 5px 15px 5px;
+            justify-content: center;
             -webkit-overflow-scrolling: touch;
-            scrollbar-width: none; /* Firefox scroll gizle */
+            scrollbar-width: none;
         }
-        .filter-chips::-webkit-scrollbar { display: none; } /* Chrome scroll gizle */
+        .filter-chips::-webkit-scrollbar { display: none; }
 
         .chip {
             background: white;
@@ -129,7 +130,7 @@
             transform: translateY(-2px);
         }
 
-        /* 3. KARTLAR VE GRID */
+        /* 3. KARTLAR VE GRID (AYNI KALDI) */
         .grid-menu { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
@@ -148,12 +149,12 @@
             display: flex; 
             flex-direction: column; 
             align-items: center; 
-            justify-content: space-between; /* İçerik dikeyde dağılsın */
+            justify-content: space-between;
             box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); 
             border: 2px solid transparent; 
             transition: 0.3s; 
             cursor: pointer; 
-            height: 200px; /* Sabit Yükseklik */
+            height: 200px;
             position: relative; 
         }
         
@@ -166,10 +167,10 @@
             line-height: 1.3; 
             text-align: center;
             display: -webkit-box;
-            -webkit-line-clamp: 3; /* Maksimum 3 satır */
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            margin-bottom: auto; /* İsmi yukarı it */
+            margin-bottom: auto;
         }
         
         .faculty-badge {
@@ -186,7 +187,6 @@
             text-overflow: ellipsis;
         }
 
-        /* Prestijli Kart (EEE) */
         .dept-card.prestigious { background: linear-gradient(135deg, #c62828 0%, #b91c1c 100%); color: white; border: none; }
         .dept-card.prestigious .faculty-badge { background: rgba(255,255,255,0.2); color: white; }
         
@@ -203,8 +203,10 @@
         .contact-link { color: #0f172a; text-decoration: none; font-weight: 600; }
         
         @media (max-width: 600px) {
-            .filter-chips { justify-content: flex-start; padding-left: 5px; } /* Mobilde sola yaslı kaydırma */
+            .filter-chips { justify-content: flex-start; padding-left: 5px; }
             .dept-name { font-size: 0.9rem; }
+            /* Mobilde hero padding ayarı */
+            .hero-section { padding: 50px 20px 80px 20px; }
         }
     </style>
 </head>
