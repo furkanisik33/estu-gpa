@@ -1,19 +1,22 @@
-/* ESTÜ MÜHENDİSLİK NOT MERKEZİ - VERİTABANI */
+
 
 const SYSTEM_CONFIG = {
     gradeScale: { "AA":4.0, "AB":3.7, "BA":3.3, "BB":3.0, "BC":2.7, "CB":2.3, "CC":2.0, "CD":1.7, "DC":1.3, "DD":1.0, "FF":0.0 },
     semesterLabels: {
-        tr: [ "1. Dönem (Güz)", "2. Dönem Sonu (1. Sınıf)", "3. Dönem Sonu", "4. Dönem Sonu (2. Sınıf)", "5. Dönem Sonu", "6. Dönem Sonu (3. Sınıf)", "Manuel / 4. Sınıf" ],
-        en: [ "1st Semester (Fall)", "End of 2nd Sem. (Freshman)", "End of 3rd Semester", "End of 4th Sem. (Sophomore)", "End of 5th Semester", "End of 6th Sem. (Junior)", "Manual / Senior" ]
+        tr: [ "1. Dönem (Güz)", "2. Dönem Sonu (1. Sınıf)", "3. Dönem Sonu", "4. Dönem Sonu (2. Sınıf)", "5. Dönem Sonu", "6. Dönem Sonu (3. Sınıf)", "7. Dönem Sonu", "4. Sınıf / Mezuniyet" ],
+        en: [ "1st Semester (Fall)", "End of 2nd Sem. (Freshman)", "End of 3rd Semester", "End of 4th Sem. (Sophomore)", "End of 5th Semester", "End of 6th Sem. (Junior)", "End of 7th Semester", "Manual / Senior" ]
     }
 };
 
 const DEPARTMENTS = {
+    // --- MÜHENDİSLİK FAKÜLTESİ ---
+
     // 1. ELEKTRİK-ELEKTRONİK MÜHENDİSLİĞİ
     "eee": {
         title: "Elektrik-Elektronik Müh.",
         icon: "⚡",
         color: "#c62828",
+        faculty: "Mühendislik Fakültesi",
         core: [
             [ {c:"MAT1011",n:"Calculus I",e:7.5},{c:"FIZ105",n:"Physics I",e:6},{c:"FIZ107",n:"Physics Lab I",e:1.5},{c:"KIM1005",n:"Gen. Chemistry",e:6},{c:"BIM122",n:"Discrete Math",e:5},{c:"TUR125",n:"Türk Dili I",e:2} ],
             [ {c:"MAT1012",n:"Calculus II",e:7.5},{c:"FIZ106",n:"Physics II",e:6},{c:"FIZ108",n:"Physics Lab II",e:1.5},{c:"MAT2021",n:"Linear Algebra",e:4.5},{c:"EEM102",n:"Intro to EE",e:7.5},{c:"EEM104",n:"Prof. Aspects",e:3} ],
@@ -23,63 +26,21 @@ const DEPARTMENTS = {
             [ {c:"EEM308",n:"Comm. I",e:7},{c:"EEM336",n:"Microproc. I",e:7},{c:"EEM342",n:"Controls",e:7},{c:"ISG402",n:"İş Sağlığı ve Güvenliği II",e:2},{c:"TAR166",n:"Atatürk İlk. ve İnk. II",e:2} ]
         ],
         specs: [
-            // Kontrol ve Sistem
-            {c:"EEM451",n:"Industrial Control Systems",e:5,t:"kontrol"},
-            {c:"EEM453",n:"Research in Control I",e:5,t:"kontrol"},
-            {c:"EEM454",n:"Research in Control II",e:5,t:"kontrol"},
-            {c:"EEM491",n:"Linear Control Systems",e:5,t:"kontrol"},
-            {c:"EEM494",n:"Control Systems Lab",e:5,t:"kontrol"},
-            {c:"EEM450",n:"Intro to System ID",e:5,t:"kontrol"},
-            {c:"EEM452",n:"Intro to Robotics",e:5,t:"kontrol"},
-
-            // Elektronik
-            {c:"EEM4501",n:"Analog Electronics",e:5,t:"elektronik"},
-            {c:"EEM459",n:"Research in Electronics I",e:5,t:"elektronik"},
-            {c:"EEM460",n:"Research in Electronics II",e:5,t:"elektronik"},
-            {c:"EEM464",n:"System-on-Chip Design",e:5,t:"elektronik"},
-            {c:"EEM403",n:"Optoelectronics & Nanophotonics",e:5,t:"elektronik"},
-
-            // Haberleşme (Telekom)
-            {c:"EEM465",n:"Fund. of Data Comm.",e:5,t:"haberlesme"},
-            {c:"EEM467",n:"Digital Communications",e:5,t:"haberlesme"},
-            {c:"EEM469",n:"Communication Electronics",e:5,t:"haberlesme"},
-            {c:"EEM461",n:"Research in Telecom I",e:5,t:"haberlesme"},
-            {c:"EEM462",n:"Research in Telecom II",e:5,t:"haberlesme"},
-            {c:"EEM470",n:"Microwaves and Antennas",e:5,t:"haberlesme"},
-            {c:"EEM496",n:"Communication Sys. Lab",e:5,t:"haberlesme"},
-            {c:"EEM482",n:"Fund. of Data Networks",e:5,t:"haberlesme"},
-
-            // Güç Sistemleri
-            {c:"EEM471",n:"Electrical Machinery I",e:5,t:"guc"},
-            {c:"EEM473",n:"Power Systems Analysis I",e:5,t:"guc"},
-            {c:"EEM475",n:"Power Electronics I",e:5,t:"guc"},
-            {c:"EEM479",n:"Electrical Install. Sys.",e:5,t:"guc"},
-            {c:"EEM483",n:"Power Systems Analysis II",e:5,t:"guc"},
-            {c:"EEM456",n:"Research in Power Sys II",e:5,t:"guc"},
-            {c:"EEM466",n:"High Voltage Techniques",e:5,t:"guc"},
-            {c:"EEM476",n:"Power Electronics II",e:5,t:"guc"},
-
-            // Sinyal İşleme
-            {c:"EEM409",n:"Random Signals",e:5,t:"sinyal"},
-            {c:"EEM457",n:"Research in Signal Proc. I",e:5,t:"sinyal"},
-            {c:"EEM458",n:"Research in Signal Proc. II",e:5,t:"sinyal"},
-            {c:"EEM463",n:"Intro to Image Processing",e:5,t:"sinyal"},
-            {c:"EEM477",n:"Digital Signal Processing",e:5,t:"sinyal"},
-
-            // Sayısal Sistemler ve Bilgisayar
-            {c:"EEM417",n:"Engineering Computations",e:5,t:"bilgisayar"},
-            {c:"EEM449",n:"Embedded System Design",e:5,t:"sayisal"},
-            {c:"EEM4503",n:"Digital Sys. Des. (FPGA)",e:5,t:"sayisal"},
-            {c:"EEM448",n:"Research in Digital Sys II",e:5,t:"sayisal"},
-            {c:"EEM480",n:"Algorithms and Complexity",e:5,t:"bilgisayar"},
-            {c:"EEM486",n:"Computer Architecture",e:5,t:"bilgisayar"}
+            {c:"EEM451",n:"Industrial Control Systems",e:5,t:"kontrol"},{c:"EEM453",n:"Research in Control I",e:5,t:"kontrol"},{c:"EEM454",n:"Research in Control II",e:5,t:"kontrol"},{c:"EEM491",n:"Linear Control Systems",e:5,t:"kontrol"},{c:"EEM494",n:"Control Systems Lab",e:5,t:"kontrol"},{c:"EEM450",n:"Intro to System ID",e:5,t:"kontrol"},{c:"EEM452",n:"Intro to Robotics",e:5,t:"kontrol"},
+            {c:"EEM4501",n:"Analog Electronics",e:5,t:"elektronik"},{c:"EEM459",n:"Research in Electronics I",e:5,t:"elektronik"},{c:"EEM460",n:"Research in Electronics II",e:5,t:"elektronik"},{c:"EEM464",n:"System-on-Chip Design",e:5,t:"elektronik"},{c:"EEM403",n:"Optoelectronics & Nanophotonics",e:5,t:"elektronik"},
+            {c:"EEM465",n:"Fund. of Data Comm.",e:5,t:"haberlesme"},{c:"EEM467",n:"Digital Communications",e:5,t:"haberlesme"},{c:"EEM469",n:"Communication Electronics",e:5,t:"haberlesme"},{c:"EEM461",n:"Research in Telecom I",e:5,t:"haberlesme"},{c:"EEM462",n:"Research in Telecom II",e:5,t:"haberlesme"},{c:"EEM470",n:"Microwaves and Antennas",e:5,t:"haberlesme"},{c:"EEM496",n:"Communication Sys. Lab",e:5,t:"haberlesme"},{c:"EEM482",n:"Fund. of Data Networks",e:5,t:"haberlesme"},
+            {c:"EEM471",n:"Electrical Machinery I",e:5,t:"guc"},{c:"EEM473",n:"Power Systems Analysis I",e:5,t:"guc"},{c:"EEM475",n:"Power Electronics I",e:5,t:"guc"},{c:"EEM479",n:"Electrical Install. Sys.",e:5,t:"guc"},{c:"EEM483",n:"Power Systems Analysis II",e:5,t:"guc"},{c:"EEM456",n:"Research in Power Sys II",e:5,t:"guc"},{c:"EEM466",n:"High Voltage Techniques",e:5,t:"guc"},{c:"EEM476",n:"Power Electronics II",e:5,t:"guc"},
+            {c:"EEM409",n:"Random Signals",e:5,t:"sinyal"},{c:"EEM457",n:"Research in Signal Proc. I",e:5,t:"sinyal"},{c:"EEM458",n:"Research in Signal Proc. II",e:5,t:"sinyal"},{c:"EEM463",n:"Intro to Image Processing",e:5,t:"sinyal"},{c:"EEM477",n:"Digital Signal Processing",e:5,t:"sinyal"},
+            {c:"EEM417",n:"Engineering Computations",e:5,t:"bilgisayar"},{c:"EEM449",n:"Embedded System Design",e:5,t:"sayisal"},{c:"EEM4503",n:"Digital Sys. Des. (FPGA)",e:5,t:"sayisal"},{c:"EEM448",n:"Research in Digital Sys II",e:5,t:"sayisal"},{c:"EEM480",n:"Algorithms and Complexity",e:5,t:"bilgisayar"},{c:"EEM486",n:"Computer Architecture",e:5,t:"bilgisayar"}
         ]
     },
+
     // 2. BİLGİSAYAR MÜHENDİSLİĞİ
     "bilgisayar": {
         title: "Bilgisayar Mühendisliği",
         icon: "💻",
         color: "#1e293b",
+        faculty: "Mühendislik Fakültesi",
         core: [
             [ {c:"BİM103",n:"Computer Programming I",e:5.0},{c:"BİM105",n:"Intro to Computer Eng.",e:2.0},{c:"FIZ105",n:"Physics I",e:6.0},{c:"FIZ107",n:"Physics Lab I",e:1.5},{c:"KIM1005",n:"General Chemistry",e:6.0},{c:"MAT1011",n:"Calculus I",e:7.5},{c:"TUR125",n:"Türk Dili I",e:2.0} ],
             [ {c:"BİM108",n:"Computer Programming II",e:6.0},{c:"BİM122",n:"Discrete Comp. Struct.",e:5.0},{c:"FIZ106",n:"Physics II",e:6.0},{c:"FIZ108",n:"Physics Lab II",e:1.5},{c:"MAT1012",n:"Calculus II",e:7.5},{c:"TUR126",n:"Türk Dili II",e:2.0} ],
@@ -100,6 +61,7 @@ const DEPARTMENTS = {
         title: "Endüstri Mühendisliği",
         icon: "🏭",
         color: "#15803d",
+        faculty: "Mühendislik Fakültesi",
         core: [
             [ {c:"ENM102",n:"Intro to Industrial Eng.",e:3.0},{c:"FIZ105",n:"Fizik I",e:6.0},{c:"FIZ107",n:"Fizik Laboratuvarı I",e:1.5},{c:"KIM1005",n:"Genel Kimya",e:6.0},{c:"KIM1010",n:"Genel Kimya Laboratuvarı",e:1.5},{c:"MAT1011",n:"Genel Matematik I",e:7.5},{c:"TRS127",n:"Teknik Resim",e:4.5} ],
             [ {c:"ENM104",n:"Intro to Comp. & Prog.",e:4.5},{c:"FIZ106",n:"Fizik II",e:6.0},{c:"FIZ108",n:"Fizik Laboratuvarı II",e:1.5},{c:"IKT151",n:"Genel İktisat",e:3.0},{c:"MAT1012",n:"Genel Matematik II",e:7.5},{c:"MAT2023",n:"Lin. Ceb. ve Say. Yö.",e:4.5} ],
@@ -120,6 +82,7 @@ const DEPARTMENTS = {
         title: "Makine Mühendisliği",
         icon: "⚙️",
         color: "#ea580c",
+        faculty: "Mühendislik Fakültesi",
         core: [
             [ {c:"FIZ105",n:"Fizik I",e:6.0},{c:"FIZ107",n:"Fizik Laboratuvarı I",e:1.5},{c:"ISG401",n:"İş Sağlığı ve Güvenliği I",e:2.0},{c:"KIM1005",n:"Genel Kimya",e:6.0},{c:"MAT1011",n:"Genel Matematik I",e:7.5},{c:"MKM101",n:"Teknik Resim (Makine)",e:3.0},{c:"MKM103",n:"Technical English",e:2.0},{c:"TUR125",n:"Türk Dili I",e:2.0} ],
             [ {c:"FIZ106",n:"Fizik II",e:6.0},{c:"FIZ108",n:"Fizik Laboratuvarı II",e:1.5},{c:"ISG402",n:"İş Sağlığı ve Güvenliği II",e:2.0},{c:"MAT1012",n:"Genel Matematik II",e:7.5},{c:"MKM102",n:"Intro to Mech. Eng.",e:4.0},{c:"MKM104",n:"Bilgisayar Des. Tek. Resim",e:5.0},{c:"TUR126",n:"Türk Dili II",e:2.0} ],
@@ -140,6 +103,7 @@ const DEPARTMENTS = {
         title: "Kimya Mühendisliği",
         icon: "⚗️",
         color: "#0891b2",
+        faculty: "Mühendislik Fakültesi",
         core: [
             [ {c:"FIZ105",n:"Fizik I",e:6.0},{c:"FIZ107",n:"Fizik Laboratuvarı I",e:1.5},{c:"KIM1001",n:"General Chemistry I",e:6.0},{c:"KMH105",n:"Technical English",e:2.0},{c:"MAT1011",n:"Genel Matematik I",e:7.5},{c:"TUR125",n:"Türk Dili I",e:2.0} ],
             [ {c:"FIZ106",n:"Fizik II",e:6.0},{c:"FIZ108",n:"Fizik Laboratuvarı II",e:1.5},{c:"KIM1002",n:"General Chemistry II",e:6.0},{c:"KIM1010",n:"General Chem. Lab",e:1.5},{c:"KMH108",n:"Intro to Chemical Eng.",e:2.5},{c:"MAT1012",n:"Genel Matematik II",e:7.5},{c:"TUR126",n:"Türk Dili II",e:2.0} ],
@@ -160,6 +124,7 @@ const DEPARTMENTS = {
         title: "Malzeme Bilimi ve Müh.",
         icon: "🧪",
         color: "#7c3aed",
+        faculty: "Mühendislik Fakültesi",
         core: [
             [ {c:"FIZ105",n:"Physics I",e:6.0},{c:"FIZ107",n:"Physics Lab I",e:1.5},{c:"KIM1001",n:"General Chemistry I",e:6.0},{c:"MAT1011",n:"Calculus I",e:7.5},{c:"MLZ109",n:"Materials World",e:2.5},{c:"TRS127",n:"Technical Drawing",e:4.5},{c:"TUR125",n:"Türk Dili I",e:2.0} ],
             [ {c:"FIZ106",n:"Physics II",e:6.0},{c:"FIZ108",n:"Physics Lab II",e:1.5},{c:"KIM1002",n:"General Chemistry II",e:6.0},{c:"KIM1010",n:"Chemistry Lab",e:1.5},{c:"MAT1012",n:"Calculus II",e:7.5},{c:"MLZ114",n:"Structure of Materials",e:2.5},{c:"MLZ116",n:"Freshman Project",e:1.0},{c:"TUR126",n:"Türk Dili II",e:2.0} ],
@@ -180,6 +145,7 @@ const DEPARTMENTS = {
         title: "İnşaat Mühendisliği",
         icon: "🏗️",
         color: "#b45309",
+        faculty: "Mühendislik Fakültesi",
         core: [
             [ {c:"FIZ105",n:"Fizik I",e:6.0},{c:"FIZ107",n:"Fizik Laboratuvarı I",e:1.5},{c:"ING250",n:"Reading & Speaking in English",e:2.0},{c:"INS101",n:"İnşaat Müh. Giriş",e:3.5},{c:"KIM1005",n:"Genel Kimya",e:6.0},{c:"KIM1010",n:"Genel Kimya Lab.",e:1.5},{c:"MAT1011",n:"Genel Matematik I",e:7.5},{c:"TUR125",n:"Türk Dili I",e:2.0} ],
             [ {c:"FIZ106",n:"Fizik II",e:6.0},{c:"FIZ108",n:"Fizik Laboratuvarı II",e:1.5},{c:"ING360",n:"English for Business",e:2.0},{c:"INS118",n:"İnşaat Müh. Bilgisayar Uyg.",e:3.5},{c:"ISG401",n:"İş Sağlığı ve Güvenliği I",e:2.0},{c:"MAT1012",n:"Genel Matematik II",e:7.5},{c:"TRS110",n:"Teknik Resim (İnşaat)",e:3.5},{c:"TUR126",n:"Türk Dili II",e:2.0} ],
@@ -200,6 +166,7 @@ const DEPARTMENTS = {
         title: "Çevre Mühendisliği",
         icon: "🌱",
         color: "#16a34a",
+        faculty: "Mühendislik Fakültesi",
         core: [
             [ {c:"CEV203",n:"Çevre Mühendisliğine Giriş",e:2.5},{c:"CEV209",n:"Technical English I",e:2.5},{c:"FIZ105",n:"Fizik I",e:6.0},{c:"FIZ107",n:"Fizik Laboratuvarı I",e:1.5},{c:"KIM1001",n:"General Chemistry I",e:6.0},{c:"MAT1011",n:"Genel Matematik I",e:7.5},{c:"TUR125",n:"Türk Dili I",e:2.0} ],
             [ {c:"CEV1006",n:"Ekoloji",e:2.0},{c:"FIZ106",n:"Fizik II",e:6.0},{c:"FIZ108",n:"Fizik Laboratuvarı II",e:1.5},{c:"KIM1002",n:"General Chemistry II",e:6.0},{c:"KIM1010",n:"Chemistry Lab",e:1.5},{c:"MAT1012",n:"Genel Matematik II",e:7.5},{c:"TUR126",n:"Türk Dili II",e:2.0} ],
@@ -212,6 +179,61 @@ const DEPARTMENTS = {
         ],
         specs: [
             {c:"CEV323",n:"Biyoremediasyon Tek.",e:3.0,t:"biyo"},{c:"CEV325",n:"Çevre Müh. Bilişim Tek.",e:3.0,t:"bilisim"},{c:"CEV327",n:"Yeşil ve Sürd. Tarım",e:3.0,t:"tarim"},{c:"CEV335",n:"Su ve Atıksu Dezenf.",e:3.0,t:"su"},{c:"CEV340",n:"Çevresel İstatistik Analizi",e:3.0,t:"analiz"},{c:"CEV346",n:"Enerji Üretimi ve Çevre",e:3.0,t:"enerji"},{c:"CEV352",n:"Çevre Sağlığı",e:3.0,t:"saglik"},{c:"CEV354",n:"Çevresel Ayak İzleri",e:3.0,t:"surdurulebilirlik"},{c:"CEV356",n:"Atıksuların Yeniden Kul.",e:3.0,t:"su"},{c:"CEV358",n:"Küresel İklim Değişikliği",e:3.0,t:"iklim"},{c:"CEV360",n:"Kurumsal Sürd. Yönetimi",e:3.0,t:"yonetim"},{c:"CEV362",n:"Çevre Ekonomisi",e:3.0,t:"ekonomi"},{c:"CEV398",n:"Çevre Denetimi",e:3.0,t:"yonetim"},{c:"CEV431",n:"Su Arıtımı Projesi",e:4.0,t:"tasarim"},{c:"CEV4501",n:"Çevre Sosyolojisi",e:3.0,t:"sosyal"},{c:"CEV473",n:"Su Kalitesi Değerlendirmesi",e:3.0,t:"su"},{c:"CEV477",n:"Uzaktan Algılama ve CBS",e:3.0,t:"bilisim"},{c:"CEV479",n:"Yeşil Müh. Tas. ve Sürd.",e:3.0,t:"tasarim"},{c:"CEV481",n:"Arıtma Çamurları",e:3.0,t:"atik"},{c:"CEV483",n:"Çevre Toksikolojisi",e:3.0,t:"saglik"},{c:"CEV485",n:"Çevresel Maruz Kalım",e:3.0,t:"analiz"},{c:"CEV493",n:"Mevzuat Yaklaşımı",e:3.0,t:"hukuk"},{c:"CEV495",n:"Hava Kir. Meteorolojisi",e:3.0,t:"hava"},{c:"CEV497",n:"Endüstriyel Atıksu Arıtımı",e:3.0,t:"su"},{c:"CEV499",n:"İleri Arıtım",e:3.0,t:"su"},{c:"CEV432",n:"Atıksu Arıtımı Projesi",e:4.0,t:"tasarim"},{c:"CEV444",n:"Katı Atık Yön. Projesi",e:4.0,t:"tasarim"},{c:"CEV466",n:"Ekolojik Planlama",e:3.0,t:"ekoloji"},{c:"CEV468",n:"Havza Yönetimi",e:3.0,t:"su"},{c:"CEV484",n:"Küçük Ölçekli Arıtım",e:3.0,t:"su"},{c:"CEV492",n:"Hava Kalitesi Yön. Prj.",e:4.0,t:"tasarim"},{c:"CEV498",n:"Tıbbi Atık Yönetimi",e:3.0,t:"atik"}
+        ]
+    },
+
+    // --- HAVACILIK VE UZAY BİLİMLERİ FAKÜLTESİ ---
+
+    // 9. UÇAK GÖVDE MOTOR BAKIM
+    "ugmb": {
+        title: "Uçak Gövde Motor Bakım",
+        icon: "✈️",
+        color: "#0284c7",
+        faculty: "Havacılık ve Uzay Bilimleri",
+        core: [
+            [ {c:"FIZ105",n:"Fizik I",e:6.0},{c:"FIZ107",n:"Fizik Laboratuvarı I",e:1.5},{c:"MAT801",n:"Matematik I",e:4.0},{c:"MAT803",n:"Lineer Cebir",e:3.0},{c:"TAR165",n:"Atatürk İlk. ve İnk. I",e:2.0},{c:"TUR125",n:"Türk Dili I",e:2.0},{c:"UGB105",n:"Uçuş Teorisi",e:3.5} ],
+            [ {c:"FIZ231",n:"Dalgalar ve Optik",e:5.0},{c:"HYO116",n:"Havacılık Kuralları",e:4.0},{c:"HYO225",n:"Uçak Bakım Terminolojisi I",e:4.0},{c:"MAT802",n:"Matematik II",e:4.0},{c:"TAR166",n:"Atatürk İlk. ve İnk. II",e:2.0},{c:"TUR126",n:"Türk Dili II",e:2.0} ],
+            [ {c:"HYO221",n:"Temel Elektrik I",e:3.0},{c:"HYO226",n:"Uçak Bakım Terminolojisi II",e:4.0},{c:"MEK112",n:"Mekanik",e:3.0},{c:"TER203",n:"Termodinamik",e:4.0} ],
+            [ {c:"HYO2006",n:"Uçak Malzeme Bilgisi",e:3.5},{c:"HYO222",n:"Temel Elektrik II",e:3.0},{c:"MEK218",n:"Akışkanlar Mekaniği",e:3.0},{c:"UGB2006",n:"Uçak Yapıları ve Sis. I",e:4.5},{c:"UGB202",n:"Temel Elektronik I",e:3.5},{c:"UGB315",n:"Gaz Türbinli Motor Teo.",e:4.0} ],
+            [ {c:"HYO2008",n:"Temel Elektrik Lab.",e:2.0},{c:"HYO3005",n:"Tahribatsız Muayene Yön.",e:2.0},{c:"HYO3007",n:"Uçak Aerodinamiği",e:4.0},{c:"HYO336",n:"Uçak Elektrik Sistemleri",e:4.0},{c:"UGB3009",n:"Temel Elektronik II",e:4.0},{c:"UGB325",n:"Uçak Elektrik Atölyesi",e:5.0},{c:"UGB407",n:"Uçak Yapıları ve Sis. II",e:4.0} ],
+            [ {c:"HYO313",n:"Elektrik Makinaları",e:3.0},{c:"HYO420",n:"Elektromanyetik Çevre",e:2.5},{c:"HYO436",n:"Uçuş Kumandaları",e:2.0},{c:"MEK318",n:"Uçuş Mekaniği",e:3.0},{c:"UGB3006",n:"Uçak Donanım ve Uyg.",e:7.0},{c:"UGB322",n:"Gaz Türbinli Motor Sis. I",e:4.5},{c:"UGB326",n:"Aviyonik Sistemler",e:4.0},{c:"UGB412",n:"Uçak Yapıları ve Sis. III",e:4.0} ],
+            [ {c:"HYO338",n:"Elektronik Gösterge Sis.",e:4.0},{c:"HYO419",n:"Modern Aviyonik Sis.",e:2.5},{c:"HYO422",n:"İnsan Faktörleri",e:3.0},{c:"UGB4005",n:"Gaz Türbinli Motor Atölyesi",e:4.5},{c:"UGB409",n:"Bakım Uygulamaları",e:6.5},{c:"UGB411",n:"Gaz Türbinli Motor Sis. II",e:5.5},{c:"UGB420",n:"Pervaneler",e:4.0} ],
+            [ {c:"UGBSJ402",n:"Staj I",e:5.0} ]
+        ],
+        specs: [
+            {c:"HYO115",n:"Sivil Havacılığa Giriş",e:3.0,t:"havacilik"},{c:"HYO2503",n:"Dif. Denk. ve Havacılık Uyg.",e:5.0,t:"matematik"},{c:"TRS2501",n:"Bil. Des. Teknik Resim",e:5.0,t:"tasarim"},{c:"HYO2504",n:"Havacılıkta Gelecek Vizyonu",e:7.5,t:"havacilik"},
+            {c:"UGB204",n:"Hava Aracı Güç Sis. (TEİ)",e:12.0,t:"motor"},{c:"UGB208",n:"Hava Aracı Güç Sis. (HUBF)",e:12.0,t:"motor"},{c:"HYO315",n:"Elektrik Makinaları Lab.",e:3.0,t:"elektrik"},{c:"HYO105",n:"Havayolu Taşımacılığı Yön.",e:3.0,t:"yonetim"},
+            {c:"HYO406",n:"Helikopter Teorisi",e:5.0,t:"helikopter"},{c:"HYO415",n:"Havacılıkta Akademik Gel.",e:5.0,t:"akademik"},{c:"HYO421",n:"Otomatik Uçuş Sistemleri",e:3.0,t:"aviyonik"},{c:"HYO4501",n:"Aircraft Systems Design",e:5.0,t:"tasarim"},
+            {c:"UGB425",n:"Uçak Bakım Pratikleri M11",e:5.0,t:"bakim"},{c:"ESTU405",n:"Bilgisayar Programlama",e:5.0,t:"yazilim"},{c:"HYO409",n:"Havacılık Emniyeti Olaylar",e:5.0,t:"emniyet"},{c:"HYO428",n:"Havacılık Meteorolojisi",e:5.0,t:"meteoroloji"},
+            {c:"UGB415",n:"UGMB Uygulamaları",e:5.0,t:"bakim"},{c:"UGB422",n:"Çevresel Etki Değ.",e:5.0,t:"cevre"},{c:"UGB428",n:"Uçak Bakım Pratikleri M7",e:5.0,t:"bakim"},{c:"UGB430",n:"Uçak Bakım Pratikleri M17",e:5.0,t:"bakim"},
+            {c:"UGB432",n:"İşletmede Mesleki Eğitim",e:15.0,t:"staj"},{c:"UGBSJ404",n:"Staj II",e:2.5,t:"staj"}
+        ]
+    },
+
+    // 10. HAVACILIK ELEKTRİK ELEKTRONİĞİ
+    "hee": {
+        title: "Havacılık Elektrik Elektroniği",
+        icon: "⚡✈️",
+        color: "#0369a1",
+        faculty: "Havacılık ve Uzay Bilimleri",
+        core: [
+            [ {c:"FIZ105",n:"Fizik I",e:6.0},{c:"FIZ107",n:"Fizik Laboratuvarı I",e:1.5},{c:"HEE105",n:"Uçuş Teorisi",e:3.5},{c:"MAT801",n:"Matematik I",e:4.0},{c:"MAT803",n:"Lineer Cebir",e:3.0},{c:"TAR165",n:"Atatürk İlk. ve İnk. I",e:2.0},{c:"TUR125",n:"Türk Dili I",e:2.0} ],
+            [ {c:"FIZ231",n:"Dalgalar ve Optik",e:5.0},{c:"HYO116",n:"Havacılık Kuralları",e:4.0},{c:"MAT802",n:"Matematik II",e:4.0},{c:"MEK112",n:"Mekanik",e:3.0},{c:"TAR166",n:"Atatürk İlk. ve İnk. II",e:2.0},{c:"TUR126",n:"Türk Dili II",e:2.0} ],
+            [ {c:"HEE213",n:"Uçak Yapıları ve Sis. I",e:3.0},{c:"HYO2006",n:"Uçak Malzeme Bilgisi",e:3.5},{c:"HYO221",n:"Temel Elektrik I",e:3.0},{c:"HYO225",n:"Uçak Bakım Terminolojisi I",e:4.0},{c:"TER203",n:"Termodinamik",e:4.0} ],
+            [ {c:"HEE2006",n:"Temel Elektronik I",e:3.0},{c:"HEE214",n:"Uçak Yapıları ve Sis. II",e:2.0},{c:"HEE236",n:"Haberleşme Sistemleri I",e:3.0},{c:"HYO2008",n:"Temel Elektrik Lab.",e:2.0},{c:"HYO222",n:"Temel Elektrik II",e:3.0},{c:"HYO226",n:"Uçak Bakım Terminolojisi II",e:4.0},{c:"HYO3005",n:"Tahribatsız Muayene Yön.",e:2.0},{c:"MEK218",n:"Akışkanlar Mekaniği",e:3.0} ],
+            [ {c:"HEE3005",n:"Bakım Uygulamaları I",e:9.5},{c:"HEE315",n:"Uçak Yapıları ve Sis. III",e:3.0},{c:"HEE327",n:"Temel Elektronik II",e:3.0},{c:"HEE329",n:"Sayısal Devreler I",e:3.0},{c:"HYO3007",n:"Uçak Aerodinamiği",e:4.0},{c:"HYO313",n:"Elektrik Makinaları",e:3.0} ],
+            [ {c:"HEE318",n:"Temel Elektronik III",e:2.0},{c:"HEE320",n:"Sayısal Devreler II",e:3.0},{c:"HEE324",n:"Seyrüsefer Sistemleri I",e:4.0},{c:"HEE326",n:"Uçak Elektrik Atölyesi",e:5.0},{c:"HEE328",n:"Sayısal Veri İletimi",e:2.0},{c:"HYO336",n:"Uçak Elektrik Sistemleri",e:4.0},{c:"HYO338",n:"Elektronik Gösterge Sis.",e:4.0},{c:"MEK318",n:"Uçuş Mekaniği",e:3.0} ],
+            [ {c:"HEE421",n:"Haberleşme Sistemleri II",e:3.0},{c:"HEE423",n:"Seyrüsefer Sistemleri II",e:3.0},{c:"HEE431",n:"Gaz Türbinli Motorlar",e:3.0},{c:"HEE443",n:"Mikroişlemciler",e:3.0},{c:"HEE453",n:"Uçak Gösterge Sis. I",e:3.0},{c:"HYO420",n:"Elektromanyetik Çevre",e:2.5},{c:"HYO421",n:"Otomatik Uçuş Sistemleri",e:3.0} ],
+            [ {c:"HEE432",n:"Gaz Türbinli Motor Atölyesi",e:1.5},{c:"HEE444",n:"Uçak Gösterge Sis. II",e:2.0},{c:"HEE456",n:"Bakım Uygulamaları II",e:3.5},{c:"HEESJ402",n:"Staj I",e:5.0},{c:"HYO419",n:"Modern Aviyonik Sistemler",e:2.5},{c:"HYO422",n:"İnsan Faktörleri",e:3.0},{c:"HYO436",n:"Uçuş Kumandaları",e:2.0} ]
+        ],
+        specs: [
+            {c:"HYO115",n:"Sivil Havacılığa Giriş",e:3.0,t:"havacilik"},{c:"HYO2503",n:"Dif. Denk. ve Havacılık Uyg.",e:5.0,t:"matematik"},{c:"TRS2501",n:"Bil. Des. Teknik Resim",e:5.0,t:"tasarim"},{c:"HEE230",n:"Haberleşme Sis. Lab I",e:3.0,t:"haberlesme"},
+            {c:"HEE322",n:"İHA Tasarımı ve Kontrol",e:4.5,t:"iha"},{c:"HYO315",n:"Elektrik Makinaları Lab.",e:3.0,t:"elektrik"},{c:"ESTU403",n:"Temel Bilgisayar Kullanımı",e:4.0,t:"bilisim"},{c:"HEE419",n:"Uçak Elk. Sis. Bakım Onarım",e:3.0,t:"bakim"},
+            {c:"HEE427",n:"Arıza Tespit Metodolojisi",e:5.0,t:"bakim"},{c:"HEE441",n:"Bakım Atölye Uyg. M13 I",e:7.5,t:"bakim"},{c:"HEE447",n:"Uçak Yapıları Uyg. M11",e:5.0,t:"bakim"},{c:"HEE449",n:"Bakım Pratikleri M13 I",e:7.5,t:"bakim"},
+            {c:"HYO406",n:"Helikopter Teorisi",e:5.0,t:"helikopter"},{c:"HYO411",n:"Titreşim Analizi",e:5.0,t:"analiz"},{c:"HYO416",n:"Pistonlu Motor Teorisi",e:5.0,t:"motor"},{c:"HYO425",n:"Emniyet Yönetim Sistemi",e:5.0,t:"yonetim"},
+            {c:"HYO4501",n:"Aircraft Systems Design",e:5.0,t:"tasarim"},{c:"HEE434",n:"Otomatik Kontrol",e:4.5,t:"kontrol"},{c:"HEE440",n:"Bakım Pratikleri M13 II",e:5.0,t:"bakim"},{c:"HEE442",n:"Bakım Atölye Uyg. M13 II",e:7.5,t:"bakim"},
+            {c:"HEE446",n:"Havacılık Elk. Uygulamaları",e:5.0,t:"elektrik"},{c:"HEE448",n:"Microwave Theory",e:5.0,t:"haberlesme"},{c:"HEE452",n:"ILS/VOR/DME Sistemleri",e:5.0,t:"aviyonik"},{c:"HEE454",n:"İşletmede Mesleki Eğitim",e:18.0,t:"staj"},
+            {c:"HEESJ404",n:"Staj II",e:2.5,t:"staj"},{c:"HYO114",n:"Havacılıkta Ergonomi",e:5.0,t:"yonetim"},{c:"HYO428",n:"Havacılık Meteorolojisi",e:5.0,t:"meteoroloji"},{c:"SHU424",n:"Havaaracı Bakım Yönetimi",e:5.0,t:"yonetim"}
         ]
     }
 };
