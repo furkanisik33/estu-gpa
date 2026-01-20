@@ -11,11 +11,13 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ESTÜ GPA | Hesaplama ve Simülasyon</title> <meta name="google-site-verification" content="geFAFpHDdJmimSnFMtUR9NZI0Lvaevapm_uEPHqJ7uc" />
-    <meta name="description" content="Eskişehir Teknik Üniversitesi (ESTÜ) tüm bölümler için gelişmiş GPA ve GANO hesaplama platformu.">
+    <title>ESTÜ GPA | Hesaplama</title>
+    
+    <meta name="google-site-verification" content="geFAFpHDdJmimSnFMtUR9NZI0Lvaevapm_uEPHqJ7uc" />
+    <meta name="description" content="ESTÜ tüm bölümler için gelişmiş GPA ve GANO hesaplama platformu. Hedefini belirle, ortalamanı hesapla.">
     
     <meta property="og:title" content="ESTÜ GPA | Not Merkezi" />
-    <meta property="og:description" content="Mühendislik, Havacılık ve diğer tüm bölümler için en güncel GANO hesaplama aracı." />
+    <meta property="og:description" content="Tüm bölümler için en güncel GANO hesaplama ve senaryo aracı." />
     <meta property="og:image" content="https://furkanisik33.github.io/estu-gpa/icon.png" />
     <meta property="og:url" content="https://furkanisik33.github.io/estu-gpa/" />
     <meta property="og:type" content="website" />
@@ -26,60 +28,184 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     
-    <script src="js/data.js?v=final_v3"></script>
+    <script src="js/data.js?v=final_v5"></script>
 
     <style>
-        :root { --primary: #c62828; --bg: #f8fafc; --text: #0f172a; --card-bg: #ffffff; }
-        body { margin: 0; font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
+        :root { 
+            --primary: #c62828; 
+            --bg: #f8fafc; 
+            --text: #0f172a; 
+            --hero-grad: linear-gradient(135deg, #0f172a 0%, #c62828 100%); 
+        }
+        body { margin: 0; font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding-bottom: 40px; }
         
-        .logo-area img { width: 120px; border-radius: 25px; box-shadow: 0 10px 40px rgba(198, 40, 40, 0.2); margin-bottom: 25px; transition: transform 0.3s; }
-        .logo-area img:hover { transform: scale(1.05) rotate(-3deg); }
-        h1 { font-size: 3rem; margin: 0; font-weight: 800; letter-spacing: -1px; background: -webkit-linear-gradient(45deg, #c62828, #1e293b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        p { color: #64748b; font-size: 1.2rem; margin-top: 10px; max-width: 500px; line-height: 1.5; }
+        /* 1. HERO ALANI (MODERN BAŞLIK) */
+        .hero-section {
+            width: 100%;
+            background: var(--hero-grad);
+            color: white;
+            padding: 50px 20px 80px 20px; /* Alttan ekstra boşluk bıraktık (floating için) */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+            box-shadow: 0 10px 40px rgba(198, 40, 40, 0.3);
+            position: relative;
+            margin-bottom: 60px; /* Arama kutusu buraya gelecek */
+        }
+        .hero-logo img {
+            width: 90px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            background: white;
+            padding: 2px;
+            margin-bottom: 15px;
+        }
+        .hero-title { font-size: 2.2rem; font-weight: 800; margin: 0; letter-spacing: -1px; }
+        .hero-subtitle { font-size: 1rem; opacity: 0.85; margin-top: 5px; font-weight: 300; max-width: 400px; line-height: 1.4; }
+
+        /* 2. FLOATING ARAMA VE FİLTRE (HAVADA DURAN KISIM) */
+        .controls-wrapper {
+            width: 90%;
+            max-width: 600px;
+            margin-top: -60px; /* Yukarı çekerek Hero'nun üzerine bindirdik */
+            z-index: 10;
+        }
+
+        .search-box { 
+            position: relative; 
+            width: 100%; 
+            margin-bottom: 15px; 
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1); 
+            border-radius: 50px;
+        }
+        .search-box input { 
+            width: 100%; 
+            padding: 18px 25px; 
+            padding-left: 55px; 
+            border-radius: 50px; 
+            border: none; 
+            font-size: 1rem; 
+            outline: none; 
+            font-family: inherit; 
+            font-weight: 500; 
+            background: white; 
+        }
+        .search-icon { position: absolute; left: 22px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; opacity: 0.4; color: var(--primary); }
+
+        /* AKILLI SEKMELER (CHIPS) */
+        .filter-chips {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 5px 5px 15px 5px; /* Scroll bar için boşluk */
+            justify-content: center; /* Ortala */
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox scroll gizle */
+        }
+        .filter-chips::-webkit-scrollbar { display: none; } /* Chrome scroll gizle */
+
+        .chip {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #64748b;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+        .chip.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 5px 15px rgba(198, 40, 40, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* 3. KARTLAR VE GRID */
+        .grid-menu { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
+            gap: 20px; 
+            width: 90%; 
+            max-width: 900px; 
+            margin-top: 20px;
+        }
         
-        .search-box { position: relative; width: 100%; max-width: 550px; margin: 40px 0; }
-        .search-box input { width: 100%; padding: 20px 25px; padding-left: 55px; border-radius: 50px; border: 2px solid #e2e8f0; font-size: 1.1rem; outline: none; transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.03); font-family: inherit; font-weight: 500; }
-        .search-box input:focus { border-color: var(--primary); box-shadow: 0 10px 40px rgba(198, 40, 40, 0.15); transform: translateY(-2px); }
-        .search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; opacity: 0.5; }
+        .dept-card { 
+            background: white; 
+            padding: 25px 15px; 
+            border-radius: 24px; 
+            text-decoration: none; 
+            color: var(--text); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: space-between; /* İçerik dikeyde dağılsın */
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); 
+            border: 2px solid transparent; 
+            transition: 0.3s; 
+            cursor: pointer; 
+            height: 200px; /* Sabit Yükseklik */
+            position: relative; 
+        }
         
-        .grid-menu { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; width: 100%; max-width: 900px; }
-        
-        .dept-card { background: white; padding: 20px; border-radius: 24px; text-decoration: none; color: var(--text); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); border: 2px solid transparent; transition: 0.3s; cursor: pointer; height: 180px; position: relative; overflow: hidden; }
         .dept-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        .dept-icon { font-size: 3rem; z-index: 2; }
-        .dept-name { font-weight: 700; font-size: 0.95rem; line-height: 1.3; z-index: 2; }
+        .dept-icon { font-size: 3rem; margin-bottom: 10px; }
         
-        /* FAKÜLTE ETİKETİ STİLİ (YENİ) */
+        .dept-name { 
+            font-weight: 700; 
+            font-size: 0.95rem; 
+            line-height: 1.3; 
+            text-align: center;
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* Maksimum 3 satır */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: auto; /* İsmi yukarı it */
+        }
+        
         .faculty-badge {
-            font-size: 0.65rem;
-            background: rgba(0,0,0,0.05);
+            font-size: 0.6rem;
+            background: #f1f5f9;
             padding: 4px 8px;
             border-radius: 8px;
             color: #64748b;
             font-weight: 600;
-            margin-top: 5px;
-            z-index: 2;
+            width: 100%;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .dept-card.prestigious { grid-column: span 2; background: linear-gradient(135deg, #c62828 0%, #b91c1c 100%); color: white; border: none; }
+        /* Prestijli Kart (EEE) */
+        .dept-card.prestigious { background: linear-gradient(135deg, #c62828 0%, #b91c1c 100%); color: white; border: none; }
         .dept-card.prestigious .faculty-badge { background: rgba(255,255,255,0.2); color: white; }
-        .dept-card.prestigious:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 20px 40px rgba(198, 40, 40, 0.4); }
+        
+        /* FOOTER */
+        .footer { margin-top: 50px; font-size: 0.85rem; color: #94a3b8; }
+        .contact-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; padding: 8px 15px; background: white; border: 1px solid #e2e8f0; border-radius: 50px; text-decoration: none; color: #475569; font-weight: 600; font-size: 0.8rem; transition: 0.2s; cursor: pointer; }
+
+        /* MODAL */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        .modal-content { background: #fff; padding: 30px; border-radius: 24px; width: 90%; max-width: 400px; text-align: center; position: relative; }
+        .modal-close { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: #64748b; }
+        .contact-item { background: #f1f5f9; padding: 15px; border-radius: 12px; margin: 10px 0; font-size: 0.9rem; display: flex; flex-direction: column; gap: 5px; }
+        .contact-label { font-size: 0.7rem; font-weight: 800; color: var(--primary); text-transform: uppercase; }
+        .contact-link { color: #0f172a; text-decoration: none; font-weight: 600; }
         
         @media (max-width: 600px) {
-            .dept-card.prestigious { grid-column: span 1; }
-            .grid-menu { grid-template-columns: 1fr 1fr; }
+            .filter-chips { justify-content: flex-start; padding-left: 5px; } /* Mobilde sola yaslı kaydırma */
+            .dept-name { font-size: 0.9rem; }
         }
-        
-        .footer { margin-top: 60px; font-size: 0.9rem; color: #94a3b8; }
-        .contact-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 15px; padding: 10px 20px; background: #fff; border: 1px solid #e2e8f0; border-radius: 50px; text-decoration: none; color: #475569; font-weight: 600; font-size: 0.85rem; transition: 0.2s; cursor: pointer; }
-        .contact-btn:hover { background: #f1f5f9; color: var(--primary); border-color: var(--primary); }
-
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
-        .modal-content { background: #fff; padding: 30px; border-radius: 24px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.2); position: relative; }
-        .modal-close { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: #64748b; }
-        .contact-item { background: #f1f5f9; padding: 15px; border-radius: 12px; margin: 10px 0; font-size: 0.9rem; word-break: break-all; display: flex; flex-direction: column; gap: 5px; }
-        .contact-label { font-size: 0.75rem; font-weight: 800; color: var(--primary); text-transform: uppercase; }
-        .contact-link { color: #0f172a; text-decoration: none; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -87,8 +213,8 @@
     <div id="contactModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal(event)">×</span>
-            <h2 style="margin-top:0; color:#c62828;">Hata Bildir / İletişim</h2>
-            <p style="font-size:0.9rem; color:#64748b;">Bir hata fark ettiyseniz veya öneriniz varsa bize ulaşın:</p>
+            <h2 style="margin-top:0; color:#c62828;">İletişim</h2>
+            <p style="font-size:0.9rem; color:#64748b;">Hata bildirimi veya önerileriniz için:</p>
             <div class="contact-item">
                 <span class="contact-label">Geliştirici</span>
                 <a href="mailto:furkan.isik@ogr.eskisehir.edu.tr" class="contact-link">furkan.isik@ogr.eskisehir.edu.tr</a>
@@ -100,14 +226,26 @@
         </div>
     </div>
 
-    <div class="logo-area">
-        <img src="icon.png" alt="ESTÜ Logo">
-        <h1>ESTÜ NOT MERKEZİ</h1> <p>Tüm Bölümler İçin GPA Hesaplama Aracı</p>
+    <div class="hero-section">
+        <div class="hero-logo">
+            <img src="icon.png" alt="ESTÜ Logo">
+        </div>
+        <h1 class="hero-title">ESTÜ GPA</h1>
+        <p class="hero-subtitle">Tüm Bölümler İçin Gelişmiş GANO Hesaplama Aracı</p>
     </div>
 
-    <div class="search-box">
-        <span class="search-icon">🔍</span>
-        <input type="text" id="search" placeholder="Bölümünü ara... (Örn: Havacılık)" onkeyup="filterDepts()">
+    <div class="controls-wrapper">
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="search" placeholder="Bölümünü ara... (Örn: Havacılık)" onkeyup="filterDepts()">
+        </div>
+
+        <div class="filter-chips">
+            <div class="chip active" onclick="setCategory('all', this)">Tümü</div>
+            <div class="chip" onclick="setCategory('Mühendislik', this)">Mühendislik</div>
+            <div class="chip" onclick="setCategory('Havacılık', this)">Havacılık</div>
+            <div class="chip" onclick="setCategory('Fen', this)">Fen</div>
+        </div>
     </div>
 
     <div class="grid-menu" id="dept-list">
@@ -116,33 +254,52 @@
     <div class="footer">
         <div>Designed by <strong>Furkan Işık</strong></div>
         <button onclick="openModal()" class="contact-btn">
-            📩 Hata Bildir / İletişim
+            📩 Hata Bildir
         </button>
     </div>
 
     <script>
         const container = document.getElementById('dept-list');
-        
+        let currentCategory = 'all'; // Varsayılan kategori
+
         function openModal() { document.getElementById('contactModal').style.display = 'flex'; }
         function closeModal(e) { 
             if(e.target.id === 'contactModal' || e.target.classList.contains('modal-close')) 
                 document.getElementById('contactModal').style.display = 'none'; 
         }
 
+        // KATEGORİ SEÇME FONKSİYONU
+        function setCategory(category, btnElement) {
+            currentCategory = category;
+            
+            // Buton aktiflik durumu
+            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            // Listeyi yenile
+            filterDepts();
+        }
+
         function renderDepts(filterText = "") {
             container.innerHTML = "";
             
             if (typeof DEPARTMENTS === 'undefined') {
-                container.innerHTML = "<p>Veritabanı yükleniyor...</p>";
+                container.innerHTML = "<p style='grid-column:span 3; color:#94a3b8;'>Veritabanı yükleniyor...</p>";
                 return;
             }
+
+            let found = false;
 
             Object.keys(DEPARTMENTS).forEach(key => {
                 const dept = DEPARTMENTS[key];
                 
-                if(dept.title.toLowerCase().includes(filterText.toLowerCase())) {
+                // FİLTRELEME MANTIĞI: (İsimde Ara) VE (Kategori Uyuyor Mu?)
+                const matchesText = dept.title.toLowerCase().includes(filterText.toLowerCase());
+                const matchesCategory = currentCategory === 'all' || (dept.faculty && dept.faculty.includes(currentCategory));
+
+                if(matchesText && matchesCategory) {
+                    found = true;
                     const isEEE = key === 'eee';
-                    // Fakülte ismi veritabanında varsa onu kullan, yoksa Mühendislik varsay
                     const facultyName = dept.faculty ? dept.faculty : "Mühendislik Fakültesi";
                     
                     const html = `
@@ -155,6 +312,10 @@
                     container.innerHTML += html;
                 }
             });
+
+            if(!found) {
+                container.innerHTML = "<p style='grid-column:span 3; color:#94a3b8; padding:20px;'>Aradığınız kriterde bölüm bulunamadı.</p>";
+            }
         }
 
         function filterDepts() {
