@@ -343,7 +343,8 @@
 
         document.documentElement.style.setProperty('--primary', currentDept.color);
         document.documentElement.style.setProperty('--primary-dark', currentDept.color);
-        document.getElementById('dept-badge').innerText = currentDept.title;
+        document.querySelector('.brand-group h1').innerText = currentDept.title;
+        document.getElementById('dept-badge').innerText = currentDept.faculty || "Mühendislik Fakültesi";
         document.getElementById('story-icon').innerText = currentDept.icon;
         document.getElementById('story-dept').innerText = currentDept.title.toUpperCase();
 
