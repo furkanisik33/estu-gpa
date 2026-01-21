@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<script>
+window.onerror = function(message, source, lineno, colno, error) {
+   alert("HATA BULUNDU!\n\nMesaj: " + message + "\nDosya: " + source + "\nSatır: " + lineno);
+   document.body.innerHTML = '<div style="background:#ef4444;color:white;padding:30px;font-family:sans-serif;font-size:18px;text-align:center;"><h1>⚠️ BİR HATA OLUŞTU</h1><p>'+message+'</p><p>Dosya: '+source+'</p><p>Satır: '+lineno+'</p></div>';
+   return true;
+};
+</script>
 <html lang="tr">
 <head>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-K3F43XM20K"></script>
