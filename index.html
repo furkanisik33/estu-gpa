@@ -14,7 +14,7 @@
     <title>ESTÜ GPA | Hesaplama</title>
     
     <meta name="google-site-verification" content="geFAFpHDdJmimSnFMtUR9NZI0Lvaevapm_uEPHqJ7uc" />
-    <meta name="description" content="ESTÜ tüm bölümler için gelişmiş GPA ve GANO hesaplama platformu. Hedefini belirle, ortalamanı hesapla.">
+    <meta name="description" content="ESTÜ tüm bölümler için gelişmiş GPA ve GANO hesaplama platformu.">
     
     <meta property="og:title" content="ESTÜ GPA | Not Merkezi" />
     <meta property="og:description" content="Tüm bölümler için en güncel GANO hesaplama ve senaryo aracı." />
@@ -28,151 +28,164 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     
-    <script src="js/data.js?v=final_v6"></script>
+    <script src="js/data.js?v=final_v7"></script>
 
     <style>
+        /* 1. TEMEL AYARLAR (KAYMAYI ENGELLEMEK İÇİN) */
         :root { 
             --primary: #c62828; 
             --bg: #f8fafc; 
             --text: #0f172a; 
-            /* BEĞENDİĞİN ORİJİNAL GRADIENT (Lacivertten Kırmızıya) */
             --hero-grad: linear-gradient(135deg, #1e293b 0%, #b91c1c 100%);
         }
-        body { margin: 0; font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding-bottom: 40px; }
         
-        /* 1. HERO ALANI (ESTETİK DÜZELTME) */
+        * { box-sizing: border-box; } /* ÇOK ÖNEMLİ: Taşmayı engeller */
+        
+        body { 
+            margin: 0; 
+            font-family: 'Outfit', sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            overflow-x: hidden; /* Sağa sola kaymayı kesin engeller */
+            width: 100%;
+        }
+        
+        /* 2. HERO ALANI (DÜZELTİLMİŞ) */
         .hero-section {
             width: 100%;
             background: var(--hero-grad);
             color: white;
-            /* Ekranın %38'i kadar yer kaplasın */
-            min-height: 38vh; 
-            padding: 40px 20px 80px 20px; 
+            /* Mobilde çok yer kaplamasın diye esnek yükseklik */
+            padding: 40px 20px 90px 20px; 
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
             
-            /* GEÇİŞ DÜZELTMESİ: Temiz ve Modern Yuvarlatma */
-            /* Eski "sarkan" görüntü yerine, kenarları yumuşatılmış modern kutu */
-            border-bottom-left-radius: 40px;
-            border-bottom-right-radius: 40px;
+            /* KAVİS AYARI: Daha az yuvarlak, daha modern */
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
             
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); /* Derinlik hissi */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             position: relative;
-            margin-bottom: 50px;
+            margin-bottom: 20px; /* Alt boşluk azaltıldı */
         }
         
         .hero-logo img {
-            width: 120px; /* Sabitlenen Boyut */
-            border-radius: 24px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            width: 110px; /* Biraz küçülttük, daha dengeli */
+            border-radius: 22px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
             background: white;
-            padding: 5px; /* Beyaz çerçeve biraz daha belirgin */
-            margin-bottom: 20px;
+            padding: 4px;
+            margin-bottom: 15px;
         }
-        .hero-title { font-size: 2.5rem; font-weight: 800; margin: 0; letter-spacing: -1px; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
-        .hero-subtitle { font-size: 1.1rem; opacity: 0.9; margin-top: 8px; font-weight: 400; max-width: 500px; line-height: 1.5; }
+        .hero-title { font-size: 2.2rem; font-weight: 800; margin: 0; letter-spacing: -1px; }
+        .hero-subtitle { font-size: 1rem; opacity: 0.9; margin-top: 5px; font-weight: 300; max-width: 450px; line-height: 1.4; }
 
-        /* 2. FLOATING ARAMA VE FİLTRE */
+        /* 3. FLOATING ARAMA (MOBİL UYUMLU) */
         .controls-wrapper {
             width: 90%;
             max-width: 600px;
-            /* Hero'nun tam bitiş çizgisine oturtmak için yukarı çekiyoruz */
-            margin-top: -75px; 
+            margin-top: -65px; /* Hero'nun içine gömülme miktarı */
             z-index: 10;
+            padding: 0 5px; /* Kenarlardan hafif boşluk */
         }
 
         .search-box { 
             position: relative; 
             width: 100%; 
             margin-bottom: 15px; 
-            /* Arama kutusu havada asılı gibi dursun */
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1); 
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1); 
             border-radius: 50px;
+            background: white;
         }
         .search-box input { 
             width: 100%; 
-            padding: 18px 25px; 
-            padding-left: 55px; 
+            padding: 16px 20px; 
+            padding-left: 50px; 
             border-radius: 50px; 
             border: none; 
             font-size: 1rem; 
             outline: none; 
             font-family: inherit; 
             font-weight: 500; 
-            background: white; 
+            background: transparent;
         }
-        .search-icon { position: absolute; left: 22px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; opacity: 0.4; color: var(--primary); }
+        .search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; opacity: 0.4; color: var(--primary); }
 
-        /* AKILLI SEKMELER (CHIPS) */
+        /* 4. SEKMELER (CHIPS) */
         .filter-chips {
             display: flex;
-            gap: 10px;
-            overflow-x: auto;
+            gap: 8px;
+            overflow-x: auto; /* Mobilde yana kaydırma */
             padding: 5px 5px 15px 5px;
             justify-content: center;
             -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
+            scrollbar-width: none; /* Scroll çubuğunu gizle */
         }
         .filter-chips::-webkit-scrollbar { display: none; }
 
         .chip {
             background: white;
             border: 1px solid #e2e8f0;
-            padding: 10px 20px;
-            border-radius: 50px; /* Tam yuvarlak butonlar */
-            font-size: 0.9rem;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
             font-weight: 600;
             color: #64748b;
             cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.2s;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            white-space: nowrap; /* Yazı alt satıra geçmesin */
+            transition: 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
         }
         .chip.active {
             background: var(--primary);
             color: white;
             border-color: var(--primary);
-            box-shadow: 0 5px 15px rgba(198, 40, 40, 0.3);
+            box-shadow: 0 4px 12px rgba(198, 40, 40, 0.3);
             transform: translateY(-2px);
         }
 
-        /* 3. KARTLAR VE GRID */
+        /* 5. KARTLAR VE GRID */
         .grid-menu { 
             display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
-            gap: 20px; 
-            width: 90%; 
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
+            gap: 15px; 
+            width: 92%; /* Mobilde kenarlara yapışmasın */
             max-width: 900px; 
             margin-top: 10px;
+            padding-bottom: 40px;
         }
         
         .dept-card { 
             background: white; 
-            padding: 25px 15px; 
-            border-radius: 24px; 
+            padding: 20px 10px; 
+            border-radius: 20px; 
             text-decoration: none; 
             color: var(--text); 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
             justify-content: space-between;
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03); 
             border: 2px solid transparent; 
-            transition: 0.3s; 
+            transition: 0.2s; 
             cursor: pointer; 
-            height: 200px;
+            height: 180px; /* Kart yüksekliği biraz düşürüldü */
             position: relative; 
         }
         
-        .dept-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        .dept-icon { font-size: 3rem; margin-bottom: 10px; }
+        .dept-card:hover { transform: translateY(-3px); border-color: var(--primary); box-shadow: 0 15px 30px rgba(0,0,0,0.08); }
+        .dept-icon { font-size: 2.8rem; margin-bottom: 5px; }
         
         .dept-name { 
             font-weight: 700; 
-            font-size: 0.95rem; 
+            font-size: 0.85rem; 
             line-height: 1.3; 
             text-align: center;
             display: -webkit-box;
@@ -180,27 +193,30 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
             margin-bottom: auto;
+            padding: 0 5px;
         }
         
         .faculty-badge {
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             background: #f1f5f9;
-            padding: 4px 8px;
-            border-radius: 8px;
+            padding: 3px 8px;
+            border-radius: 6px;
             color: #64748b;
-            font-weight: 600;
-            width: 100%;
+            font-weight: 700;
+            width: 90%;
             text-align: center;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            margin-top: 10px;
         }
 
-        .dept-card.prestigious { background: linear-gradient(135deg, #c62828 0%, #b91c1c 100%); color: white; border: none; }
+        .dept-card.prestigious { grid-column: span 2; background: linear-gradient(135deg, #c62828 0%, #b91c1c 100%); color: white; border: none; }
         .dept-card.prestigious .faculty-badge { background: rgba(255,255,255,0.2); color: white; }
         
-        .footer { margin-top: 50px; font-size: 0.85rem; color: #94a3b8; }
-        .contact-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; padding: 8px 15px; background: white; border: 1px solid #e2e8f0; border-radius: 50px; text-decoration: none; color: #475569; font-weight: 600; font-size: 0.8rem; transition: 0.2s; cursor: pointer; }
+        /* FOOTER */
+        .footer { margin-top: 20px; font-size: 0.8rem; color: #94a3b8; padding-bottom: 30px; }
+        .contact-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 8px 16px; background: white; border: 1px solid #e2e8f0; border-radius: 50px; text-decoration: none; color: #475569; font-weight: 600; font-size: 0.8rem; transition: 0.2s; cursor: pointer; }
 
         /* MODAL */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
@@ -210,10 +226,27 @@
         .contact-label { font-size: 0.7rem; font-weight: 800; color: var(--primary); text-transform: uppercase; }
         .contact-link { color: #0f172a; text-decoration: none; font-weight: 600; }
         
+        /* MOBİL İÇİN ÖZEL DÜZELTMELER */
         @media (max-width: 600px) {
-            .filter-chips { justify-content: flex-start; padding-left: 5px; }
-            .dept-name { font-size: 0.9rem; }
-            .hero-section { min-height: 40vh; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; }
+            .hero-section { 
+                padding: 30px 20px 80px 20px; /* Üst boşluk azaltıldı */
+                border-bottom-left-radius: 25px; /* Kavis küçüldü */
+                border-bottom-right-radius: 25px;
+            }
+            .hero-logo img { width: 90px; margin-bottom: 10px; }
+            .hero-title { font-size: 2rem; }
+            .hero-subtitle { font-size: 0.9rem; }
+            
+            .controls-wrapper { margin-top: -60px; }
+            .filter-chips { justify-content: flex-start; padding-left: 5px; } /* Mobilde sola yaslı kaydırma */
+            
+            .grid-menu { 
+                grid-template-columns: 1fr 1fr; /* Mobilde 2'li yan yana garanti */
+                gap: 12px;
+            }
+            .dept-card { height: 170px; padding: 15px 5px; }
+            .dept-icon { font-size: 2.5rem; }
+            .dept-card.prestigious { grid-column: span 2; } /* EEE mobilde de geniş */
         }
     </style>
 </head>
