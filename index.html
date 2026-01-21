@@ -28,10 +28,10 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     
-    <script src="js/data.js?v=final_v7"></script>
+    <script src="js/data.js?v=final_v8"></script>
 
     <style>
-        /* 1. TEMEL AYARLAR (KAYMAYI ENGELLEMEK İÇİN) */
+        /* 1. TEMEL AYARLAR */
         :root { 
             --primary: #c62828; 
             --bg: #f8fafc; 
@@ -39,7 +39,7 @@
             --hero-grad: linear-gradient(135deg, #1e293b 0%, #b91c1c 100%);
         }
         
-        * { box-sizing: border-box; } /* ÇOK ÖNEMLİ: Taşmayı engeller */
+        * { box-sizing: border-box; } 
         
         body { 
             margin: 0; 
@@ -50,50 +50,48 @@
             display: flex; 
             flex-direction: column; 
             align-items: center; 
-            overflow-x: hidden; /* Sağa sola kaymayı kesin engeller */
+            overflow-x: hidden; 
             width: 100%;
         }
         
-        /* 2. HERO ALANI (DÜZELTİLMİŞ) */
+        /* 2. HERO ALANI (YÜKSELTİLDİ) */
         .hero-section {
             width: 100%;
             background: var(--hero-grad);
             color: white;
-            /* Mobilde çok yer kaplamasın diye esnek yükseklik */
+            /* PC'de daha yüksek olsun ki havalı dursun */
+            min-height: 50vh; 
             padding: 40px 20px 90px 20px; 
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            
-            /* KAVİS AYARI: Daha az yuvarlak, daha modern */
-            border-bottom-left-radius: 30px;
-            border-bottom-right-radius: 30px;
-            
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
             position: relative;
-            margin-bottom: 20px; /* Alt boşluk azaltıldı */
+            margin-bottom: 20px;
         }
         
         .hero-logo img {
-            width: 110px; /* Biraz küçülttük, daha dengeli */
-            border-radius: 22px;
+            width: 120px;
+            border-radius: 24px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.3);
             background: white;
             padding: 4px;
             margin-bottom: 15px;
         }
-        .hero-title { font-size: 2.2rem; font-weight: 800; margin: 0; letter-spacing: -1px; }
-        .hero-subtitle { font-size: 1rem; opacity: 0.9; margin-top: 5px; font-weight: 300; max-width: 450px; line-height: 1.4; }
+        .hero-title { font-size: 2.5rem; font-weight: 800; margin: 0; letter-spacing: -1px; }
+        .hero-subtitle { font-size: 1.1rem; opacity: 0.9; margin-top: 5px; font-weight: 300; max-width: 500px; line-height: 1.4; }
 
-        /* 3. FLOATING ARAMA (MOBİL UYUMLU) */
+        /* 3. FLOATING ARAMA */
         .controls-wrapper {
             width: 90%;
             max-width: 600px;
-            margin-top: -65px; /* Hero'nun içine gömülme miktarı */
+            margin-top: -65px;
             z-index: 10;
-            padding: 0 5px; /* Kenarlardan hafif boşluk */
+            padding: 0 5px;
         }
 
         .search-box { 
@@ -106,8 +104,8 @@
         }
         .search-box input { 
             width: 100%; 
-            padding: 16px 20px; 
-            padding-left: 50px; 
+            padding: 18px 25px; 
+            padding-left: 55px; 
             border-radius: 50px; 
             border: none; 
             font-size: 1rem; 
@@ -116,30 +114,30 @@
             font-weight: 500; 
             background: transparent;
         }
-        .search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; opacity: 0.4; color: var(--primary); }
+        .search-icon { position: absolute; left: 22px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; opacity: 0.4; color: var(--primary); }
 
-        /* 4. SEKMELER (CHIPS) */
+        /* 4. SEKMELER */
         .filter-chips {
             display: flex;
-            gap: 8px;
-            overflow-x: auto; /* Mobilde yana kaydırma */
+            gap: 10px;
+            overflow-x: auto;
             padding: 5px 5px 15px 5px;
             justify-content: center;
             -webkit-overflow-scrolling: touch;
-            scrollbar-width: none; /* Scroll çubuğunu gizle */
+            scrollbar-width: none;
         }
         .filter-chips::-webkit-scrollbar { display: none; }
 
         .chip {
             background: white;
             border: 1px solid #e2e8f0;
-            padding: 8px 16px;
+            padding: 10px 20px;
             border-radius: 50px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 600;
             color: #64748b;
             cursor: pointer;
-            white-space: nowrap; /* Yazı alt satıra geçmesin */
+            white-space: nowrap;
             transition: 0.2s;
             box-shadow: 0 2px 5px rgba(0,0,0,0.02);
         }
@@ -154,9 +152,9 @@
         /* 5. KARTLAR VE GRID */
         .grid-menu { 
             display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
-            gap: 15px; 
-            width: 92%; /* Mobilde kenarlara yapışmasın */
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
+            gap: 20px; 
+            width: 90%; 
             max-width: 900px; 
             margin-top: 10px;
             padding-bottom: 40px;
@@ -164,8 +162,8 @@
         
         .dept-card { 
             background: white; 
-            padding: 20px 10px; 
-            border-radius: 20px; 
+            padding: 25px 15px; 
+            border-radius: 24px; 
             text-decoration: none; 
             color: var(--text); 
             display: flex; 
@@ -176,16 +174,16 @@
             border: 2px solid transparent; 
             transition: 0.2s; 
             cursor: pointer; 
-            height: 180px; /* Kart yüksekliği biraz düşürüldü */
+            height: 200px; 
             position: relative; 
         }
         
-        .dept-card:hover { transform: translateY(-3px); border-color: var(--primary); box-shadow: 0 15px 30px rgba(0,0,0,0.08); }
-        .dept-icon { font-size: 2.8rem; margin-bottom: 5px; }
+        .dept-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 15px 30px rgba(0,0,0,0.08); }
+        .dept-icon { font-size: 3rem; margin-bottom: 10px; }
         
         .dept-name { 
             font-weight: 700; 
-            font-size: 0.85rem; 
+            font-size: 0.9rem; 
             line-height: 1.3; 
             text-align: center;
             display: -webkit-box;
@@ -197,13 +195,13 @@
         }
         
         .faculty-badge {
-            font-size: 0.55rem;
+            font-size: 0.6rem;
             background: #f1f5f9;
-            padding: 3px 8px;
-            border-radius: 6px;
+            padding: 4px 8px;
+            border-radius: 8px;
             color: #64748b;
             font-weight: 700;
-            width: 90%;
+            width: 100%;
             text-align: center;
             white-space: nowrap;
             overflow: hidden;
@@ -211,7 +209,13 @@
             margin-top: 10px;
         }
 
-        .dept-card.prestigious { grid-column: span 2; background: linear-gradient(135deg, #c62828 0%, #b91c1c 100%); color: white; border: none; }
+        /* EEE KART ÖZELLEŞTİRMESİ (PC'de Normal, Mobilde Büyük) */
+        .dept-card.prestigious { 
+            background: linear-gradient(135deg, #c62828 0%, #b91c1c 100%); 
+            color: white; 
+            border: none;
+            /* Masaüstünde varsayılan olarak span yok (Normal Boyut) */
+        } 
         .dept-card.prestigious .faculty-badge { background: rgba(255,255,255,0.2); color: white; }
         
         /* FOOTER */
@@ -226,27 +230,31 @@
         .contact-label { font-size: 0.7rem; font-weight: 800; color: var(--primary); text-transform: uppercase; }
         .contact-link { color: #0f172a; text-decoration: none; font-weight: 600; }
         
-        /* MOBİL İÇİN ÖZEL DÜZELTMELER */
+        /* MOBİL DÜZENLEMELER */
         @media (max-width: 600px) {
             .hero-section { 
-                padding: 30px 20px 80px 20px; /* Üst boşluk azaltıldı */
-                border-bottom-left-radius: 25px; /* Kavis küçüldü */
-                border-bottom-right-radius: 25px;
+                min-height: 40vh; /* Mobilde biraz daha kısa olabilir */
+                padding: 40px 20px 80px 20px;
+                border-bottom-left-radius: 30px; 
+                border-bottom-right-radius: 30px;
             }
-            .hero-logo img { width: 90px; margin-bottom: 10px; }
-            .hero-title { font-size: 2rem; }
-            .hero-subtitle { font-size: 0.9rem; }
+            .hero-logo img { width: 100px; margin-bottom: 15px; }
+            .hero-title { font-size: 2.2rem; }
+            .hero-subtitle { font-size: 1rem; }
             
             .controls-wrapper { margin-top: -60px; }
-            .filter-chips { justify-content: flex-start; padding-left: 5px; } /* Mobilde sola yaslı kaydırma */
+            .filter-chips { justify-content: flex-start; padding-left: 5px; }
             
             .grid-menu { 
-                grid-template-columns: 1fr 1fr; /* Mobilde 2'li yan yana garanti */
-                gap: 12px;
+                grid-template-columns: 1fr 1fr; /* Mobilde 2 sütun */
+                gap: 15px;
             }
-            .dept-card { height: 170px; padding: 15px 5px; }
-            .dept-icon { font-size: 2.5rem; }
-            .dept-card.prestigious { grid-column: span 2; } /* EEE mobilde de geniş */
+            
+            /* İŞTE ÇÖZÜM: EEE SADECE MOBİLDE GENİŞ OLSUN */
+            .dept-card.prestigious { grid-column: span 2; }
+            
+            .dept-card { height: 180px; padding: 20px 10px; }
+            .dept-icon { font-size: 2.8rem; }
         }
     </style>
 </head>
