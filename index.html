@@ -28,7 +28,7 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     
-    <script src="js/data.js?v=final_v8"></script>
+    <script src="js/data.js?v=final_night_v1"></script>
 
     <style>
         /* 1. TEMEL AYARLAR */
@@ -54,13 +54,12 @@
             width: 100%;
         }
         
-        /* 2. HERO ALANI (YÜKSELTİLDİ) */
+        /* 2. HERO ALANI (YÜKSEK & MODERN) */
         .hero-section {
             width: 100%;
             background: var(--hero-grad);
             color: white;
-            /* PC'de daha yüksek olsun ki havalı dursun */
-            min-height: 50vh; 
+            min-height: 50vh; /* PC'de yüksek ve havalı */
             padding: 40px 20px 90px 20px; 
             display: flex;
             flex-direction: column;
@@ -209,12 +208,11 @@
             margin-top: 10px;
         }
 
-        /* EEE KART ÖZELLEŞTİRMESİ (PC'de Normal, Mobilde Büyük) */
+        /* EEE KART ÖZELLEŞTİRMESİ */
         .dept-card.prestigious { 
             background: linear-gradient(135deg, #c62828 0%, #b91c1c 100%); 
             color: white; 
             border: none;
-            /* Masaüstünde varsayılan olarak span yok (Normal Boyut) */
         } 
         .dept-card.prestigious .faculty-badge { background: rgba(255,255,255,0.2); color: white; }
         
@@ -233,7 +231,7 @@
         /* MOBİL DÜZENLEMELER */
         @media (max-width: 600px) {
             .hero-section { 
-                min-height: 40vh; /* Mobilde biraz daha kısa olabilir */
+                min-height: 40vh; 
                 padding: 40px 20px 80px 20px;
                 border-bottom-left-radius: 30px; 
                 border-bottom-right-radius: 30px;
@@ -250,8 +248,8 @@
                 gap: 15px;
             }
             
-            /* İŞTE ÇÖZÜM: EEE SADECE MOBİLDE GENİŞ OLSUN */
-            .dept-card.prestigious { grid-column: span 2; }
+            /* DÜZELTME: EEE artık span 1 (Standart Boyut) */
+            .dept-card.prestigious { grid-column: span 1; }
             
             .dept-card { height: 180px; padding: 20px 10px; }
             .dept-icon { font-size: 2.8rem; }
