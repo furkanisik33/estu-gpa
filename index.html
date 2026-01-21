@@ -28,58 +28,59 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     
-    <script src="js/data.js?v=final_v5"></script>
+    <script src="js/data.js?v=final_v6"></script>
 
     <style>
         :root { 
             --primary: #c62828; 
             --bg: #f8fafc; 
             --text: #0f172a; 
-            /* SEVDİĞİN RENKLER (Radial Gradient) */
-            --hero-grad: radial-gradient(circle at center, #d32f2f 0%, #c62828 40%, #1e293b 100%);
+            /* BEĞENDİĞİN ORİJİNAL GRADIENT (Lacivertten Kırmızıya) */
+            --hero-grad: linear-gradient(135deg, #1e293b 0%, #b91c1c 100%);
         }
         body { margin: 0; font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding-bottom: 40px; }
         
-        /* 1. HERO ALANI (YÜKSEKLİK VE GEÇİŞ AYARLANDI) */
+        /* 1. HERO ALANI (ESTETİK DÜZELTME) */
         .hero-section {
             width: 100%;
             background: var(--hero-grad);
             color: white;
-            /* Yükseklik Ayarı: Ekranın %38'ini kaplasın */
+            /* Ekranın %38'i kadar yer kaplasın */
             min-height: 38vh; 
-            padding: 40px 20px 80px 20px; /* Alt boşluk arama çubuğu için */
+            padding: 40px 20px 80px 20px; 
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center; /* İçeriği dikey ortala */
+            justify-content: center;
             text-align: center;
             
-            /* GEÇİŞ (TRANSITION) AYARI */
-            /* Daha yumuşak, yayvan bir kavis */
-            border-bottom-left-radius: 50% 30px;
-            border-bottom-right-radius: 50% 30px;
+            /* GEÇİŞ DÜZELTMESİ: Temiz ve Modern Yuvarlatma */
+            /* Eski "sarkan" görüntü yerine, kenarları yumuşatılmış modern kutu */
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
             
-            box-shadow: 0 10px 40px rgba(198, 40, 40, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); /* Derinlik hissi */
             position: relative;
-            margin-bottom: 60px;
+            margin-bottom: 50px;
         }
         
         .hero-logo img {
-            width: 120px; /* İSTENİLEN BOYUT */
+            width: 120px; /* Sabitlenen Boyut */
             border-radius: 24px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             background: white;
-            padding: 4px;
-            margin-bottom: 15px;
+            padding: 5px; /* Beyaz çerçeve biraz daha belirgin */
+            margin-bottom: 20px;
         }
-        .hero-title { font-size: 2.4rem; font-weight: 800; margin: 0; letter-spacing: -1px; }
-        .hero-subtitle { font-size: 1rem; opacity: 0.9; margin-top: 8px; font-weight: 300; max-width: 450px; line-height: 1.5; }
+        .hero-title { font-size: 2.5rem; font-weight: 800; margin: 0; letter-spacing: -1px; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .hero-subtitle { font-size: 1.1rem; opacity: 0.9; margin-top: 8px; font-weight: 400; max-width: 500px; line-height: 1.5; }
 
         /* 2. FLOATING ARAMA VE FİLTRE */
         .controls-wrapper {
             width: 90%;
             max-width: 600px;
-            margin-top: -65px; /* Hero'nun içine biraz daha gömdük */
+            /* Hero'nun tam bitiş çizgisine oturtmak için yukarı çekiyoruz */
+            margin-top: -75px; 
             z-index: 10;
         }
 
@@ -87,7 +88,8 @@
             position: relative; 
             width: 100%; 
             margin-bottom: 15px; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.12); /* Gölgeyi biraz artırdık ki havada dursun */
+            /* Arama kutusu havada asılı gibi dursun */
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1); 
             border-radius: 50px;
         }
         .search-box input { 
@@ -119,9 +121,9 @@
         .chip {
             background: white;
             border: 1px solid #e2e8f0;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.85rem;
+            padding: 10px 20px;
+            border-radius: 50px; /* Tam yuvarlak butonlar */
+            font-size: 0.9rem;
             font-weight: 600;
             color: #64748b;
             cursor: pointer;
@@ -140,11 +142,11 @@
         /* 3. KARTLAR VE GRID */
         .grid-menu { 
             display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
             gap: 20px; 
             width: 90%; 
             max-width: 900px; 
-            margin-top: 20px;
+            margin-top: 10px;
         }
         
         .dept-card { 
@@ -211,7 +213,7 @@
         @media (max-width: 600px) {
             .filter-chips { justify-content: flex-start; padding-left: 5px; }
             .dept-name { font-size: 0.9rem; }
-            .hero-title { font-size: 2rem; }
+            .hero-section { min-height: 40vh; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; }
         }
     </style>
 </head>
@@ -267,7 +269,7 @@
 
     <script>
         const container = document.getElementById('dept-list');
-        let currentCategory = 'all'; // Varsayılan kategori
+        let currentCategory = 'all'; 
 
         function openModal() { document.getElementById('contactModal').style.display = 'flex'; }
         function closeModal(e) { 
@@ -275,15 +277,10 @@
                 document.getElementById('contactModal').style.display = 'none'; 
         }
 
-        // KATEGORİ SEÇME FONKSİYONU
         function setCategory(category, btnElement) {
             currentCategory = category;
-            
-            // Buton aktiflik durumu
             document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
             btnElement.classList.add('active');
-
-            // Listeyi yenile
             filterDepts();
         }
 
@@ -300,7 +297,6 @@
             Object.keys(DEPARTMENTS).forEach(key => {
                 const dept = DEPARTMENTS[key];
                 
-                // FİLTRELEME MANTIĞI: (İsimde Ara) VE (Kategori Uyuyor Mu?)
                 const matchesText = dept.title.toLowerCase().includes(filterText.toLowerCase());
                 const matchesCategory = currentCategory === 'all' || (dept.faculty && dept.faculty.includes(currentCategory));
 
