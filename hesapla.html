@@ -14,17 +14,10 @@
     <title>ESTÜ GPA Hesapla</title>
     
     <meta name="google-site-verification" content="geFAFpHDdJmimSnFMtUR9NZI0Lvaevapm_uEPHqJ7uc" />
-    <meta name="description" content="ESTÜ Not Ortalaması Hesaplama Aracı. Transkriptini veya ekran görüntüsünü yükle, GANO'nu otomatik hesapla.">
+    <meta name="description" content="ESTÜ Not Ortalaması Hesaplama Aracı. Müfredatını seç, notlarını gir, GANO'nu öğren.">
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-    <script>
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-
     <meta property="og:title" content="ESTÜ GPA | GANO Hesapla" />
-    <meta property="og:description" content="Transkriptini veya SS'ini yükle, saniyeler içinde ortalamanı hesapla." />
+    <meta property="og:description" content="Tüm bölümler için en güncel GANO hesaplama ve senaryo aracı." />
     <meta property="og:image" content="https://furkanisik33.github.io/estu-gpa/icon.png" />
     <meta property="og:url" content="https://furkanisik33.github.io/estu-gpa/" />
     <meta property="og:type" content="website" />
@@ -36,7 +29,7 @@
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <script src="js/data.js?v=final_v6"></script>
+    <script src="js/data.js?v=final_v7"></script>
 
     <style>
         :root {
@@ -96,11 +89,6 @@
         .btn-add { background: var(--accent); color: white; height: 100%; border-radius: 12px; }
         .btn-outline { background: transparent; border: 2px dashed var(--text-sub); color: var(--text-sub); margin-top: 10px; opacity: 0.7; }
         
-        /* TRANSKRIPT BUTONU */
-        .upload-btn-area { margin-bottom: 20px; }
-        .btn-upload { background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%); color: white; border: none; padding: 15px; border-radius: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; width: 100%; box-shadow: 0 10px 20px rgba(124, 58, 237, 0.2); transition: 0.3s; }
-        .btn-upload:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(124, 58, 237, 0.3); }
-
         #result-area { display: none; text-align: center; margin-top: 30px; }
         .gano-display { font-size: 5rem; font-weight: 800; line-height: 1; letter-spacing: -3px; margin: 20px 0; color: var(--text-main); }
         
@@ -137,10 +125,6 @@
         .contact-link { color: var(--text-main); text-decoration: none; font-weight: 600; }
         #story-preview-img { width: 100%; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); margin-bottom: 15px; }
 
-        /* PROGRESS BAR FOR OCR */
-        #ocr-progress { width: 100%; background-color: #e2e8f0; border-radius: 10px; margin-top: 10px; height: 10px; display: none; overflow: hidden; }
-        #ocr-bar { height: 100%; background-color: var(--success); width: 0%; transition: width 0.3s; }
-
         /* GİZLİ PAYLAŞIM ALANI */
         #share-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -999; opacity: 0; pointer-events: none; display: flex; justify-content: center; align-items: center; background: #fff; }
         .story-card { width: 1080px; height: 1920px; background: #f8fafc; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; position: relative; padding: 100px; }
@@ -175,20 +159,6 @@
     </div>
 </div>
 
-<div id="uploadModal" class="modal-overlay" onclick="closeModal(event)">
-    <div class="modal-content">
-        <span class="modal-close" onclick="closeModal(event)">×</span>
-        <h3 style="margin-top:0; color:var(--accent);">Transkript Yükle</h3>
-        <p style="font-size:0.85rem; color:var(--text-sub); margin-bottom:20px;">OBS'den indirdiğin <b>PDF</b> dosyasını veya aldığın <b>Ekran Görüntüsünü (SS)</b> yükle.</p>
-        
-        <input type="file" id="fileInput" accept=".pdf, .png, .jpg, .jpeg" style="display:none;" onchange="handleFileUpload(this)">
-        <label for="fileInput" class="btn btn-primary" style="margin-bottom:15px; cursor:pointer;">📄 Dosya Seç (PDF veya Resim)</label>
-        
-        <div id="ocr-progress"><div id="ocr-bar"></div></div>
-        <div id="upload-status" style="font-size:0.8rem; color:var(--text-sub); margin-top:10px;"></div>
-    </div>
-</div>
-
 <div id="error-box">
     ⚠️ Veritabanı dosyasına ulaşılamıyor!<br>
     <small id="error-detail"></small>
@@ -214,12 +184,6 @@
 
 <div class="container" id="main-container" style="display:none;">
     
-    <div class="upload-btn-area">
-        <button class="btn-upload" onclick="openUploadModal()">
-            <span>🚀 Transkript Yükle (PDF / SS)</span>
-        </button>
-    </div>
-
     <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('calc')" data-lang="tab_calc">📊 GPA Hesapla</button>
         <button class="tab-btn" onclick="switchTab('scenario')" data-lang="tab_scen">🚀 Senaryo</button>
@@ -295,362 +259,4 @@
             </div>
         </div>
         <div class="story-circle">
-            <span style="font-size:2rem; color:#64748b; letter-spacing:4px; font-weight:600;">GPA SCORE</span>
-            <strong id="share-gano-val" style="font-size:14rem; color:var(--primary); line-height:1; margin-top:20px; font-weight:800;">0.00</strong>
-        </div>
-        <div style="position:absolute; bottom:80px; font-size:1.2rem; color:#cbd5e1;">Designed by Furkan Işık</div>
-    </div>
-</div>
-
-<script>
-    window.addEventListener('load', function() { checkDatabaseAndStart(); });
-
-    function openModal() { document.getElementById('contactModal').style.display = 'flex'; }
-    function openUploadModal() { document.getElementById('uploadModal').style.display = 'flex'; }
-    
-    function closeModal(e) { 
-        if(e.target.id === 'contactModal' || e.target.id === 'storyModal' || e.target.id === 'uploadModal' || e.target.classList.contains('modal-close') || e.target.tagName === 'BUTTON') {
-            document.getElementById('contactModal').style.display = 'none'; 
-            document.getElementById('storyModal').style.display = 'none';
-            document.getElementById('uploadModal').style.display = 'none';
-        }
-    }
-
-    // --- DOSYA İŞLEME MERKEZİ (PDF & RESİM) ---
-    async function handleFileUpload(input) {
-        const file = input.files[0];
-        if(!file) return;
-
-        const statusDiv = document.getElementById('upload-status');
-        const progressBar = document.getElementById('ocr-progress');
-        const bar = document.getElementById('ocr-bar');
-        
-        statusDiv.innerHTML = "⏳ Dosya işleniyor...";
-        statusDiv.style.color = "var(--text-sub)";
-        progressBar.style.display = 'none';
-
-        if (file.type === 'application/pdf') {
-            // PDF İŞLEME (Hızlı)
-            try {
-                const arrayBuffer = await file.arrayBuffer();
-                const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
-                let fullText = "";
-                for (let i = 1; i <= pdf.numPages; i++) {
-                    const page = await pdf.getPage(i);
-                    const textContent = await page.getTextContent();
-                    fullText += textContent.items.map(item => item.str).join(" ") + " ";
-                }
-                parseAndFill(fullText);
-            } catch (error) {
-                console.error(error);
-                statusDiv.innerHTML = "❌ PDF okunamadı.";
-            }
-        } else if (file.type.startsWith('image/')) {
-            // RESİM İŞLEME (OCR - Tesseract)
-            progressBar.style.display = 'block';
-            statusDiv.innerHTML = "🧠 Resim okunuyor... (Bu işlem birkaç saniye sürebilir)";
-            
-            Tesseract.recognize(
-                file,
-                'eng', // İngilizce modeli kodlar ve notlar için daha başarılıdır
-                { logger: m => {
-                    if(m.status === 'recognizing text') {
-                        bar.style.width = (m.progress * 100) + '%';
-                    }
-                }}
-            ).then(({ data: { text } }) => {
-                console.log("OCR Sonucu:", text);
-                parseAndFill(text);
-            }).catch(err => {
-                console.error(err);
-                statusDiv.innerHTML = "❌ Resim okunamadı.";
-            });
-        }
-    }
-
-    function parseAndFill(text) {
-        // --- AKILLI OKUMA MOTORU v2.0 ---
-        // 1. Temizlik
-        let cleanText = text
-            .replace(/\s+/g, " ")       // Boşlukları sıkıştır
-            .replace(/\|/g, " ")        // Tablo çizgilerini (OCR hatası) sil
-            .replace(/FZ/g, "FIZ")
-            .replace(/B M/g, "BIM")
-            .replace(/EMAT/g, "MAT")
-            .replace(/ST20/g, "IST20")
-            .toUpperCase();
-
-        let filledCount = 0;
-        const grades = ["AA", "AB", "BA", "BB", "BC", "CB", "CC", "CD", "DC", "DD", "FF", "VF", "F"];
-
-        // 2. Arama
-        let allCourses = [];
-        if(window.core) window.core.forEach(sem => allCourses.push(...sem));
-        if(window.specs) allCourses.push(...window.specs);
-
-        allCourses.forEach(course => {
-            const code = course.c; 
-            const safeCode = code.replace(/[^A-Z0-9]/g, ""); 
-            
-            // Regex: Kodu bul, sağında 250 karakter içinde harf notu ara
-            // Parantez içi temizliği vs. için toleranslı regex
-            const regex = new RegExp(`${safeCode}.{0,250}?(${grades.join("|")})(?![A-Z])`, "i");
-            const match = cleanText.match(regex);
-            
-            if (match) {
-                let foundGrade = match[1];
-                if (foundGrade === "F") foundGrade = "FF";
-
-                const select = document.getElementById(`grade-${course.c}`);
-                if (select) {
-                    for (let i = 0; i < select.options.length; i++) {
-                        if (select.options[i].text === foundGrade) {
-                            if(select.selectedIndex !== i) {
-                                select.selectedIndex = i;
-                                filledCount++;
-                                select.dispatchEvent(new Event('change'));
-                            }
-                            break;
-                        }
-                    }
-                }
-            }
-        });
-
-        const statusDiv = document.getElementById('upload-status');
-        if(filledCount > 0) {
-            statusDiv.innerHTML = `✅ <b>${filledCount}</b> ders başarıyla dolduruldu!`;
-            statusDiv.style.color = "var(--success)";
-            setTimeout(() => { document.getElementById('uploadModal').style.display = 'none'; calculateGANO(); }, 2000);
-        } else {
-            statusDiv.innerHTML = "⚠️ Ders bulunamadı. Görüntü kalitesi düşük olabilir.";
-            statusDiv.style.color = "var(--warning)";
-        }
-    }
-
-    function downloadShare() {
-        const gano = document.getElementById('gano-val').innerText;
-        document.getElementById('share-gano-val').innerText = gano;
-        const container = document.getElementById('share-container');
-        container.style.opacity = "1"; container.style.zIndex = "9999"; 
-        const cardEl = document.getElementById('share-card-el');
-        html2canvas(cardEl, { scale: 2, backgroundColor: "#f8fafc" }).then(canvas => {
-            const imgData = canvas.toDataURL("image/png");
-            document.getElementById('story-preview-img').src = imgData;
-            document.getElementById('storyModal').style.display = 'flex';
-            container.style.opacity = "0"; container.style.zIndex = "-999";
-        }).catch(err => { 
-            alert("Hata oluştu."); container.style.opacity = "0"; container.style.zIndex = "-999";
-        });
-    }
-
-    function checkDatabaseAndStart() {
-        if (typeof DEPARTMENTS === 'undefined') {
-            setTimeout(function() {
-                if (typeof DEPARTMENTS === 'undefined') {
-                    document.getElementById('loading-box').style.display = 'none';
-                    document.getElementById('error-box').style.display = 'block';
-                    document.getElementById('error-detail').innerText = "js/data.js yüklenemedi.";
-                } else { startEngine(); }
-            }, 500);
-        } else { startEngine(); }
-    }
-
-    function startEngine() {
-        document.getElementById('loading-box').style.display = 'none';
-        document.getElementById('main-container').style.display = 'block';
-        const urlParams = new URLSearchParams(window.location.search);
-        const deptId = urlParams.get('bolum') || 'eee';
-        const currentDept = DEPARTMENTS[deptId];
-        
-        if(!currentDept) { alert("Bölüm bulunamadı!"); window.location.href="index.html"; return; }
-
-        window.core = currentDept.core; 
-        window.specs = currentDept.specs;
-        window.deptId = deptId;
-
-        document.documentElement.style.setProperty('--primary', currentDept.color);
-        document.documentElement.style.setProperty('--primary-dark', currentDept.color);
-        
-        document.querySelector('.brand-group h1').innerText = currentDept.title;
-        document.getElementById('dept-badge').innerText = currentDept.faculty || "Mühendislik Fakültesi";
-        document.getElementById('story-icon').innerText = currentDept.icon;
-        document.getElementById('story-dept').innerText = currentDept.title.toUpperCase();
-
-        init();
-    }
-
-    let currentLang = 'tr';
-    let gradeScale = {"AA":4.0, "FF":0}; 
-    if(typeof SYSTEM_CONFIG !== 'undefined') gradeScale = SYSTEM_CONFIG.gradeScale;
-
-    function init() {
-        if(localStorage.getItem('theme') === 'dark') toggleTheme();
-        if(localStorage.getItem('lang') === 'en') { currentLang = 'en'; toggleLang(false); } 
-        updateSemesterOptions();
-        renderCurriculum(); 
-        populateScenList();
-        document.addEventListener('click', function(e) {
-            const searchContainer = document.querySelector('.search-container-local');
-            if (searchContainer && !searchContainer.contains(e.target)) {
-                document.getElementById('searchResults').style.display = 'none';
-            }
-        });
-    }
-
-    function searchCourse() {
-        const input = document.getElementById('courseSearchBox');
-        const filter = input.value.toLowerCase();
-        const resultsDiv = document.getElementById('searchResults');
-        if (!filter) { resultsDiv.style.display = 'none'; return; }
-        if(!window.specs) return;
-        const matches = window.specs.filter(course => course.n.toLowerCase().includes(filter) || course.c.toLowerCase().includes(filter));
-        resultsDiv.innerHTML = "";
-        if(matches.length > 0) {
-            resultsDiv.style.display = 'block';
-            matches.forEach(course => {
-                const div = document.createElement('div');
-                div.className = "search-result-item";
-                div.innerHTML = `<div style="display:flex; align-items:center;"><span class="res-code">${course.c}</span><span class="res-name">${course.n}</span></div><span class="res-ects">${course.e}</span>`;
-                div.onclick = function() { addCustomRow(course.c, course.n, course.e); input.value = ""; resultsDiv.style.display = 'none'; };
-                resultsDiv.appendChild(div);
-            });
-        } else { resultsDiv.style.display = 'none'; }
-    }
-
-    function updateSemesterOptions() {
-        const select = document.getElementById('semesterSelect');
-        const currentValue = select.value;
-        select.innerHTML = "";
-        let labels = (typeof SYSTEM_CONFIG !== 'undefined') ? SYSTEM_CONFIG.semesterLabels[currentLang] : [];
-        labels.forEach((label, index) => {
-            const val = index.toString();
-            let displayText = label;
-            if(index === 6) displayText = "4. Sınıf / Mezuniyet";
-            const option = document.createElement('option');
-            option.value = val; option.text = displayText; select.appendChild(option);
-        });
-        if(currentValue) select.value = currentValue;
-        if(!select.value && labels.length > 0) { select.selectedIndex = 0; setTimeout(renderCurriculum, 50); }
-    }
-
-    function renderCurriculum() {
-        const val = document.getElementById('semesterSelect').value;
-        const container = document.getElementById('curriculum-container');
-        container.innerHTML = "";
-        if(!window.core || window.core.length === 0) return;
-        if(val === "" || val === null) return;
-
-        const max = parseInt(val);
-        const labels = SYSTEM_CONFIG.semesterLabels[currentLang];
-        const loopMax = (max === 6) ? 5 : max; 
-
-        for(let i=0; i<=loopMax; i++) {
-            if(!window.core[i]) continue;
-            const semDiv = document.createElement('div'); semDiv.className = "card";
-            const semName = labels[i] ? labels[i].split(' (')[0] : "Dönem " + (i+1);
-            let html = `<div class="semester-header"><span class="sem-title">${semName}</span><span class="ano-badge" id="ano-${i}">ANO: --</span></div>`;
-            window.core[i].forEach(c => {
-                html += `<div class="course-item"><div class="c-info"><div class="c-code">${c.c} <span class="c-ects">${c.e}</span></div><span class="c-name">${c.n}</span></div><select class="grade-select core-grade" data-ects="${c.e}" id="grade-${c.c}" onchange="saveGANOState()"><option value="">-</option>${Object.keys(gradeScale).map(g => `<option value="${gradeScale[g]}">${g}</option>`).join('')}</select></div>`;
-            });
-            semDiv.innerHTML = html; container.appendChild(semDiv);
-        }
-
-        if(max === 6) {
-            const infoDiv = document.createElement('div');
-            infoDiv.className = "card info-box";
-            infoDiv.innerHTML = "🎓 4. Sınıf / Mezuniyet <br><span style='font-weight:400; font-size:0.9rem;'>Lütfen aşağıdan <b>Uzmanlık Alanı</b> veya <b>Seçmeli Derslerinizi</b> ekleyiniz.</span>";
-            container.appendChild(infoDiv);
-        }
-        loadSavedGrades();
-    }
-
-    function toggleTheme() {
-        const body = document.body;
-        if(body.getAttribute('data-theme') === 'dark') { body.removeAttribute('data-theme'); localStorage.setItem('theme', 'light'); } 
-        else { body.setAttribute('data-theme', 'dark'); localStorage.setItem('theme', 'dark'); }
-    }
-    function toggleLang(switchLang = true) {
-        if(switchLang) currentLang = currentLang === 'tr' ? 'en' : 'tr';
-        document.getElementById('langBtn').innerText = currentLang.toUpperCase();
-        updateSemesterOptions(); localStorage.setItem('lang', currentLang);
-    }
-    function switchTab(tab) {
-        document.querySelectorAll('.tab-content').forEach(d => d.style.display = 'none');
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById('tab-'+tab).style.display = 'block';
-        document.querySelector(`.tab-btn[onclick="switchTab('${tab}')"]`).classList.add('active');
-    }
-    function saveGANOState() {
-        const selects = document.querySelectorAll('select.grade-select');
-        const data = {};
-        selects.forEach(s => { if(s.value !== "") { if(!s.id) s.id = "s-"+Math.random().toString(36).substr(2,9); data[s.id] = s.value; } });
-        localStorage.setItem('grades_' + window.deptId, JSON.stringify(data));
-        localStorage.setItem('sem_' + window.deptId, document.getElementById('semesterSelect').value);
-    }
-    function loadSavedGrades() {
-        const data = JSON.parse(localStorage.getItem('grades_' + window.deptId));
-        if(data) { Object.keys(data).forEach(id => { const el = document.getElementById(id); if(el) el.value = data[id]; }); }
-    }
-    function addCustomRow(code, name, ects, isManual=false) {
-        let container = document.getElementById('curriculum-container');
-        let extraCard = document.getElementById('extra-courses-card');
-        if(!extraCard) { extraCard = document.createElement('div'); extraCard.id = 'extra-courses-card'; extraCard.className = 'card'; extraCard.innerHTML = `<div class="semester-header"><span class="sem-title" style="color:var(--success)">EK DERSLER</span></div><div id="extra-list"></div>`; container.appendChild(extraCard); }
-        const list = extraCard.querySelector('#extra-list'); const div = document.createElement('div'); div.className = "course-item";
-        const ectsDisplay = isManual ? `<input type="number" class="manual-ects" value="5" style="width:50px; padding:5px; border-radius:8px;">` : `<span class="c-ects">${ects}</span>`;
-        const codeDisplay = isManual ? `<input type="text" placeholder="Kod" style="width:80px; padding:5px; border-radius:8px;">` : code;
-        div.innerHTML = `<div class="c-info"><div class="c-code">${codeDisplay} ${!isManual ? ectsDisplay : ''}</div>${isManual ? ectsDisplay : ''}<span class="c-name">${name}</span></div><div style="display:flex; flex-direction:column; align-items:end; gap:5px;"><select class="grade-select ${isManual?'manual-grade':'spec-grade'}" ${!isManual ? `data-ects="${ects}"` : ''} onchange="saveGANOState()"><option value="">-</option>${Object.keys(gradeScale).map(g => `<option value="${gradeScale[g]}">${g}</option>`).join('')}</select><button onclick="this.closest('.course-item').remove(); saveGANOState();" style="border:none; background:none; color:var(--danger); font-size:0.8rem; cursor:pointer;">Sil</button></div>`;
-        list.appendChild(div);
-    }
-    function addManualCourse() { addCustomRow("MANUEL", "Özel Ders", 5, true); }
-    function calculateGANO() {
-        let totalP = 0, totalE = 0;
-        document.querySelectorAll('#curriculum-container .card').forEach((card) => {
-            let semP = 0, semE = 0;
-            card.querySelectorAll('select.grade-select').forEach(sel => {
-                if(sel.value === "") return;
-                let ects = sel.classList.contains('manual-grade') ? (parseFloat(sel.closest('.course-item').querySelector('.manual-ects').value)||0) : parseFloat(sel.getAttribute('data-ects'));
-                if(ects > 0) { semP += parseFloat(sel.value) * ects; semE += ects; }
-            });
-            const anoBadge = card.querySelector('.ano-badge');
-            if(anoBadge && semE > 0) { const ano = semP/semE; anoBadge.innerText = `ANO: ${ano.toFixed(2)}`; anoBadge.style.color = ano>=3?"var(--success)":(ano>=2?"var(--warning)":"var(--danger)"); }
-            totalP += semP; totalE += semE;
-        });
-        const resArea = document.getElementById('result-area'); const ganoDisplay = document.getElementById('gano-val');
-        if(totalE === 0) { alert("Lütfen not giriniz."); return; }
-        const gano = totalP / totalE; ganoDisplay.innerText = gano.toFixed(2); ganoDisplay.style.color = gano>=3?"var(--success)":(gano>=2?"var(--warning)":"var(--danger)");
-        resArea.style.display = 'block'; saveGANOState(); resArea.scrollIntoView({behavior:'smooth'});
-    }
-    function populateScenList() {
-        const sel = document.getElementById('scen-list-select');
-        let all = [];
-        if(window.core) window.core.forEach(sem => sem.forEach(c => all.push(c)));
-        if(window.specs) window.specs.forEach(s => all.push(s));
-        all.sort((a,b) => a.c.localeCompare(b.c));
-        all.forEach(c => { let opt = document.createElement('option'); opt.value = JSON.stringify(c); opt.text = `${c.c} - ${c.n}`; sel.appendChild(opt); });
-    }
-    function addScenFromList() { const val = document.getElementById('scen-list-select').value; if(!val) return; const c = JSON.parse(val); addScenRow(c.c, c.n, c.e, false); }
-    function addScenManual() { addScenRow("", "Manuel Ders", 5, true); }
-    function addScenRow(code, name, ects, isManual) {
-        const div = document.createElement('div'); div.className = "card"; div.style.padding = "15px"; div.style.borderLeft = "4px solid var(--warning)";
-        let opts = Object.keys(gradeScale).map(g => `<option value="${gradeScale[g]}">${g}</option>`).join('');
-        let ectsDisplay = isManual ? `<input type="number" class="s-ects" value="${ects}" style="width:60px; padding:6px; border-radius:8px; border:1px solid var(--border); background:var(--bg-body); font-weight:700; text-align:center;">` : `<span style="background:var(--bg-body); padding:2px 8px; border-radius:6px; font-size:0.8rem;">${ects} AKTS</span><input type="hidden" class="s-ects" value="${ects}">`;
-        div.innerHTML = `<div style="display:flex; justify-content:space-between; margin-bottom:10px; align-items:center;"><span style="font-weight:700;">${isManual ? 'Manuel' : code} <small style="font-weight:400; color:var(--text-sub)">${name}</small></span>${ectsDisplay}</div><div style="display:grid; grid-template-columns: 1fr auto 1fr; gap:10px; align-items:center;"><div><select class="s-old"><option value="">NA</option>${opts}</select></div><div style="color:var(--text-sub);">➔</div><div><select class="s-new"><option value="">?</option>${opts}</select></div></div><button onclick="this.closest('.card').remove()" style="width:100%; margin-top:10px; background:none; border:1px dashed var(--danger); color:var(--danger); padding:8px; border-radius:8px; cursor:pointer;">Kaldır</button>`;
-        document.getElementById('scenario-list').appendChild(div);
-    }
-    function calcScenario() {
-        const curGano = parseFloat(document.getElementById('scen-gano').value); const curEcts = parseFloat(document.getElementById('scen-ects').value);
-        if(!curGano || !curEcts) { alert("Mevcut verileri giriniz."); return; }
-        let points = curGano * curEcts; let totalEcts = curEcts;
-        document.querySelectorAll('#scenario-list .card').forEach(row => {
-            const ects = parseFloat(row.querySelector('.s-ects').value); const oldG = row.querySelector('.s-old').value; const newG = row.querySelector('.s-new').value;
-            if(newG === "") return;
-            if(oldG === "") { points += (parseFloat(newG) * ects); totalEcts += ects; } else { points = points - (parseFloat(oldG)*ects) + (parseFloat(newG)*ects); }
-        });
-        const newGano = points / totalEcts; document.getElementById('scen-result').style.display = 'block'; document.getElementById('scen-new-gano').innerText = newGano.toFixed(2);
-        const diff = newGano - curGano; document.getElementById('scen-diff').innerHTML = `<span style="color:${diff>0?'var(--success)':'var(--danger)'}">${diff>0?'+':''}${diff.toFixed(2)}</span> Değişim`;
-        document.getElementById('scen-result').scrollIntoView({behavior:'smooth'});
-    }
-</script>
-</body>
-</html>
+            <span style="font-size:2rem; color:#64748b; letter
