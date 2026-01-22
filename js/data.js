@@ -176,5 +176,38 @@ const DEPARTMENTS = {
             [ {c:"HEE432",n:"Gaz Türbinli Motor Atölyesi",e:1.5},{c:"HEE444",n:"Uçak Gösterge Sis. II",e:2.0},{c:"HEE456",n:"Bakım Uygulamaları II",e:3.5},{c:"HEESJ402",n:"Staj I",e:5.0},{c:"HYO419",n:"Modern Aviyonik Sistemler",e:2.5},{c:"HYO422",n:"İnsan Faktörleri",e:3.0},{c:"HYO436",n:"Uçuş Kumandaları",e:2.0} ]
         ],
         specs: []
+    }, // ← BU VİRGÜL ÇOK ÖNEMLİ! (Önceki bölümle bunu ayırır)
+
+    // --- ÖZEL BÖLÜM (ATÜ) ---
+    "atu": {
+        title: "ATÜ Havacılık ve Uzay Müh.",
+        icon: "🚀",
+        color: "#be123c", // ATÜ Logosu rengine yakın bir ton
+        faculty: "Havacılık ve Uzay Bilimleri",
+        core: [
+            // 1. Yarıyıl
+            [ {c:"AER103",n:"Intro to Aerospace Engineering",e:3.0},{c:"CAD103",n:"Comp. Aided Eng. Drawing I",e:4.0},{c:"CHM105",n:"General Chemistry",e:3.0},{c:"CHM107",n:"General Chemistry Lab",e:2.0},{c:"HIS101",n:"Ataturk's Prin. & Hist. I",e:2.0},{c:"INF103",n:"Intro to Info Tech",e:2.0},{c:"MAT103",n:"Calculus I",e:5.0},{c:"PHY101",n:"Physics I",e:5.0},{c:"PHY103",n:"Physics I Lab",e:2.0},{c:"TUR101",n:"Turkish Language I",e:2.0} ],
+            // 2. Yarıyıl
+            [ {c:"AER104",n:"Intro to Programming",e:5.0},{c:"CAD104",n:"Comp. Aided Eng. Drawing II",e:4.0},{c:"HIS102",n:"Ataturk's Prin. & Hist. II",e:2.0},{c:"MAT104",n:"Calculus II",e:5.0},{c:"MAT108",n:"Linear Algebra",e:5.0},{c:"PHY102",n:"Physics II",e:5.0},{c:"PHY104",n:"Physics II Lab",e:2.0},{c:"TUR102",n:"Turkish Language II",e:2.0} ],
+            // 3. Yarıyıl
+            [ {c:"AER201",n:"Thermodynamics",e:5.0},{c:"AER207",n:"Intro to Material Science",e:5.0},{c:"AER209",n:"Statics",e:5.0},{c:"AER211",n:"Manufacturing Technologies",e:5.0},{c:"AER213",n:"Differential Equations",e:4.0},{c:"ENG201",n:"Technical English",e:2.0} ],
+            // 4. Yarıyıl
+            [ {c:"AER212",n:"Fluid Mechanics",e:6.0},{c:"AER214",n:"Dynamics",e:6.0},{c:"AER216",n:"Strength of Materials",e:6.0},{c:"AER218",n:"Fund. of Electrical Eng.",e:5.0},{c:"AER220",n:"Numerical Methods",e:5.0},{c:"ENG202",n:"Academic Presentation Skills",e:2.0} ],
+            // 5. Yarıyıl
+            [ {c:"AER301",n:"Aerodynamics-I",e:6.0},{c:"AER303",n:"Measurement Techniques",e:6.0},{c:"AER307",n:"Automatic Control",e:6.0},{c:"AER309",n:"Heat Transfer",e:6.0},{c:"AER311",n:"Mechanical Vibrations",e:6.0} ],
+            // 6. Yarıyıl
+            [ {c:"AER314",n:"Orbital Mechanics",e:4.0},{c:"AER316",n:"Internship",e:5.0},{c:"AER318",n:"Aerodynamics II",e:6.0},{c:"AER320",n:"Aerospace Structures",e:6.0} ],
+            // 7. Yarıyıl
+            [ {c:"AER401",n:"Aircraft Stability and Control",e:6.0},{c:"AER405",n:"Propulsion Systems",e:6.0},{c:"AER411",n:"Occupational Safety Law I",e:4.0},{c:"AER451",n:"Principles of Aircraft Design I",e:6.0} ],
+            // 8. Yarıyıl
+            [ {c:"AER402",n:"Principles of Aircraft Design II",e:6.0},{c:"AER412",n:"Occupational Safety Law II",e:4.0},{c:"AER452",n:"Graduate Project",e:8.0} ]
+        ],
+        specs: [
+            // Tüm Seçmeli Dersler (Gruplu Dersler)
+            {c:"AER233",n:"Engineering Economics",e:4.0,t:"secmeli"},{c:"AER235",n:"Career Planning",e:4.0,t:"secmeli"},{c:"GEN201",n:"Introduction to Business",e:4.0,t:"secmeli"},{c:"GEN203",n:"Cultural Heritage & Tourism",e:4.0,t:"secmeli"},{c:"GEN237",n:"History of Science",e:4.0,t:"secmeli"},
+            {c:"AER310",n:"Intro to CFD",e:4.0,t:"teknik"},{c:"AER312",n:"Applied Finite Element Analysis",e:4.0,t:"teknik"},{c:"AER322",n:"Aircraft Engine Design",e:4.0,t:"teknik"},{c:"AER334",n:"Rocket Propulsion",e:4.0,t:"teknik"},
+            {c:"AER407",n:"Helicopter Aerodynamics",e:4.0,t:"teknik"},{c:"AER421",n:"Space Propulsion Systems",e:4.0,t:"teknik"},{c:"AER423",n:"Microprocessors",e:4.0,t:"teknik"},{c:"AER425",n:"Aircraft Instrument Systems",e:4.0,t:"teknik"},{c:"AER427",n:"Composite Materials",e:4.0,t:"teknik"},{c:"AER429",n:"Aircraft Systems",e:4.0,t:"teknik"},{c:"AER435",n:"Intro to Rocket Design",e:4.0,t:"teknik"},{c:"AER437",n:"Project Management",e:4.0,t:"teknik"},{c:"AER439",n:"Embedded Control Systems",e:4.0,t:"teknik"},{c:"AER441",n:"Spacecraft Antenna Design",e:4.0,t:"teknik"},{c:"AER443",n:"Low-speed Aerodynamics",e:4.0,t:"teknik"},{c:"AER445",n:"Turbomachinery",e:4.0,t:"teknik"},{c:"AER447",n:"Elasticity",e:4.0,t:"teknik"},{c:"AER449",n:"Aerospace Technologies",e:4.0,t:"teknik"},{c:"GEN401",n:"Consumer Behavior",e:4.0,t:"genel"},{c:"GEN403",n:"Intellectual Property Rights",e:4.0,t:"genel"},
+            {c:"AER420",n:"Aircraft Maintenance",e:4.0,t:"teknik"},{c:"AER422",n:"Boundary Layer Theory",e:4.0,t:"teknik"},{c:"AER424",n:"Wind Energy Technology",e:4.0,t:"teknik"},{c:"AER428",n:"Intro to UAV Design",e:4.0,t:"teknik"},{c:"AER438",n:"Engineering Ethics",e:4.0,t:"teknik"},{c:"AER440",n:"Aviation Law",e:4.0,t:"teknik"},{c:"AER442",n:"Social Awareness",e:4.0,t:"genel"},{c:"AER444",n:"Aerodynamics of Launches",e:4.0,t:"teknik"},{c:"AER446",n:"Renewable Energy for Aircrafts",e:4.0,t:"teknik"},{c:"AER448",n:"Intro to Aeroelasticity",e:4.0,t:"teknik"},{c:"AER450",n:"Solar Energy Propulsion",e:4.0,t:"teknik"},{c:"AER454",n:"Spacecraft Vehicle Design",e:4.0,t:"teknik"},{c:"AER456",n:"Aircraft Simulation & Control",e:4.0,t:"teknik"},{c:"AER458",n:"Guidance System & Navigation",e:4.0,t:"teknik"},{c:"GEN402",n:"Organizational Behaviour",e:4.0,t:"genel"}
+        ]
     }
 };
