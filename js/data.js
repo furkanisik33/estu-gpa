@@ -212,7 +212,7 @@ const DEPARTMENTS = {
     // 10. HAVACILIK ELEKTRİK ELEKTRONİĞİ
     "hee": {
         title: "Havacılık Elektrik Elektroniği",
-        icon: "⚡✈️",
+        icon: "🛸",
         color: "#0369a1",
         faculty: "Havacılık ve Uzay Bilimleri",
         core: [
@@ -295,6 +295,153 @@ const DEPARTMENTS = {
         ],
         specs: [
             {c:"ENT2505",n:"Dijital Oyun Tasarımında İçerik",e:4.0,t:"oyun"},{c:"ENT230",n:"Etkileşimli Prototipleme",e:4.0,t:"tasarim"},{c:"ENT3505",n:"Endüstriyel Seramik Tasarımı",e:6.0,t:"tasarim"},{c:"ENT3507",n:"Çocuk Odaklı Tasarım",e:6.0,t:"tasarim"},{c:"ENT3501",n:"Dijital Oyun Tasarımı I",e:6.0,t:"oyun"},{c:"ENT3523",n:"Üretim Odaklı Tasarım",e:4.0,t:"uretim"},{c:"ENT4503",n:"Ürün ve Servis Deneyimi Stüdyosu",e:6.0,t:"tasarim"},{c:"ENT3504",n:"Mobilya Tasarım Stüdyosu",e:6.0,t:"tasarim"},{c:"ENT3508",n:"Ambalaj Tasarımı Stüdyosu",e:6.0,t:"tasarim"},{c:"ENT4509",n:"Görsel İletişim Tasarımı Stüdyosu",e:6.0,t:"iletisim"},{c:"ENT4506",n:"Sürdürülebilir Tasarım Stüdyosu",e:6.0,t:"surdurulebilirlik"},{c:"ENT3529",n:"Üretken ve Parametrik Tasarım",e:4.0,t:"tasarim"},{c:"ENT3517",n:"Girişimcilik ve Teknoloji Geliştirme",e:4.0,t:"girisimcilik"},{c:"ENT4508",n:"UX/UI Tasarımı Stüdyosu",e:6.0,t:"tasarim"},{c:"ENT4511",n:"Tasarım Yönetimi",e:4.0,t:"yonetim"}
+        ]
+    },
+        // 14. MATEMATİK
+    "matematik": {
+        title: "Matematik",
+        icon: "📐",
+        color: "#059669",
+        faculty: "Fen Fakültesi",
+        core: [
+            // 1. Yarıyıl
+            [ {c:"MAT1013",n:"Genel Matematik I",e:7.5},{c:"FİZ1029",n:"Fizik I",e:6.0},{c:"FİZ107",n:"Fizik Laboratuvarı I",e:1.5},{c:"MAT115",n:"Analitik Geometri I",e:5.0},{c:"MAT117",n:"Soyut Matematik I",e:5.0},{c:"MAT817",n:"Genel Matematik Lab. I",e:2.0} ],
+            // 2. Yarıyıl
+            [ {c:"MAT1014",n:"Genel Matematik II",e:7.5},{c:"MAT116",n:"Analitik Geometri II",e:5.0},{c:"MAT118",n:"Soyut Matematik II",e:5.0},{c:"MAT818",n:"Genel Matematik Lab. II",e:2.0} ],
+            // 3. Yarıyıl (Taslak - Müfredata göre doldurulabilir)
+            [ {c:"MAT215",n:"Analiz I",e:6.0},{c:"MAT213",n:"Lineer Cebir I",e:5.0},{c:"MAT227",n:"Diferansiyel Denklemler I",e:5.0} ],
+            // 4. Yarıyıl
+            [ {c:"MAT216",n:"Analiz II",e:6.0},{c:"MAT214",n:"Lineer Cebir II",e:5.0},{c:"MAT228",n:"Diferansiyel Denklemler II",e:5.0} ],
+            // 5. Yarıyıl
+            [ {c:"MAT321",n:"Kompleks Fonksiyonlar Teorisi I",e:6.0},{c:"MAT313",n:"Cebir I",e:5.0} ],
+            // 6. Yarıyıl
+            [ {c:"MAT322",n:"Kompleks Fonksiyonlar Teorisi II",e:6.0},{c:"MAT314",n:"Cebir II",e:5.0} ],
+            // 7. Yarıyıl
+            [ {c:"MAT401",n:"Reel Analiz",e:6.0},{c:"MAT457",n:"Matematik Projesi I",e:4.0} ],
+            // 8. Yarıyıl
+            [ {c:"MAT458",n:"Matematik Projesi II",e:6.0} ]
+        ],
+        specs: [
+            {c:"İŞL215",n:"Zaman Yönetimi",e:3.0,t:"ortak"},{c:"İŞL301",n:"İnsan Kaynakları Yönetimi",e:4.0,t:"isletme"},{c:"MAT365",n:"Yaratıcılık ve İnovasyon Yön.",e:2.0,t:"matematik"},{c:"MÜZ151",n:"Müziğin Tarihçesi",e:3.0,t:"ortak"},{c:"ESTÜ101",n:"Üniversite Hayatına Giriş",e:2.0,t:"estu"},{c:"ESTÜ121",n:"Piyano",e:3.0,t:"estu"},{c:"ESTÜ122",n:"Gitar",e:3.0,t:"estu"},{c:"ESTÜ111",n:"Gönüllülük Çalışmaları",e:4.0,t:"estu"}
+        ]
+    },
+        // 15. İÇ MİMARLIK
+    "icmimarlik": {
+        title: "İç Mimarlık",
+        icon: "🛋️",
+        color: "#4f46e5",
+        faculty: "Mimarlık ve Tasarım Fakültesi",
+        core: [
+            // 1. Yarıyıl
+            [ {c:"İÇT105",n:"Tasarımda Eskiz",e:4.0},{c:"İÇT109",n:"İç Mimarlığa Giriş",e:3.0},{c:"İÇT113",n:"Temel Tasarım I",e:10.0},{c:"TRS133",n:"Teknik Resim",e:6.0},{c:"TÜR125",n:"Türk Dili I",e:2.0},{c:"YDL101",n:"Yabancı Dil Dersleri",e:3.0} ],
+            // 2. Yarıyıl
+            [ {c:"BİL180",n:"Bilgisayarlı Sunum Teknikleri",e:3.0},{c:"İÇT110",n:"Mekan Tasarımına Giriş",e:5.0},{c:"İÇT114",n:"Temel Tasarım II",e:10.0},{c:"İÇT122",n:"İç Mekanda Ergonomi",e:3.0},{c:"PPT112",n:"Perspektif",e:5.0},{c:"TÜR126",n:"Türk Dili II",e:2.0} ],
+            // 3. Yarıyıl
+            [ {c:"İÇT201",n:"İç Mimari Proje I",e:10.0},{c:"İÇT203",n:"Mekan ve Donatı Bilgisi I",e:5.0},{c:"İÇT209",n:"Yapı ve Yapım Bilgisi I",e:4.0},{c:"İÇT213",n:"İç Mimarlık Tarihi I",e:3.0},{c:"TAR165",n:"Atatürk İlkeleri ve İnkılap Tarihi I",e:2.0} ],
+            // 4. Yarıyıl
+            [ {c:"İÇT202",n:"İç Mimari Proje II",e:10.0},{c:"İÇT204",n:"Mekan ve Donatı Bilgisi II",e:5.0},{c:"İÇT210",n:"Yapı ve Yapım Bilgisi II",e:4.0},{c:"İÇT214",n:"İç Mimarlık Tarihi II",e:3.0},{c:"TAR166",n:"Atatürk İlkeleri ve İnkılap Tarihi II",e:2.0} ],
+            // 5. Yarıyıl
+            [ {c:"İÇT301",n:"İç Mimari Proje III",e:10.0},{c:"İÇT303",n:"İç Mekan İnce Yapı Bilgisi I",e:4.0},{c:"İÇT305",n:"İç Mekan Fiziksel Çevre Denetimi I",e:3.0},{c:"İÇT307",n:"Modern İç Mimarlık Tarihi",e:3.0},{c:"İÇT309",n:"Rölöve ve Restorasyon",e:4.0},{c:"İÇTSJ301",n:"Şantiye Stajı",e:3.0} ],
+            // 6. Yarıyıl
+            [ {c:"İÇT302",n:"İç Mimari Proje IV",e:10.0},{c:"İÇT304",n:"İç Mekan İnce Yapı Bilgisi II",e:4.0},{c:"İÇT306",n:"İç Mekan Fiziksel Çevre Denetimi II",e:3.0},{c:"İÇT308",n:"Mobilya Tasarımı",e:5.0},{c:"İÇT310",n:"Türk İç Mimarlık Tarihi",e:3.0} ],
+            // 7. Yarıyıl
+            [ {c:"İÇT401",n:"İç Mimari Proje V",e:10.0},{c:"İÇT403",n:"Çevre ve Kentsel Tasarım",e:3.0},{c:"İÇT405",n:"Uygulama Projesi",e:5.0},{c:"İÇT407",n:"Mesleki Uygulama Bilgisi ve Etik",e:2.0},{c:"İÇTSJ401",n:"Büro Stajı",e:3.0},{c:"İSG401",n:"İş Sağlığı ve Güvenliği I",e:2.0} ],
+            // 8. Yarıyıl
+            [ {c:"İÇT402",n:"Mezuniyet Projesi",e:14.0},{c:"İÇT404",n:"Proje Yönetimi ve İşletme",e:3.0},{c:"İSG402",n:"İş Sağlığı ve Güvenliği II",e:2.0} ]
+        ],
+        specs: [
+            {c:"İÇT424",n:"Portfolyo Sunuş ve Tanıtım Yön.",e:4.0,t:"mesleki"},{c:"İÇT428",n:"Mekanlar ve Sınırlar",e:4.0,t:"mesleki"},{c:"İÇT441",n:"Müze Tasarımına Çağdaş Yaklaşımlar",e:4.0,t:"tasarim"},{c:"İÇT443",n:"Deneyime Dayalı Mekan Tasarımı",e:4.0,t:"tasarim"},{c:"İÇT460",n:"Maliyet Analizi",e:5.0,t:"teknik"},{c:"SAN113",n:"Sanat Kavramları",e:2.0,t:"ortak"},{c:"ESTÜ113",n:"Tasarım Odaklı Düşünme",e:3.0,t:"estu"},{c:"ESTÜ114",n:"Görsel Düşünme",e:3.0,t:"estu"},{c:"ESTÜ207",n:"Genel Psikoloji",e:3.0,t:"estu"},{c:"ESTÜ116",n:"Bilgisayar Destekli Tasarım I",e:3.0,t:"estu"}
+        ]
+    },
+        // 16. KİMYA (FEN FAKÜLTESİ)
+    "kimya_fen": {
+        title: "Kimya",
+        icon: "🔬",
+        color: "#0284c7",
+        faculty: "Fen Fakültesi",
+        core: [
+            // 1. Yarıyıl
+            [ {c:"BİY127",n:"Kimyacılar İçin Biyoloji I",e:2.0},{c:"FİZ1029",n:"Fizik I",e:6.0},{c:"FİZ107",n:"Fizik Laboratuvarı I",e:1.5},{c:"KİM1033",n:"Genel Kimya I",e:6.0},{c:"KİM121",n:"Genel Kimya Laboratuvarı I",e:2.0},{c:"MAT1023",n:"Matematik I",e:6.0},{c:"TÜR125",n:"Türk Dili I",e:2.0} ],
+            // 2. Yarıyıl
+            [ {c:"BİY128",n:"Kimyacılar İçin Biyoloji II",e:2.0},{c:"FİZ1030",n:"Fizik II",e:6.0},{c:"FİZ108",n:"Fizik Laboratuvarı II",e:1.5},{c:"KİM1034",n:"Genel Kimya II",e:6.0},{c:"KİM122",n:"Genel Kimya Laboratuvarı II",e:2.0},{c:"MAT1024",n:"Matematik II",e:6.0},{c:"TÜR126",n:"Türk Dili II",e:2.0} ],
+            // 3. Yarıyıl
+            [ {c:"İSG401",n:"İş Sağlığı ve Güvenliği I",e:2.0},{c:"KİM221",n:"Analitik Kimya Laboratuvarı I",e:3.0},{c:"KİM257",n:"Anorganik Kimya I",e:5.0},{c:"KİM275",n:"Analitik Kimya I",e:5.0},{c:"KİM277",n:"Organik Kimya I",e:4.0},{c:"TAR165",n:"Atatürk İlkeleri ve İnkılap Tarihi I",e:2.0} ],
+            // 4. Yarıyıl
+            [ {c:"İSG402",n:"İş Sağlığı ve Güvenliği II",e:2.0},{c:"KİM222",n:"Analitik Kimya Laboratuvarı II",e:3.0},{c:"KİM240",n:"Aletli Analiz I",e:4.0},{c:"KİM276",n:"Analitik Kimya II",e:5.0},{c:"KİM278",n:"Organik Kimya II",e:5.0},{c:"KİM334",n:"Anorganik Kimya II",e:5.0},{c:"TAR166",n:"Atatürk İlkeleri ve İnkılap Tarihi II",e:2.0} ],
+            // 5. Yarıyıl
+            [ {c:"KİM321",n:"Organik Kimya Laboratuvarı I",e:4.0},{c:"KİM325",n:"Anorganik Kimya Laboratuvarı I",e:4.0},{c:"KİM337",n:"Organik Kimya III",e:6.0},{c:"KİM343",n:"Aletli Analiz II",e:4.0},{c:"KİM345",n:"Fizikokimya I",e:5.0},{c:"KİM359",n:"Kaynak Taraması",e:1.0} ],
+            // 6. Yarıyıl
+            [ {c:"KİM322",n:"Organik Kimya Laboratuvarı II",e:4.0},{c:"KİM324",n:"Fizikokimya Laboratuvarı I",e:4.0},{c:"KİM326",n:"Anorganik Kimya Laboratuvarı II",e:4.0},{c:"KİM346",n:"Fizikokimya II",e:5.0},{c:"KİM358",n:"Aletli Analiz III",e:4.0} ],
+            // 7. Yarıyıl
+            [ {c:"KİM401",n:"Biyokimya I",e:3.0},{c:"KİM409",n:"Endüstriyel Kimya",e:4.0},{c:"KİM423",n:"Endüstriyel Kimya Laboratuvarı",e:3.0},{c:"KİM435",n:"Fizikokimya III",e:4.0},{c:"KİM447",n:"Aletli Analiz Laboratuvarı I",e:3.0} ],
+            // 8. Yarıyıl
+            [ {c:"KİM402",n:"Biyokimya II",e:3.0},{c:"KİM408",n:"Atom ve Molekül Kimyası",e:2.0},{c:"KİM412",n:"Biyokimya Laboratuvarı",e:3.0},{c:"KİM425",n:"Fizikokimya Laboratuvarı II",e:3.0},{c:"KİM448",n:"Aletli Analiz Laboratuvarı II",e:3.0} ]
+        ],
+        specs: [
+            {c:"KİMSJ303",n:"Staj",e:5.0,t:"staj"},{c:"KİM459",n:"Bitirme Projesi I",e:10.0,t:"proje"},{c:"KİM460",n:"Bitirme Projesi II",e:13.0,t:"proje"},
+            {c:"KİM209",n:"Kimyada Matematiksel Yöntemler",e:3.0,t:"matematik"},{c:"KİM215",n:"Çevre ve Sorunları",e:3.0,t:"cevre"},{c:"KİM217",n:"Kimya Lab. Güvenli Çalışma Esasları",e:3.0,t:"guvenlik"},{c:"İŞL475",n:"Tekno-Girişimcilik",e:4.0,t:"isletme"},
+            {c:"KİM305",n:"Su ve Atık Su Analizleri",e:3.0,t:"analiz"},{c:"KİM315",n:"Seramik Kimyası",e:3.0,t:"malzeme"},{c:"KİM331",n:"Atomik Absorpsiyonda Analiz Yöntemleri",e:3.0,t:"analiz"},{c:"KİM336",n:"Yüzey ve Isıl Analiz Teknikleri",e:3.0,t:"analiz"},
+            {c:"KİM339",n:"Anorganik Teknolojiler",e:3.0,t:"teknoloji"},{c:"KİM347",n:"Gıda Kimyası ve Teknolojisi",e:3.0,t:"gida"},{c:"KİM316",n:"İlaç Aktif Maddeleri",e:3.0,t:"saglik"},{c:"KİM338",n:"X Işınları Analiz Teknikleri",e:3.0,t:"analiz"},
+            {c:"KİM349",n:"Organik Bileşiklerde Yapı Karakterizasyonu",e:3.0,t:"organik"},{c:"KİM360",n:"Polimer Kimyasına Giriş",e:3.0,t:"polimer"},{c:"KİM362",n:"Technical Writing for Chemists",e:3.0,t:"iletisim"},{c:"KİM364",n:"Elektrokimyasal Yöntemler",e:3.0,t:"fizikokimya"},
+            {c:"KİM3802",n:"Koku ve Aroma Kimyası",e:3.0,t:"organik"},{c:"BİL425",n:"Bilgisayar Destekli Kimya Hesaplamaları",e:3.0,t:"bilisim"},{c:"BİY461",n:"Biyoteknoloji",e:3.0,t:"biyoloji"},{c:"KİM415",n:"Heterosiklik Kimyaya Giriş",e:3.0,t:"organik"},
+            {c:"KİM427",n:"Gaz Kromatografisi Analiz Teknikleri",e:3.0,t:"analiz"},{c:"KİM429",n:"Temel Grup Elementleri Kimyası",e:3.0,t:"anorganik"},{c:"KİM437",n:"Biyoafinite Kromatografisi",e:3.0,t:"analiz"},{c:"KİM453",n:"Boya Kimyası ve Teknolojisi",e:3.0,t:"malzeme"},
+            {c:"KİM455",n:"Uygulamalı NMR Spektroskopi Teknikleri",e:3.0,t:"analiz"},{c:"KİM434",n:"Koordinasyon Kimyası",e:3.0,t:"anorganik"},{c:"KİM438",n:"Sıvı Kromatografi Analiz Teknikleri",e:3.0,t:"analiz"},{c:"KİM446",n:"Doğal Polimerik Malzemeler",e:3.0,t:"polimer"},{c:"KİM456",n:"Kozmetik Kimyası",e:3.0,t:"organik"}
+        ]
+    },
+        // 17. FİZİK
+    "fizik": {
+        title: "Fizik",
+        icon: "⚛️",
+        color: "#8b5cf6",
+        faculty: "Fen Fakültesi",
+        core: [
+            // 1. Yarıyıl
+            [ {c:"FİZ115",n:"Fizik I",e:7.0},{c:"FİZ117",n:"Fizik Laboratuvarı I",e:3.0},{c:"KİM1033",n:"Genel Kimya I",e:6.0},{c:"KİM121",n:"Genel Kimya Laboratuvarı I",e:2.0},{c:"MAT1013",n:"Genel Matematik I",e:7.5},{c:"TAR165",n:"Atatürk İlkeleri ve İnkılap Tarihi I",e:2.0} ],
+            // 2. Yarıyıl
+            [ {c:"FİZ1016",n:"Fizik II",e:7.0},{c:"FİZ118",n:"Fizik Laboratuvarı II",e:3.0},{c:"KİM1034",n:"Genel Kimya II",e:6.0},{c:"KİM122",n:"Genel Kimya Laboratuvarı II",e:2.0},{c:"MAT1014",n:"Genel Matematik II",e:7.5},{c:"TAR166",n:"Atatürk İlkeleri ve İnkılap Tarihi II",e:2.0} ],
+            // 3. Yarıyıl
+            [ {c:"FİZ229",n:"Fizikte Matematiksel Yöntemler I",e:5.0},{c:"FİZ231",n:"Dalgalar ve Optik",e:5.0},{c:"FİZ233",n:"Dalgalar ve Optik Laboratuvarı",e:2.0},{c:"MAT2011",n:"Diferansiyel Denklemler",e:4.5},{c:"TÜR125",n:"Türk Dili I",e:2.0} ],
+            // 4. Yarıyıl
+            [ {c:"FİZ218",n:"Modern Fizik",e:5.0},{c:"FİZ230",n:"Fizikte Matematiksel Yöntemler II",e:5.0},{c:"TER206",n:"Termodinamik",e:5.0},{c:"TER210",n:"Termodinamik Laboratuvarı",e:2.0},{c:"TÜR126",n:"Türk Dili II",e:2.0} ],
+            // 5. Yarıyıl
+            [ {c:"FİZ327",n:"Kuantum Fiziği I",e:5.0},{c:"FİZ349",n:"Klasik Mekanik",e:6.0},{c:"FİZ353",n:"Elektronik I",e:3.0},{c:"FİZ355",n:"Fizikçiler İçin Bilgisayar Programlama I",e:2.0},{c:"FİZ359",n:"Doğa Bilimleri için Fizik",e:2.0},{c:"FİZSJ401",n:"Staj",e:5.0} ],
+            // 6. Yarıyıl
+            [ {c:"FİZ328",n:"Kuantum Fiziği II",e:5.0},{c:"FİZ346",n:"Kuantum Fiziği Laboratuvarı",e:2.0},{c:"FİZ348",n:"Elektromanyetik Teori",e:6.0},{c:"FİZ354",n:"Elektronik II",e:3.0},{c:"FİZ356",n:"Fizikçiler için Bilgisayar Programlama II",e:2.0} ],
+            // 7. Yarıyıl
+            [ {c:"FİZ429",n:"Katıhal Fiziği",e:5.0},{c:"FİZ433",n:"Atom ve Molekül Fiziği",e:5.0},{c:"FİZ453",n:"Kariyer Gelişimi",e:2.0},{c:"FİZ459",n:"Bitirme Projesi I",e:5.0},{c:"İSG401",n:"İş Sağlığı ve Güvenliği I",e:2.0} ],
+            // 8. Yarıyıl
+            [ {c:"FİZ212",n:"İstatistik Fizik",e:5.0},{c:"FİZ428",n:"Nükleer Fizik",e:5.0},{c:"FİZ460",n:"Bitirme Projesi II",e:5.0},{c:"FİZ462",n:"Karakterizasyon Yöntemleri",e:3.5},{c:"İSG402",n:"İş Sağlığı ve Güvenliği II",e:2.0} ]
+        ],
+        specs: [
+            {c:"FİZ113",n:"Technical English",e:4.0,t:"dil"},{c:"FİZ321",n:"Yarıiletkenler",e:3.0,t:"katihal"},{c:"FİZ331",n:"Fizikte Nobel Ödülleri",e:3.0,t:"genel"},{c:"FİZ337",n:"Güneş Enerjisi ve Uygulamaları",e:3.0,t:"enerji"},{c:"FİZ340",n:"Fiziğin Tıptaki Bazı Uygulamaları",e:3.0,t:"uygulamali"},{c:"FİZ344",n:"Jeofizik ve Deprem",e:3.0,t:"jeofizik"},{c:"FİZ413",n:"Astronominin Fiziksel Temelleri",e:3.0,t:"astronomi"},{c:"FİZ425",n:"Yüksek Enerji Fiziği",e:3.0,t:"nukleer"},{c:"FİZ468",n:"Parçacık Fiziği",e:3.0,t:"nukleer"},{c:"ELO302",n:"Elektronik Devre Elemanı Uyg.",e:3.0,t:"elektronik"},{c:"FİZ365",n:"Enerji Kaynakları Teknolojisi",e:3.0,t:"enerji"},{c:"FİZ451",n:"Fizikte Nümerik Metotlar",e:3.0,t:"bilgisayar"},{c:"FİZ403",n:"Spektroskopik Yöntemler",e:3.0,t:"analiz"},{c:"FİZ414",n:"Astrofiziğe Giriş",e:3.0,t:"astronomi"},{c:"FİZ446",n:"Uygulamalı Isı Teorisi",e:3.0,t:"termodinamik"}
+        ]
+    },
+        // 18. BİYOLOJİ
+    "biyoloji": {
+        title: "Biyoloji",
+        icon: "🧬",
+        color: "#10b981",
+        faculty: "Fen Fakültesi",
+        core: [
+            // 1. Yarıyıl
+            [ {c:"BİY117",n:"Genel Biyoloji I",e:4.0},{c:"BİY119",n:"Genel Biyoloji Laboratuvarı I",e:3.0},{c:"BİY141",n:"Temel Matematik",e:3.0},{c:"İSG401",n:"İş Sağlığı ve Güvenliği I",e:2.0},{c:"JEO101",n:"Genel Jeoloji",e:2.0},{c:"KİM1003",n:"Genel Kimya",e:4.0},{c:"KİM131",n:"Genel Kimya Laboratuvarı",e:2.0},{c:"TÜR125",n:"Türk Dili I",e:2.0} ],
+            // 2. Yarıyıl
+            [ {c:"BİY118",n:"Genel Biyoloji II",e:4.0},{c:"BİY120",n:"Genel Biyoloji Laboratuvarı II",e:3.0},{c:"BİY126",n:"Temel Fizik",e:4.0},{c:"BİY132",n:"Temel Fizik Laboratuvarı",e:3.0},{c:"İSG402",n:"İş Sağlığı ve Güvenliği II",e:2.0},{c:"İST209",n:"Biyoistatistik",e:3.0},{c:"KİM146",n:"Organik Kimya Laboratuvarı",e:2.0},{c:"KİM208",n:"Organik Kimya",e:4.0},{c:"TÜR126",n:"Türk Dili II",e:2.0} ],
+            // 3. Yarıyıl
+            [ {c:"BİY213",n:"Tohumsuz Bitkiler",e:2.5},{c:"BİY215",n:"Mikrobiyoloji I",e:2.5},{c:"BİY217",n:"Mikrobiyoloji Laboratuvarı I",e:2.0},{c:"BİY219",n:"Tohumsuz Bitkiler Laboratuvarı",e:2.0},{c:"BİY221",n:"Bitki Morfolojisi",e:2.5},{c:"BİY223",n:"Bitki Morfolojisi Laboratuvarı",e:2.0},{c:"BİY225",n:"Sitoloji",e:2.0},{c:"BİY227",n:"Sitoloji Laboratuvarı",e:2.0},{c:"BİY229",n:"Omurgasız Hayvanlar",e:2.5},{c:"BİY231",n:"Omurgasız Hayvanlar Laboratuvarı",e:2.0},{c:"BİY239",n:"Moleküler Biyoloji",e:2.0},{c:"BİY241",n:"Moleküler Biyoloji Laboratuvarı",e:2.0},{c:"TAR165",n:"Atatürk İlkeleri ve İnkılap Tarihi I",e:2.0} ],
+            // 4. Yarıyıl
+            [ {c:"BİY216",n:"Mikrobiyoloji II",e:2.5},{c:"BİY218",n:"Mikrobiyoloji Laboratuvarı II",e:2.0},{c:"BİY220",n:"Tohumlu Bitkiler",e:3.0},{c:"BİY222",n:"Tohumlu Bitkiler Laboratuvarı",e:2.0},{c:"BİY224",n:"Omurgalı Hayvanlar",e:2.5},{c:"BİY226",n:"Omurgalı Hayvanlar Laboratuvarı",e:2.0},{c:"BİY228",n:"Arthropoda",e:2.5},{c:"BİY230",n:"Arthropoda Laboratuvarı",e:2.0},{c:"BİY232",n:"Genel Ekoloji",e:3.0},{c:"BİY234",n:"Genel Ekoloji Laboratuvarı",e:2.0},{c:"TAR166",n:"Atatürk İlkeleri ve İnkılap Tarihi II",e:2.0} ],
+            // 5. Yarıyıl
+            [ {c:"BİY305",n:"Moleküler Hücre Fizyolojisi",e:2.5},{c:"BİY339",n:"Hayvan Fizyolojisi",e:2.5},{c:"BİY341",n:"Hayvan Fizyolojisi Laboratuvarı",e:2.0},{c:"BİY371",n:"Biyoteknoloji",e:2.5},{c:"BİY373",n:"Biyoteknoloji Laboratuvarı",e:2.0},{c:"BİY395",n:"Biyokimya I",e:2.5},{c:"BİY397",n:"Biyokimya Laboratuvarı I",e:2.0},{c:"BİYSJ301",n:"Staj",e:5.0} ],
+            // 6. Yarıyıl
+            [ {c:"BİY354",n:"Bitki Fizyolojisi",e:2.5},{c:"BİY356",n:"Bitki Fizyolojisi Laboratuvarı",e:2.0},{c:"BİY358",n:"Genetik",e:2.5},{c:"BİY360",n:"Genetik Laboratuvarı",e:2.0},{c:"BİY396",n:"Biyokimya II",e:2.5},{c:"BİY398",n:"Biyokimya Laboratuvarı II",e:2.0} ],
+            // 7. Yarıyıl
+            [ {c:"BİY405",n:"Gelişim Biyolojisi I",e:3.0},{c:"BİY412",n:"Bitki Coğrafyası",e:3.0},{c:"BİY414",n:"Zoocoğrafya",e:3.0},{c:"BİY457",n:"Moleküler Genetik",e:3.0},{c:"BİY489",n:"Bitirme Projesi I",e:7.0} ],
+            // 8. Yarıyıl
+            [ {c:"BİY402",n:"Evrim",e:3.0},{c:"BİY404",n:"İnsan Biyolojisi",e:3.0},{c:"BİY406",n:"Gelişim Biyolojisi II",e:3.0},{c:"BİY490",n:"Bitirme Projesi II",e:7.0} ]
+        ],
+        specs: [
+            {c:"BİY313",n:"Etoloji",e:4.0,t:"zooloji"},{c:"BİY3501",n:"Proteomik ve Protein Müh.",e:4.0,t:"molekuler"},{c:"BİY375",n:"Adli Biyoloji",e:4.0,t:"adli"},{c:"BİY393",n:"Proje Yazma Teknikleri",e:4.0,t:"proje"},{c:"BİY374",n:"İmmünoloji",e:4.0,t:"saglik"},{c:"BİY388",n:"Moleküler Biyolojide Teknikler",e:4.0,t:"molekuler"},{c:"BİY410",n:"Tıbbi Mikrobiyoloji",e:4.0,t:"mikrobiyoloji"},{c:"BİY431",n:"Biyoinformatiğe Giriş",e:4.0,t:"bilisim"},{c:"BİY433",n:"Bitki Genetik Mühendisliği",e:4.0,t:"genetik"},{c:"BİY465",n:"Klinik Biyokimya",e:4.0,t:"biyokimya"},{c:"BİY469",n:"Adli Entomoloji",e:4.0,t:"adli"},{c:"BİY479",n:"Astrobotanik",e:4.0,t:"botanik"},{c:"BİY430",n:"Genetik Toksikoloji",e:4.0,t:"genetik"},{c:"BİY476",n:"Gıda Mikrobiyolojisi",e:4.0,t:"mikrobiyoloji"},{c:"BİY482",n:"Moleküler Biyoteknolojiye Giriş",e:4.0,t:"biyoteknoloji"}
         ]
     },
     // --- ÖZEL BÖLÜM (ATÜ) ---
