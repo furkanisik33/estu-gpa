@@ -1,7 +1,10 @@
 /* ESTÜ NOT MERKEZİ - VERİTABANI (FULL - vFinal) */
 
 const SYSTEM_CONFIG = {
-    gradeScale: { "AA":4.0, "AB":3.7, "BA":3.3, "BB":3.0, "BC":2.7, "CB":2.3, "CC":2.0, "CD":1.7, "DC":1.3, "DD":1.0, "FF":0.0 },
+gradeScales: {
+        "default": { "AA":4.0, "AB":3.7, "BA":3.3, "BB":3.0, "BC":2.7, "CB":2.3, "CC":2.0, "CD":1.7, "DC":1.3, "DD":1.0, "FF":0.0 },
+        "atu": { "AA":4.0, "BA":3.5, "BB":3.0, "CB":2.5, "CC":2.0, "DC":1.5, "DD":1.0, "FD":0.5, "FF":0.0, "S":"SKIP", "U":"SKIP" }
+    },    
     semesterLabels: {
         tr: [ "1. Dönem (Güz)", "2. Dönem Sonu (1. Sınıf)", "3. Dönem Sonu", "4. Dönem Sonu (2. Sınıf)", "5. Dönem Sonu", "6. Dönem Sonu (3. Sınıf)", "7. Dönem Sonu", "4. Sınıf / Mezuniyet" ],
         en: [ "1st Semester (Fall)", "End of 2nd Sem. (Freshman)", "End of 3rd Semester", "End of 4th Sem. (Sophomore)", "End of 5th Semester", "End of 6th Sem. (Junior)", "End of 7th Semester", "Manual / Senior" ]
