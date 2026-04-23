@@ -235,7 +235,68 @@ const DEPARTMENTS = {
             {c:"HEESJ404",n:"Staj II",e:2.5,t:"staj"},{c:"HYO114",n:"Havacılıkta Ergonomi",e:5.0,t:"yonetim"},{c:"HYO428",n:"Havacılık Meteorolojisi",e:5.0,t:"meteoroloji"},{c:"SHU424",n:"Havaaracı Bakım Yönetimi",e:5.0,t:"yonetim"}
         ]
     },
+        // 11. MİMARLIK
+    "mimarlik": {
+        title: "Mimarlık",
+        icon: "🏛️",
+        color: "#d97706",
+        faculty: "Mimarlık ve Tasarım Fakültesi",
+        core: [
+            [ {c:"MIM1005",n:"Temel Tasarım",e:10.0},{c:"MIM1007",n:"Mimari Anlatım",e:6.0},{c:"MAT1095",n:"Genel Matematik",e:3.0},{c:"TAR165",n:"Atatürk İlkeleri ve İnkılap Tarihi I",e:2.0},{c:"TÜR125",n:"Türk Dili I",e:2.0},{c:"ING187",n:"İngilizce I",e:3.0} ],
+            [ {c:"MIM1006",n:"Mimari Tasarıma Giriş",e:10.0},{c:"MIM1008",n:"Yapı Elemanları",e:4.0},{c:"MIM1010",n:"Mimariye Giriş",e:2.0},{c:"MIM1012",n:"Mimarlıkta Bilgisayar Uygulamaları",e:2.0},{c:"TAR166",n:"Atatürk İlkeleri ve İnkılap Tarihi II",e:2.0},{c:"TÜR126",n:"Türk Dili II",e:2.0},{c:"ING188",n:"İngilizce II",e:3.0} ],
+            [ {c:"MIM2005",n:"Mimari Proje I",e:8.0},{c:"MIM2007",n:"Strüktür Analizi I",e:3.0},{c:"MIM2009",n:"Yapı ve Yapım Yöntemleri I",e:4.0},{c:"MIM2011",n:"Mimarlık Tarihi",e:3.0} ],
+            [ {c:"MIM2006",n:"Mimari Proje II",e:8.0},{c:"MIM2012",n:"Yapı Tesisatı",e:3.0},{c:"MIM2014",n:"Modern Mimarlık Tarihi",e:3.0},{c:"MIM2010",n:"Yapı ve Yapım Yöntemleri II",e:4.0},{c:"MIM2008",n:"Strüktür Analizi II",e:3.0} ],
+            [ {c:"MIM3005",n:"Mimari Proje III",e:10.0},{c:"MIM3007",n:"Mimari Koruma I",e:3.0},{c:"MIM3009",n:"Kentsel Tasarım",e:4.0},{c:"MIM3011",n:"Uygulama Projesi",e:5.0},{c:"MIM3013",n:"Fiziksel Çevre Denetimi I",e:3.0},{c:"MIMSJ301",n:"Şantiye Stajı",e:3.0} ],
+            [ {c:"MIM3006",n:"Mimari Proje IV",e:10.0},{c:"MIM3008",n:"Mimari Koruma II",e:5.0},{c:"MIM3010",n:"Kentsel Tasarım Stüdyosu",e:5.0},{c:"MIM3012",n:"Türk Mimarlık Tarihi",e:3.0},{c:"MIM3014",n:"Fiziksel Çevre Denetimi II",e:3.0} ],
+            [ {c:"MIM4005",n:"Mimari Proje V",e:10.0},{c:"MIM4007",n:"Yapı Hukuku",e:2.0},{c:"MIM4009",n:"Meslek Etiği ve Pratiği",e:2.0},{c:"MIMSJ401",n:"Büro Stajı",e:3.0},{c:"İSG401",n:"İş Sağlığı ve Güvenliği I",e:2.0} ],
+            [ {c:"MIM4006",n:"Mezuniyet Projesi",e:12.0},{c:"MIM4008",n:"Yapı Yönetimi ve Maliyeti",e:3.0},{c:"İSG402",n:"İş Sağlığı ve Güvenliği II",e:2.0} ]
+        ],
+        specs: [
+            {c:"MIM2501",n:"Mimarlıkta Eleştirel Okumalar",e:4.0,t:"mesleki"},{c:"MIM2503",n:"Mekan ve Gelecek",e:4.0,t:"mesleki"},{c:"MIM2505",n:"Beden, Mekan, Deneyim",e:4.0,t:"mesleki"},{c:"MIM2513",n:"Bilgisayar Destekli Tasarım I",e:4.0,t:"tasarim"},{c:"MIM2514",n:"Bilgisayar Destekli Tasarım II",e:4.0,t:"tasarim"},{c:"MIM3501",n:"Ahşap Yapılar",e:4.0,t:"yapi"},{c:"MIM3504",n:"Coğrafi Bilgi Sistemleri",e:4.0,t:"bilisim"},{c:"MIM3506",n:"Mimarlıkta Sürdürülebilir Tasarım",e:4.0,t:"surdurulebilirlik"},{c:"MIM3510",n:"İnce Yapı",e:4.0,t:"yapi"},{c:"MIM4504",n:"Peyzaj Tasarımı",e:4.0,t:"tasarim"},{c:"MIM4506",n:"Çağdaş Strüktür Sistemleri",e:4.0,t:"yapi"},{c:"MTF3001",n:"Grafik Tasarımı",e:4.0,t:"ortak"},{c:"SNT155",n:"Sanat Tarihi",e:2.0,t:"ortak"},{c:"ESTÜ101",n:"Üniversite Hayatına Giriş",e:2.0,t:"estu"},{c:"ESTÜ403",n:"Temel Bilgisayar Kullanımı",e:4.0,t:"estu"}
+        ]
+    },
 
+
+    // 12. İSTATİSTİK
+    "istatistik": {
+        title: "İstatistik",
+        icon: "📊",
+        color: "#2563eb",
+        faculty: "Fen Fakültesi",
+        core: [
+            [ {c:"MAT1013",n:"Calculus I",e:7.5},{c:"İST129",n:"İstatistik I",e:6.0},{c:"İST123",n:"Veri Yapıları ve Algoritmalar",e:4.5},{c:"İST135",n:"Statistics Laboratory I",e:3.0},{c:"TÜR125",n:"Türk Dili I",e:2.0},{c:"TAR165",n:"Atatürk İlkeleri ve İnkılap Tarihi I",e:2.0} ],
+            [ {c:"MAT1014",n:"Calculus II",e:7.5},{c:"İST130",n:"İstatistik II",e:6.0},{c:"BİL168",n:"Bilgisayar Programlama",e:5.0},{c:"İST136",n:"Statistics Laboratory II",e:3.0},{c:"TÜR126",n:"Türk Dili II",e:2.0},{c:"TAR166",n:"Atatürk İlkeleri ve İnkılap Tarihi II",e:2.0} ],
+            [ {c:"İST239",n:"Probability I",e:6.0},{c:"İST305",n:"Yöneylem Araştırması",e:6.0},{c:"İST358",n:"Veritabanı ve Yönetimi",e:4.5},{c:"MAT209",n:"Analiz I",e:6.0} ],
+            [ {c:"BİL802",n:"Görsel Programlama",e:4.0},{c:"MAT2021",n:"Linear Algebra",e:4.5},{c:"İST126",n:"Probability II",e:6.0},{c:"MAT212",n:"Analiz II",e:6.0} ],
+            [ {c:"İST247",n:"Matematiksel İstatistik I",e:6.0},{c:"İST311",n:"Parametrik Olmayan İstatistiksel Teknikler",e:5.5},{c:"İST333",n:"Regresyon Analizi",e:6.0},{c:"İSTSJ402",n:"Staj",e:5.0} ],
+            [ {c:"İST248",n:"Matematiksel İstatistik II",e:6.0},{c:"İKT384",n:"Ekonometri",e:6.0},{c:"İST335",n:"Örnekleme",e:6.0},{c:"İST338",n:"İstatistiksel Yazılımlar",e:5.0} ],
+            [ {c:"İST459",n:"Deney Tasarımı I",e:6.0},{c:"İST411",n:"Zaman Serileri Analizi",e:5.0},{c:"İST457",n:"Çok Değişkenli İstatistik",e:6.0},{c:"İST439",n:"Graduation Project I",e:4.5} ],
+            [ {c:"İST464",n:"Hesap Tabloları Uygulamaları",e:3.0},{c:"İST430",n:"Stokastik Süreçler",e:5.0},{c:"İST462",n:"İstatistiksel Kalite Kontrolü",e:5.0},{c:"İST440",n:"Graduation Project II",e:4.5} ]
+        ],
+        specs: [
+            {c:"BİL801",n:"Nesne Tabanlı Programlama",e:4.0,t:"yazilim"},{c:"İKT460",n:"Finansal Ekonometri",e:4.5,t:"ekonomi"},{c:"İST243",n:"Açıklayıcı Veri Analizi",e:3.0,t:"veri"},{c:"İST249",n:"Matlab ile Programlama",e:5.0,t:"yazilim"},{c:"İST256",n:"Introduction to R Programming",e:4.5,t:"yazilim"},{c:"İST257",n:"Introduction to Data Science",e:3.0,t:"veri"},{c:"İST337",n:"Çok Değişkenli Zaman Serileri",e:4.0,t:"analiz"},{c:"İST356",n:"Python ile Programlama",e:5.0,t:"yazilim"},{c:"İST413",n:"Yapay Sinir Ağlarına Giriş",e:5.0,t:"yapay_zeka"},{c:"İST438",n:"Makine Öğrenmesi Yöntemleri ve Uyg.",e:4.5,t:"yapay_zeka"},{c:"YBİM302",n:"Tavsiye Sistemleri",e:4.5,t:"veri"},{c:"YİST301",n:"Uygulamalı Ekonometri",e:5.0,t:"ekonomi"},{c:"YİST303",n:"Veri Görselleştirme",e:5.0,t:"veri"},{c:"ARY202",n:"Araştırma Yöntemleri",e:5.0,t:"istatistik"}
+        ]
+    },
+        // 13. ENDÜSTRİYEL TASARIM
+    "entas": {
+        title: "Endüstriyel Tasarım",
+        icon: "🎨",
+        color: "#db2777",
+        faculty: "Mimarlık ve Tasarım Fakültesi",
+        core: [
+            [ {c:"ENT1005",n:"Ürün Tasarımına Giriş",e:3.0},{c:"ENT129",n:"Tasarım Çizimi I",e:4.0},{c:"ENT131",n:"Endüstriyel Ürün Tek. Çizimi I",e:4.0},{c:"ENT133",n:"Temel Tasarım Stüdyosu I",e:12.0},{c:"TÜR125",n:"Türk Dili I",e:2.0},{c:"İNG187",n:"İngilizce I",e:3.0} ],
+            [ {c:"ENT1000",n:"Endüstriyel Tasarım Tarihi",e:3.0},{c:"ENT130",n:"Tasarım Çizimi II",e:4.0},{c:"ENT132",n:"Endüstriyel Ürün Tek. Çizimi II",e:4.0},{c:"ENT134",n:"Temel Tasarım Stüdyosu II",e:12.0},{c:"TÜR126",n:"Türk Dili II",e:2.0},{c:"İNG188",n:"İngilizce II",e:3.0} ],
+            [ {c:"ENT2005",n:"Bilgisayar Destekli Tasarım I",e:2.0},{c:"ENT2007",n:"Dijital Ortamda Görselleştirme I",e:4.0},{c:"ENT2009",n:"Malzeme ve Üretim Yöntemleri I",e:3.0},{c:"ENT235",n:"Ürün Tasarımı I",e:12.0},{c:"TAR165",n:"Atatürk İlkeleri ve İnkılap Tarihi I",e:2.0} ],
+            [ {c:"ENT2006",n:"Tasarım Araştırmaları",e:2.0},{c:"ENT2008",n:"Dijital Ortamda Görselleştirme II",e:4.0},{c:"ENT2010",n:"Malzeme ve Üretim Yöntemleri II",e:3.0},{c:"ENT236",n:"Ürün Tasarımı II",e:12.0},{c:"ENT2012",n:"Maket Yapımı ve Prototipleme",e:4.0},{c:"TAR166",n:"Atatürk İlkeleri ve İnkılap Tarihi II",e:2.0} ],
+            [ {c:"ENT3005",n:"Tasarım Hukuku",e:2.0},{c:"ENT337",n:"Ürün Tasarımı III",e:12.0},{c:"ENTSJ301",n:"Fabrika Stajı",e:3.0} ],
+            [ {c:"ENT3006",n:"Tasarımda Form Anlam ve Algı",e:2.0},{c:"ENT3008",n:"Tasarım Kültürü",e:2.0},{c:"ENT338",n:"Ürün Tasarımı IV",e:12.0} ],
+            [ {c:"ENT441",n:"Portfolyo Tasarımı I",e:4.0},{c:"ENT437",n:"Mesleki İlişkiler ve Proje Yönetimi",e:3.0},{c:"ENT439",n:"Ürün Tasarımı V",e:12.0},{c:"ENTSJ401",n:"Ofis Stajı",e:3.0} ],
+            [ {c:"ENT442",n:"Portfolyo Tasarımı II",e:4.0},{c:"ENT452",n:"Ürün Tasarımı VI",e:14.0} ]
+        ],
+        specs: [
+            {c:"ENT2505",n:"Dijital Oyun Tasarımında İçerik",e:4.0,t:"oyun"},{c:"ENT230",n:"Etkileşimli Prototipleme",e:4.0,t:"tasarim"},{c:"ENT3505",n:"Endüstriyel Seramik Tasarımı",e:6.0,t:"tasarim"},{c:"ENT3507",n:"Çocuk Odaklı Tasarım",e:6.0,t:"tasarim"},{c:"ENT3501",n:"Dijital Oyun Tasarımı I",e:6.0,t:"oyun"},{c:"ENT3523",n:"Üretim Odaklı Tasarım",e:4.0,t:"uretim"},{c:"ENT4503",n:"Ürün ve Servis Deneyimi Stüdyosu",e:6.0,t:"tasarim"},{c:"ENT3504",n:"Mobilya Tasarım Stüdyosu",e:6.0,t:"tasarim"},{c:"ENT3508",n:"Ambalaj Tasarımı Stüdyosu",e:6.0,t:"tasarim"},{c:"ENT4509",n:"Görsel İletişim Tasarımı Stüdyosu",e:6.0,t:"iletisim"},{c:"ENT4506",n:"Sürdürülebilir Tasarım Stüdyosu",e:6.0,t:"surdurulebilirlik"},{c:"ENT3529",n:"Üretken ve Parametrik Tasarım",e:4.0,t:"tasarim"},{c:"ENT3517",n:"Girişimcilik ve Teknoloji Geliştirme",e:4.0,t:"girisimcilik"},{c:"ENT4508",n:"UX/UI Tasarımı Stüdyosu",e:6.0,t:"tasarim"},{c:"ENT4511",n:"Tasarım Yönetimi",e:4.0,t:"yonetim"}
+        ]
+    },
     // --- ÖZEL BÖLÜM (ATÜ) ---
     "atu": {
         title: "ATÜ",
